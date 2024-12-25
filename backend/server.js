@@ -50,6 +50,7 @@ app.use('/api/properties', propertieRouter)
 app.use('/api/agents', agentsRouter)
 app.use('/api/blogs', blogRouter)
 
+const __dirname = path.resolve()
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'frontend/build')))
