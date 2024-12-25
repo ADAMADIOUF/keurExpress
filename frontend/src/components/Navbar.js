@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { FaBars, FaTimes, FaUser } from 'react-icons/fa'
-import { Link } from 'react-router-dom' // Missing import for Link
+import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
 import { useLogoutMutation } from '../slices/userApiSlice'
@@ -33,7 +33,12 @@ const Navbar = () => {
     } else if (userInfo?.email) {
       setIsGoogleLogin(false)
     }
-  }, [userInfo]) // Dependency on userInfo to update
+
+    // If user is an admin, redirect to admin dashboard
+    if (userInfo?.role === 'isAdmin') {
+      navigate('/admin/dashboard')
+    }
+  }, [userInfo, navigate]) // Dependency on userInfo to update
 
   // Handle logout
   const logoutHandler = async () => {
@@ -89,7 +94,13 @@ const Navbar = () => {
               </li>
             )
           })}
-
+          {userInfo.role === 'isAdmin' && (
+            <li style={styles.navItem}>
+              <Link to='/admin/dashboard' style={styles.link}>
+                Admin Dashboard
+              </Link>
+            </li>
+          )}
           {/* If no user info, show login/register links */}
           {!userInfo ? (
             <>
@@ -122,13 +133,7 @@ const Navbar = () => {
               ) : (
                 <FaUser />
               )}
-              {userInfo.role === 'isAdmin' && (
-                <li style={styles.navItem}>
-                  <Link to='/admin/dashboard' style={styles.link}>
-                    Admin Dashboard
-                  </Link>
-                </li>
-              )}
+
               <li style={styles.navItem}>
                 <button onClick={logoutHandler} style={styles.link}>
                   Logout {isGoogleLogin ? '(Google)' : ''}

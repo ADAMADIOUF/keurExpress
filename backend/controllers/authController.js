@@ -121,7 +121,10 @@ export const getProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      profileImage: user.profileImage || '/images/default-avatar.png', 
+      image: user.image,
+      role: user.role,
+
+      profileImage: user.profileImage || '/images/default-avatar.png',
     })
   } else {
     res.status(404)
@@ -148,7 +151,9 @@ export const updateProfile = asyncHandler(async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
-    
+    image: user.image,
+    role: user.role,
+
     profileImage: user.profileImage || '/images/default-avatar.png',
   })
 })
