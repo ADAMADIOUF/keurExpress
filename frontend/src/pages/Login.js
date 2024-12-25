@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { useLoginMutation } from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
 import { toast } from 'react-toastify'
-
+import { FcGoogle } from 'react-icons/fc'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -132,8 +133,15 @@ const Login = () => {
       <p style={styles.orText}>or</p>
 
       {/* Google login button */}
-      <button onClick={handleGoogleLogin} style={styles.googleButton}>
-        Login with Google
+      <button
+        onClick={handleGoogleLogin}
+        style={styles.googleButton}
+        className='google-login'
+      >
+        Login with Google{' '}
+        <span>
+          <FcGoogle />
+        </span>
       </button>
 
       <p style={styles.signupText}>
@@ -181,7 +189,7 @@ const styles = {
   googleButton: {
     padding: '10px 20px',
     fontSize: '16px',
-    backgroundColor: '#db4437',
+    backgroundColor: '#000',
     color: '#fff',
     border: 'none',
     borderRadius: '4px',

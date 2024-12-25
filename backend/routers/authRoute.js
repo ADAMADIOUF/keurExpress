@@ -29,12 +29,7 @@ router.get(
   }),
   (req, res) => {
     // Generate the token for the logged-in user
-    const token = generateToken(req.user._id, res) // Pass the response object
-
-    // Optionally log the token or send it in the response body (for API use)
-    // console.log(token); // Token could also be sent in response if not using cookies
-
-    // Redirect to profile page or send the response to the client
+    const token = generateToken(req.user._id, res) 
     res.redirect('http://localhost:3000/profile')
   }
 )

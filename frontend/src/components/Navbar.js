@@ -122,6 +122,13 @@ const Navbar = () => {
               ) : (
                 <FaUser />
               )}
+              {userInfo.role === 'isAdmin' && (
+                <li style={styles.navItem}>
+                  <Link to='/admin/dashboard' style={styles.link}>
+                    Admin Dashboard
+                  </Link>
+                </li>
+              )}
               <li style={styles.navItem}>
                 <button onClick={logoutHandler} style={styles.link}>
                   Logout {isGoogleLogin ? '(Google)' : ''}
@@ -132,7 +139,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Show user info if logged in with Google */}
       {userInfo?.provider === 'google' && (
         <div style={styles.userInfo}>
           <img

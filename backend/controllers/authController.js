@@ -12,7 +12,7 @@ const generateNumericCode = (length) => {
 }
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { email, name, password } = req.body
+  const { email, name, password,role } = req.body
 
   
   const userExist = await User.findOne({ email })
@@ -21,28 +21,25 @@ export const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
 
-  
+   const userRole = role === 'isAdmin' ? 'isAdmin' : 'user'
   const verificationCode = generateNumericCode(6)
   const user = await User.create({
     name,
     email,
     password,
+    role: userRole,
     verificationToken: verificationCode,
-    verificationExpiresAt: Date.now() + 3600000, 
+    verificationExpiresAt: Date.now() + 3600000,
   })
 
   if (user) {
     
     generateToken(user._id, res) 
-
-   
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
-      buyer: user.buyer,
-      seller: user.seller,
+      role: user.role,
       profileImage: user.profileImage || '/images/default-avatar.png', // Fallback image
     })
   } else {

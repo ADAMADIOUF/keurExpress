@@ -23,6 +23,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import PrivateRoute from './components/PrivateRoute';
+import DashBoard from './pages/DashBoard';
+import AdminRoute from './components/AdminRoute';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -44,7 +46,9 @@ const router = createBrowserRouter(
       {/* <Route path='' element={<PrivateRoute />}> */}
         <Route path='/profile' element={<Profile />} />
       {/* </Route> */}
-
+ <Route path='' element={<AdminRoute />}>
+        <Route path='/admin/dashboard' element={<DashBoard />} />
+        </Route>
       <Route path='*' element={<NotFound />} />
     </Route>
   )

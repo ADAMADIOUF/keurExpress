@@ -2115,3 +2115,6 @@ margin: 0.5rem;
     gap: 2rem;
   }
 }
+.google-login span{
+  font-size: 2rem;
+}

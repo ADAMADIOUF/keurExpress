@@ -13,8 +13,8 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['buyer', 'seller', 'isAdmin'],
-      default: 'buyer',
+      enum: ['seller', 'isAdmin', 'user'],
+      default: 'user',
     },
     contactNumber: { type: String },
     googleId: {
