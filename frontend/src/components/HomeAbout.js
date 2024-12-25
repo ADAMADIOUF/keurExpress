@@ -3,6 +3,8 @@ import Questions from './Questions'
 import a from '../assets/homeabout.png'
 import { FaBath, FaBed } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import AboutBtn from './AboutBtn'
+
 
 const HomeAbout = () => {
   const [isImageMoving, setIsImageMoving] = useState(false) // Track image movement
@@ -29,11 +31,7 @@ const HomeAbout = () => {
       <div className='container-questions'>
         <article>
           <Questions setIsImageMoving={setIsImageMoving} />{' '}
-          <div className='more-about-us'>
-            <button className='btn'>
-              <Link to={'/about'}>more about us</Link>
-            </button>
-          </div>
+      <AboutBtn/>
         </article>
         <article className={`home-about-img ${isImageMoving ? 'move' : ''}`}>
           {' '}

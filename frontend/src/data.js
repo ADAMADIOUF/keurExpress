@@ -20,11 +20,11 @@ export const links = [
     url: '/property',
     text: 'property',
   },
-  
+
   {
     id: nanoid(),
-    url: '/partenair',
-    text: 'partenair',
+    url: '/partners',
+    text: 'partners',
   },
   {
     id: nanoid(),

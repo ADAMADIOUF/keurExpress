@@ -1,72 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const SearchTerm = () => {
-  const [location, setLocation] = useState('')
-  const [price, setPrice] = useState('')
-  const [searchResults, setSearchResults] = useState([])
+  const navigate = useNavigate()
+  const {
+    keyword: urlKeyword,
+    location: urlLocation,
+    address: urlAddress,
+  } = useParams()
+  const [keyword, setKeyword] = useState(urlKeyword || '')
+  const [location, setLocation] = useState(urlLocation || '')
+  const [address, setAddress] = useState(urlAddress || '')
 
-  // Handle the location input change
-  const handleLocationChange = (e) => {
-    setLocation(e.target.value)
-  }
 
-  // Handle the price input change
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value)
-  }
+  useEffect(() => {
+    if (urlKeyword) setKeyword(urlKeyword)
+    if (urlLocation) setLocation(urlLocation)
+    if (urlAddress) setAddress(urlAddress)
+  }, [urlKeyword, urlLocation, urlAddress])
 
-  // Handle the search button click
-  const handleSearch = () => {
-    // Mock search logic (you can replace it with actual search logic)
-    const results = [
-      {
-        id: 1,
-        location: 'New York',
-        price: 150000,
-      },
-      {
-        id: 2,
-        location: 'Los Angeles',
-        price: 250000,
-      },
-    ]
-
-    // Filter results based on location and price
-    const filteredResults = results.filter(
-      (result) =>
-        (location === '' ||
-          result.location.toLowerCase().includes(location.toLowerCase())) &&
-        (price === '' || result.price <= parseInt(price))
-    )
-
-    setSearchResults(filteredResults)
+  const submitHandler = (e) => {
+    e.preventDefault()
+    if (keyword.trim() || location.trim() || address.trim()) {
+      navigate(`/search/${keyword.trim()}/${location.trim()}/${address.trim()}`)
+    } else {
+      navigate('/') // Navigate to the homepage if no search query is provided
+    }
   }
 
   return (
     <div className='search-term'>
-      <div className='form-group'>
-        <label htmlFor='location'>Location:</label>
+      <form onSubmit={submitHandler} className='search-container'>
         <input
           type='text'
-          id='location'
-          value={location}
-          onChange={handleLocationChange}
-          placeholder='Enter location'
+          name='keyword'
+          onChange={(e) => setKeyword(e.target.value)}
+          value={keyword}
+          placeholder='Search Houses...'
+          className='search-input'
         />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='price'>Price:</label>
         <input
-          type='number'
-          id='price'
-          value={price}
-          onChange={handlePriceChange}
-          placeholder='Enter maximum price'
+          type='text'
+          name='location'
+          onChange={(e) => setLocation(e.target.value)}
+          value={location}
+          placeholder='Location'
+          className='search-input'
         />
-      </div>
-      <button onClick={handleSearch} className='button-search '>
-        Search
-      </button>
+        <input
+          type='text'
+          name='address'
+          onChange={(e) => setAddress(e.target.value)}
+          value={address}
+          placeholder='Address'
+          className='search-input'
+        />
+        <button type='submit' className='search-button search-input'>
+          Search
+        </button>
+      </form>
     </div>
   )
 }

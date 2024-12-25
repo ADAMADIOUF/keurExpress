@@ -1,6 +1,6 @@
 import React from 'react'
 import Agents from '../pages/Agents'
-import ChooseUs from './ChooseUs'
+
 
 const AgentsHeader = () => {
   return (
@@ -23,7 +23,7 @@ const AgentsHeader = () => {
           </article>
         </div>
         <Agents/>
-       
+     
       </div>
     </div>
   )

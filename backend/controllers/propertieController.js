@@ -43,14 +43,42 @@ export const createProperty = asyncHandler(async (req, res) => {
 // Get all properties
 // GET /api/properties
 export const getProperties = asyncHandler(async (req, res) => {
-  const properties = await Property.find() // Fetch all properties
+  const keyword = req.query.keyword
+    ? { title: { $regex: req.query.keyword, $options: 'i' } }
+    : {}
 
-  res.status(200).json({
-    success: true,
-    count: properties.length,
-    data: properties,
-  })
+
+  const filters = {
+    ...keyword,
+    ...(req.query.propertyType ? { propertyType: req.query.propertyType } : {}),
+    ...(req.query.minPrice ? { price: { $gte: req.query.minPrice } } : {}),
+    ...(req.query.maxPrice ? { price: { $lte: req.query.maxPrice } } : {}),
+    // Location filter: If location is provided, check both city and address fields
+    ...(req.query.location
+      ? { 'location.city': { $regex: req.query.location, $options: 'i' } }
+      : {}),
+    ...(req.query.address
+      ? { 'location.address': { $regex: req.query.address, $options: 'i' } }
+      : {}),
+  }
+
+  try {
+    // Fetch properties based on the filters
+    const properties = await Property.find(filters)
+
+    res.status(200).json({
+      success: true,
+      count: properties.length,
+      data: properties,
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
 })
+
 
 // Get a single property by ID
 // GET /api/properties/:id

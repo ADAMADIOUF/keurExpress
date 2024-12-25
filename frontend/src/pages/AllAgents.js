@@ -5,6 +5,8 @@ import Error from '../components/Error'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram } from 'react-icons/fa' // Import icons
 import HeroReusable from '../components/HeroResuable'
+import ChooseUs from '../components/ChooseUs'
+import BannerReusable from '../components/BannerResubale'
 
 const AllAgents = () => {
   const { data: agents, error, isLoading } = useGetAgentsQuery()
@@ -94,10 +96,15 @@ const AllAgents = () => {
             <p>No agents available</p>
           )}
         </div>
-
-        
-       
       </div>
+      <ChooseUs />
+      <BannerReusable
+        image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png'
+        title='Find Your Dream Home? Contact Us Today!'
+        description='Take the first step towards homeownership and reach out to our expert team at Keur Express.'
+        target='/about' // Route to navigate to
+        label='More About Us'
+      />
     </div>
   )
 }

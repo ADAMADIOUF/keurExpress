@@ -1,11 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom' // Import Link for navigation
+import { Link, useParams } from 'react-router-dom' // Import Link for navigation
 import { useGetProperiesQuery } from '../slices/propertieSlice'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
 const LastProperties = () => {
-  const { data: properties, error, isLoading } = useGetProperiesQuery()
+    const { keyword = '',  } = useParams()
+    const {
+      data: properties,
+      error,
+      isLoading,
+    } = useGetProperiesQuery({ keyword })
 
   if (isLoading) {
     return <Loading />

@@ -16,15 +16,36 @@ import SinglePropertie from './pages/SinglePropertie';
 import SingleAgent from './pages/SingleAgent';
 import AllAgents from './pages/AllAgents';
 import AllProperties from './pages/AllProperties';
+import Partenaire from './pages/Partenaire';
+import About from './components/About';
+import Contact from './components/Contact';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Profile from './pages/Profile';
+import PrivateRoute from './components/PrivateRoute';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomePage />} />
+      <Route
+        path='/search/:keyword/:location/:address/:propertyType/:minPrice/:maxPrice'
+        element={<HomePage />}
+      />
+
       <Route path='/propertie/:id' element={<SinglePropertie />} />
       <Route path='/agent/:id' element={<SingleAgent />} />
       <Route path='/all-agents' element={<AllAgents />} />
       <Route path='/property' element={<AllProperties />} />
-      {/* <Route path='*' element={<NotFound />} /> */}
+      <Route path='/partners' element={<Partenaire />} />
+      <Route path='/about' element={<About />} />
+      <Route path='/contact' element={<Contact />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Signup />} />
+      {/* <Route path='' element={<PrivateRoute />}> */}
+        <Route path='/profile' element={<Profile />} />
+      {/* </Route> */}
+
+      <Route path='*' element={<NotFound />} />
     </Route>
   )
 )

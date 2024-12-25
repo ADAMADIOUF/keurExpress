@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom' // Import Link for navigation
+import { Link, useParams } from 'react-router-dom' // Import Link for navigation
 import { useGetProperiesQuery } from '../slices/propertieSlice'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
@@ -7,7 +7,29 @@ import HeroReusable from '../components/HeroResuable'
 import SearchTermTwo from '../components/SearchTermTwo'
 
 const AllProperties = () => {
-  const { data: properties, error, isLoading } = useGetProperiesQuery()
+   const {
+       keyword = '',
+       location = '',
+       address = '',
+       propertyType="",
+       minPrice="",
+       maxPrice="",
+     } = useParams()
+   
+     // Query properties with keyword, location, and address as parameters
+     const {
+       data: properties,
+       error,
+       isLoading,
+     } = useGetProperiesQuery({
+       keyword,
+       location,
+       address,
+       propertyType,
+       minPrice,
+       maxPrice,
+     })
+   
 
   if (isLoading) {
     return <Loading />
@@ -18,9 +40,24 @@ const AllProperties = () => {
   }
 
   const propertyList = properties?.data || []
+if (propertyList.length === 0) {
+  return (
+    <>
+      <Link to='/' className='back-btn'>
+        Go Back
+      </Link>
+      <Error variant='info'>No properties found</Error>
+    </>
+  )
+}
 
   return (
     <>
+    {keyword && (
+            <Link to='/' className='back-btn'>
+              Go Back
+            </Link>
+          )}
       <HeroReusable
         title={'All Property'}
         subtitle={'Find Your Perfect Home With Keur Express'}

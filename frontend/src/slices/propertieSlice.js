@@ -4,13 +4,28 @@ import { apiSlice } from './apiSlice'
 export const propertieApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProperies: builder.query({
-      query: () => ({
+      query: ({
+        keyword,
+        location,
+        address,
+        propertyType,
+        minPrice,
+        maxPrice,
+      }) => ({
         url: `${PROPERTIES_URL}`,
+        params: {
+          keyword,
+          location,
+          address,
+          propertyType,
+          minPrice,
+          maxPrice,
+        },
       }),
       providesTags: ['Propertie'],
     }),
 
-    // Fetch a single post by its ID
+    // Fetch a single property by its ID
     getPropertieById: builder.query({
       query: (propertieId) => `${PROPERTIES_URL}/${propertieId}`,
     }),
@@ -34,7 +49,6 @@ export const propertieApiSlice = apiSlice.injectEndpoints({
     }),
 
     deletePropertie: builder.mutation({
-      // Fix typo here
       query: (id) => ({
         url: `${PROPERTIES_URL}/${id}`,
         method: 'DELETE',
@@ -49,5 +63,5 @@ export const {
   useGetPropertieByIdQuery,
   useAddPropertieMutation,
   useUpdatePropertieMutation,
-  useDeletePropertieMutation, // Fix typo here
+  useDeletePropertieMutation,
 } = propertieApiSlice

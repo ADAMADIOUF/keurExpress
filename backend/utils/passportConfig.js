@@ -1,8 +1,8 @@
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 
-import { googleAuthCallback } from './controller/authController.js' // Import the googleAuthCallback function
-import User from './models/User.js'
+import { googleAuthCallback } from '../controllers/authController.js' 
+import User from '../models/User.js'
 
 export default function (passport) {
   passport.use(

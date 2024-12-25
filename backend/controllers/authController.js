@@ -91,12 +91,11 @@ export const googleAuthCallback = async (
       return done(new Error('Invalid Google profile structure'), null)
     }
 
-    // Check if user already exists in database by Google ID or email
+   
     let user = await User.findOne({
       $or: [{ googleId: profile.id }, { email: profile.emails[0]?.value }],
     })
 
-    // If user doesn't exist, create a new user
     if (!user) {
       user = new User({
         googleId: profile.id,
@@ -108,11 +107,9 @@ export const googleAuthCallback = async (
       await user.save()
     }
 
-    // Generate a JWT token (without setting the cookie here)
-    const token = generateToken(user._id) // Generate token but do not set cookie here
-
-    // Redirect the user to a new route where the cookie will be set
-    done(null, user, { message: 'Google Auth Success', token }) // Pass the token as part of the user object
+   
+    const token = generateToken(user._id) 
+    done(null, user, { message: 'Google Auth Success', token }) 
   } catch (err) {
     console.error('Google Auth Error:', err)
     done(err, null)
@@ -120,17 +117,14 @@ export const googleAuthCallback = async (
 }
 
 export const getProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id) // Assuming `req.user` contains the authenticated user
+  const user = await User.findById(req.user._id) 
 
   if (user) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
-      buyer: user.buyer,
-      seller: user.seller, // email is always present for regular login
-      profileImage: user.profileImage || '/images/default-avatar.png', // Default avatar if no profile image
+      profileImage: user.profileImage || '/images/default-avatar.png', 
     })
   } else {
     res.status(404)
@@ -141,29 +135,23 @@ export const getProfile = asyncHandler(async (req, res) => {
 export const updateProfile = asyncHandler(async (req, res) => {
   const { name, email, profileImage } = req.body
 
-  // Find the user by their ID (authenticated user)
   const user = await User.findById(req.user._id)
 
   if (!user) {
     res.status(404)
     throw new Error('User not found')
   }
-
-  // Update user fields
   if (name) user.name = name
   if (email) user.email = email
   if (profileImage) user.profileImage = profileImage
 
-  // Save the updated user information
   await user.save()
 
   res.json({
     _id: user._id,
     name: user.name,
     email: user.email,
-    isAdmin: user.isAdmin,
-    buyer: user.buyer,
-    seller: user.seller,
+    
     profileImage: user.profileImage || '/images/default-avatar.png',
   })
 })

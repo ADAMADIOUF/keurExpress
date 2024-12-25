@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion' // Importing motion for animations
 import a from '../assets/c1.png'
 import b from '../assets/c2.png'
 import c from '../assets/c3.png'
@@ -16,22 +17,54 @@ const Companies = () => {
           </h2>
           <div className='line'></div>
         </div>
+
         <div className='container-companies'>
-          <article className='companies-details'>
+          {/* Adding motion.div to animate the images */}
+          <motion.article
+            className='companies-details'
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
             <img src={a} alt='' />
-          </article>
-          <article className='companies-details'>
+          </motion.article>
+          <motion.article
+            className='companies-details'
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
             <img src={b} alt='' />
-          </article>
-          <article className='companies-details'>
+          </motion.article>
+          <motion.article
+            className='companies-details'
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
             <img src={c} alt='' />
-          </article>
-          <article className='companies-details'>
+          </motion.article>
+          <motion.article
+            className='companies-details'
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
             <img src={d} alt='' />
-          </article>
-          <article className='companies-details'>
+          </motion.article>
+          <motion.article
+            className='companies-details'
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
             <img src={e} alt='' />
-          </article>
+          </motion.article>
         </div>
       </div>
     </div>
