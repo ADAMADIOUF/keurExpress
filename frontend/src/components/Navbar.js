@@ -94,13 +94,7 @@ const Navbar = () => {
               </li>
             )
           })}
-          {userInfo.role === 'isAdmin' && (
-            <li style={styles.navItem}>
-              <Link to='/admin/dashboard' style={styles.link}>
-                Admin Dashboard
-              </Link>
-            </li>
-          )}
+          
           {/* If no user info, show login/register links */}
           {!userInfo ? (
             <>
