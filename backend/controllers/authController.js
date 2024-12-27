@@ -12,60 +12,53 @@ const generateNumericCode = (length) => {
 }
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { email, name, password, role } = req.body
+  const { email, name, password, role } = req.body;
 
-  // Check if user already exists
-  const userExist = await User.findOne({ email })
+  console.log("Role received:", role); // Debugging log
+
+  const userExist = await User.findOne({ email });
   if (userExist) {
-    res.status(400)
-    throw new Error('User already exists')
+    res.status(400);
+    throw new Error("User already exists");
   }
 
-  // Determine the role of the user (default to 'user' if not 'isAdmin')
-  const userRole = role === 'isAdmin' ? 'isAdmin' : 'user'
+  const userRole = role === "admin" ? "admin" : "user";
+  console.log("Assigned role:", userRole); // Debugging log
 
-  // Generate a verification code (if applicable in your system)
-  const verificationCode = generateNumericCode(6)
+  const verificationCode = generateNumericCode(6);
 
-  // Create the new user
   const user = await User.create({
     name,
     email,
     password,
-    role: userRole, // Set the role
+    role: userRole, // Ensure this is correctly set
     verificationToken: verificationCode,
     verificationExpiresAt: Date.now() + 3600000,
-  })
+  });
 
   if (user) {
-    // Generate JWT token for the user
-    generateToken(user._id, res)
+    generateToken(res, user._id, );
 
-    // Send the response with user info and role
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role, // Include the role in the response
-      profileImage: user.profileImage || '/images/default-avatar.png', // Fallback image
-    })
+      role: user.role,
+      profileImage: user.profileImage || "/images/default-avatar.png",
+    });
   } else {
-    res.status(400)
-    throw new Error('User not created')
+    res.status(400);
+    throw new Error("User not created");
   }
-})
+});
+
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
-
-  // Find the user by email
   const user = await User.findOne({ email })
 
-  // Check if the user exists and password matches
   if (user && (await user.matchPassword(password))) {
-    // Generate JWT token for the user
-    generateToken(user._id, res) // This will generate the token and set it as a cookie
-
-    // Send user info along with role and JWT token
+    
+    generateToken(user._id, res) 
     res.json({
       _id: user._id,
       name: user.name,

@@ -95,7 +95,7 @@ const Navbar = () => {
             )
           })}
           
-          {/* If no user info, show login/register links */}
+         
           {!userInfo ? (
             <>
               <li style={styles.navItem}>
@@ -127,7 +127,19 @@ const Navbar = () => {
               ) : (
                 <FaUser />
               )}
-
+{userInfo.role === 'admin' && (
+                  <>
+                    <Link to='/admin/dashboard' className='dropdown-item'>
+                       Dashboard
+                    </Link>
+                    <Link to='/admin/propertiesList' className='dropdown-item'>
+                     All properties
+                    </Link>
+                    <Link to='/admin/all-users' className='dropdown-item'>
+                      All Users
+                    </Link>
+                  </>
+                )}
               <li style={styles.navItem}>
                 <button onClick={logoutHandler} style={styles.link}>
                   Logout {isGoogleLogin ? '(Google)' : ''}

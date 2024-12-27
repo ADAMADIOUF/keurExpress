@@ -4,13 +4,11 @@ import { Outlet, Navigate } from 'react-router-dom'
 
 const AdminRoute = () => {
   const { userInfo } = useSelector((state) => state.auth)
-
-  // Check if userInfo exists and if the role is 'isAdmin'
-  if (!userInfo || userInfo.role !== 'isAdmin') {
-    return <Navigate to='/login' replace />
-  }
-
-  return <Outlet />
+  return userInfo && userInfo.role === 'admin' ? (
+    <Outlet />
+  ) : (
+    <Navigate to='/login' replace />
+  )
 }
 
 export default AdminRoute

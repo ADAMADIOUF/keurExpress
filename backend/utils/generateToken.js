@@ -10,20 +10,20 @@ const generateToken = (userId, res = null) => {
   // Generate JWT token with a payload that includes the user ID
   const token = jwt.sign(
     { userId },
-    process.env.KEUR_EXPRESS, // Secret key for signing the token
-    { expiresIn: '30d' } // Set the token to expire in 30 days
+    process.env.KEUR_EXPRESS, 
+    { expiresIn: '30d' } 
   )
 
   if (res) {
-    // If the response object is provided, set the JWT token as an HTTP-only cookie
+    
     res.cookie('jwt', token, {
-      httpOnly: true, // Makes the cookie inaccessible to JavaScript
-      secure: process.env.NODE_ENV === 'production', // Only send cookie over HTTPS in production
-      sameSite: 'strict', // Helps prevent CSRF attacks
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: 'strict', 
+      maxAge: 30 * 24 * 60 * 60 * 1000, 
     })
   }
 
-  return token // Return the token (if needed, for use in headers or other places)
+  return token 
 }
 export default generateToken

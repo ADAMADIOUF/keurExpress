@@ -31,17 +31,17 @@ export const propertieApiSlice = apiSlice.injectEndpoints({
     }),
 
     addPropertie: builder.mutation({
-      query: (data) => ({
+      query: (newProperty) => ({
         url: PROPERTIES_URL,
         method: 'POST',
-        body: data,
+        body: newProperty, 
       }),
       invalidatesTags: ['Propertie'],
     }),
 
     updatePropertie: builder.mutation({
       query: (data) => ({
-        url: `${PROPERTIES_URL}/${data.id}`,
+        url: `${PROPERTIES_URL}/${data.propertieId}`,
         method: 'PUT',
         body: data,
       }),
@@ -49,8 +49,8 @@ export const propertieApiSlice = apiSlice.injectEndpoints({
     }),
 
     deletePropertie: builder.mutation({
-      query: (id) => ({
-        url: `${PROPERTIES_URL}/${id}`,
+      query: (propertieId) => ({
+        url: `${PROPERTIES_URL}/${propertieId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Propertie'],

@@ -8,19 +8,19 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: function () {
-        return !this.googleId // Password required only if googleId is not set
+        return !this.googleId 
       },
     },
     role: {
-      type: Boolean,
-      enum: ['seller', 'isAdmin', 'user'],
-      default: 'user',
-    },
+  type: String,
+  enum: ['seller', 'admin', 'user'],
+  default: 'user',
+},
     contactNumber: { type: String },
     googleId: {
       type: String,
       unique: true,
-      sparse: true, // Allows for some documents to omit this field
+      sparse: true, 
     },
     displayName: { type: String },
     profileImage: {

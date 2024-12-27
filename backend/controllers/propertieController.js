@@ -19,9 +19,10 @@ export const createProperty = asyncHandler(async (req, res) => {
     size,
     garage,
     store,
+    isFeatured,
   } = req.body
 
-  const properties = new Property({
+  const property = new Property({
     title,
     description,
     price,
@@ -34,9 +35,11 @@ export const createProperty = asyncHandler(async (req, res) => {
     size,
     garage,
     store,
+    isFeatured,
+    user: req.user._id,
   })
 
-  const createdProperty = await properties.save()
+  const createdProperty = await property.save()
   res.status(201).json(createdProperty)
 })
 
@@ -47,38 +50,26 @@ export const getProperties = asyncHandler(async (req, res) => {
     ? { title: { $regex: req.query.keyword, $options: 'i' } }
     : {}
 
-
   const filters = {
     ...keyword,
-    ...(req.query.propertyType ? { propertyType: req.query.propertyType } : {}),
-    ...(req.query.minPrice ? { price: { $gte: req.query.minPrice } } : {}),
-    ...(req.query.maxPrice ? { price: { $lte: req.query.maxPrice } } : {}),
-    // Location filter: If location is provided, check both city and address fields
-    ...(req.query.location
-      ? { 'location.city': { $regex: req.query.location, $options: 'i' } }
-      : {}),
-    ...(req.query.address
-      ? { 'location.address': { $regex: req.query.address, $options: 'i' } }
-      : {}),
+    ...(req.query.propertyType && { propertyType: req.query.propertyType }),
+    ...(req.query.minPrice && { price: { $gte: req.query.minPrice } }),
+    ...(req.query.maxPrice && { price: { $lte: req.query.maxPrice } }),
+    ...(req.query.location && {
+      'location.city': { $regex: req.query.location, $options: 'i' },
+    }),
+    ...(req.query.address && {
+      'location.address': { $regex: req.query.address, $options: 'i' },
+    }),
   }
 
-  try {
-    // Fetch properties based on the filters
-    const properties = await Property.find(filters)
-
-    res.status(200).json({
-      success: true,
-      count: properties.length,
-      data: properties,
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    })
-  }
+  const properties = await Property.find(filters)
+  res.status(200).json({
+    success: true,
+    count: properties.length,
+    data: properties,
+  })
 })
-
 
 // Get a single property by ID
 // GET /api/properties/:id
@@ -86,58 +77,74 @@ export const getSingleProperty = asyncHandler(async (req, res) => {
   const property = await Property.findById(req.params.id)
 
   if (!property) {
-    return res.status(404).json({
-      success: false,
-      message: 'Property not found',
-    })
+    res.status(404).json({ success: false, message: 'Property not found' })
+    return
   }
 
-  res.status(200).json({
-    success: true,
-    data: property,
-  })
+  res.status(200).json({ success: true, data: property })
 })
 
 // Update a property
 // PUT /api/properties/:id
 export const updateProperty = asyncHandler(async (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    images,
+    status,
+    propertyType,
+    bedrooms,
+    bathrooms,
+    size,
+    location,
+    garage,
+    store,
+  } = req.body
+
+  // Find the property by its ID
   const property = await Property.findById(req.params.id)
 
-  if (!property) {
-    return res.status(404).json({
-      success: false,
-      message: 'Property not found',
+  if (property) {
+    // Update the property fields
+    property.title = title || property.title
+    property.description = description || property.description
+    property.price = price || property.price
+    property.images = images || property.images
+    property.status = status || property.status
+    property.propertyType = propertyType || property.propertyType
+    property.bedrooms = bedrooms || property.bedrooms
+    property.bathrooms = bathrooms || property.bathrooms
+    property.size = size || property.size
+    property.location = location || property.location
+    property.garage = garage || property.garage
+    property.store = store || property.store
+
+    // Save the updated property
+    const updatedProperty = await property.save()
+
+    // Send the updated property as a response
+    res.json({
+      success: true,
+      data: updatedProperty,
     })
+  } else {
+    res.status(404)
+    throw new Error('Property not found')
   }
-
-  const updatedProperty = await Property.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true, runValidators: true }
-  )
-
-  res.status(200).json({
-    success: true,
-    data: updatedProperty,
-  })
 })
-
 // Delete a property
 // DELETE /api/properties/:id
 export const deleteProperty = asyncHandler(async (req, res) => {
   const property = await Property.findById(req.params.id)
 
   if (!property) {
-    return res.status(404).json({
-      success: false,
-      message: 'Property not found',
-    })
+    res.status(404).json({ success: false, message: 'Property not found' })
+    return
   }
 
   await Property.findByIdAndDelete(req.params.id)
-
-  res.status(200).json({
-    success: true,
-    message: 'Property deleted successfully',
-  })
+  res
+    .status(200)
+    .json({ success: true, message: 'Property deleted successfully' })
 })

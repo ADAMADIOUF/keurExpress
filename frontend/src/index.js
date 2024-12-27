@@ -25,6 +25,8 @@ import Profile from './pages/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import DashBoard from './pages/DashBoard';
 import AdminRoute from './components/AdminRoute';
+import PropertieList from './screen/PropertieList';
+import PropertieEdit from './screen/PropertieEdit';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -44,11 +46,16 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Signup />} />
       {/* <Route path='' element={<PrivateRoute />}> */}
-        <Route path='/profile' element={<Profile />} />
+      <Route path='/profile' element={<Profile />} />
       {/* </Route> */}
- <Route path='' element={<AdminRoute />}>
+      <Route path='' element={<AdminRoute />}>
         <Route path='/admin/dashboard' element={<DashBoard />} />
-        </Route>
+        <Route path='/admin/propertiesList' element={<PropertieList />} />
+        <Route
+          path='/admin/propertiesList/:id/edit'
+          element={<PropertieEdit />}
+        />
+      </Route>
       <Route path='*' element={<NotFound />} />
     </Route>
   )
