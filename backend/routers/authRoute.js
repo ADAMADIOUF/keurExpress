@@ -29,7 +29,7 @@ router.get(
     failureRedirect: '/login',
   }),
   (req, res) => {
-    // Generate the token for the logged-in user
+   
     const token = generateTokenGoogle(req.user._id, res) 
     res.redirect('http://localhost:3000/profile')
   }

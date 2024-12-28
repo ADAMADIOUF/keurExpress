@@ -32,10 +32,8 @@ const Login = () => {
     try {
       const res = await login({ email, password }).unwrap()
 
-      // Dispatch credentials to Redux store
-      dispatch(setCredentials(res)) // Assuming the response has the necessary user data
-
-      // Redirect user after successful login
+      
+      dispatch(setCredentials(res)) 
       navigate(redirect)
     } catch (error) {
       setError(error?.data?.message || error.error)
@@ -46,13 +44,13 @@ const Login = () => {
   // Google Login Handler
   const handleGoogleLogin = async () => {
     try {
-      // Initiate Google login by redirecting to backend
+      
       await fetch('http://localhost:5000/api/users/auth/google/init', {
         method: 'GET',
-        credentials: 'include', // Include cookies if using session-based auth
+        credentials: 'include',
       })
 
-      // Redirect to Google's OAuth
+      // Redirect the user to Google OAuth
       window.location.href = 'http://localhost:5000/api/users/auth/google'
     } catch (error) {
       console.error('Error initiating Google login:', error)
@@ -60,7 +58,7 @@ const Login = () => {
     }
   }
 
-  // Callback after Google OAuth
+  // Callback handling after Google OAuth
   useEffect(() => {
     const handleGoogleCallback = async () => {
       const url = window.location.href
@@ -80,8 +78,8 @@ const Login = () => {
             // Dispatch the user data to Redux
             dispatch(setCredentials(userData))
 
-            // Redirect after successful login
-            navigate(redirect)
+            // Redirect to the profile page after successful login
+            navigate('/profile')
           } else {
             toast.error('Failed to fetch user data after Google login')
           }
@@ -91,11 +89,11 @@ const Login = () => {
       }
     }
 
+    // Ensure we only run callback if we're on the correct URL after Google redirect
     if (window.location.href.includes('google')) {
       handleGoogleCallback()
     }
-  }, [dispatch, navigate, redirect])
-
+  }, [navigate, dispatch])
 
   return (
     <div style={styles.container}>

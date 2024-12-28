@@ -31,14 +31,14 @@ const PropertieEdit = () => {
   const [garage, setGarage] = useState(false)
   const [store, setStore] = useState(false)
   const [isFeatured, setIsFeatured] = useState(false)
-
+  const navigate = useNavigate()
   const {
     data: propertie,
     error,
     isLoading,
   } = useGetPropertieByIdQuery(propertieId)
 
-  const [updateProperty, { isLoading: updating }] = useUpdatePropertieMutation()
+  const [updatedProduct, { isLoading: updating }] = useUpdatePropertieMutation()
 
   useEffect(() => {
     if (propertie) {
@@ -70,6 +70,7 @@ const PropertieEdit = () => {
     e.preventDefault()
 
     const updatedProperty = {
+      propertieId,
       title,
       description,
       price,
@@ -84,13 +85,15 @@ const PropertieEdit = () => {
       store,
       isFeatured,
       
-    }
+    
 
-    try {
-      await updateProperty({ propertieId, ...updatedProperty })
-      toast.success('Property updated successfully')
-    } catch (error) {
-      toast.error(error?.data?.message || error.error)
+      }
+    const result = await updatedProduct(updatedProperty)
+    if (result.error) {
+      toast.error(result.error)
+    } else {
+      toast.success('Product updated')
+      navigate('/admin/propertiesList')
     }
   }
 

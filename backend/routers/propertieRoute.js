@@ -19,7 +19,7 @@ router.get('/', getProperties) // Get all properties
 router.get('/:id', getSingleProperty) // Get a single property by ID
 router.put(
   '/:id',
-  upload.array('images', 4), // Accept up to 4 images
+  upload.array('images', 4), 
   protect,
   admin,
   updateProperty

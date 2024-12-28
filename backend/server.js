@@ -38,8 +38,8 @@ app.use(
   })
 )
 
-// Initialize Passport and session handling
-passportConfig(passport) // Configure Passport
+
+passportConfig(passport) 
 
 app.use(passport.initialize())
 app.use(passport.session())

@@ -45,9 +45,9 @@ const router = createBrowserRouter(
       <Route path='/contact' element={<Contact />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Signup />} />
-      <Route path='' element={<PrivateRoute />}>
+      {/* <Route path='' element={<PrivateRoute />}> */}
       <Route path='/profile' element={<Profile />} />
-      </Route>
+      {/* </Route> */}
       <Route path='' element={<AdminRoute />}>
         <Route path='/admin/dashboard' element={<DashBoard />} />
         <Route path='/admin/propertiesList' element={<PropertieList />} />
@@ -63,6 +63,7 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>

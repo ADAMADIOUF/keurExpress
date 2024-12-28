@@ -12,14 +12,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'], // Invalidate user data after login
     }),
-    loginGoogle: builder.mutation({
-      query: () => ({
-        url: `${USERS_URL}/auth/google/`,
-        method: 'GET',
-        credentials: 'include', // Include credentials for Google login
-      }),
-      invalidatesTags: ['User'], // Invalidate user data after Google login
-    }),
+
     register: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}`,
@@ -29,6 +22,16 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'], // Invalidate user data after registration
     }),
+    googleLogin: builder.mutation({
+  query: (token) => ({
+    url: `${USERS_URL}/auth/google/callback`,
+    method: 'POST', // Adjust method to POST
+    body: { token }, // Pass token in the body
+  }),
+  invalidatesTags: ['User'],
+}),
+      // Invalidates any relevant cache or updates user data after login
+     
     logout: builder.mutation({
       // Accept token as an argument
       query: (token) => ({
@@ -103,7 +106,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useLoginMutation,
-  useLoginGoogleMutation,
+  useGoogleLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
   useForgotPasswordMutation,
