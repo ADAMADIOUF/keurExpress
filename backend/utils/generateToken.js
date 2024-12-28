@@ -1,29 +1,18 @@
 import jwt from 'jsonwebtoken'
 
-/**
- * Generates a JWT token and sets it as a cookie in the response.
- * @param {string} userId - The user ID (or other unique identifier).
- * @param {Object} res - The Express response object.
- * @returns {string} - The generated JWT token.
- */
-const generateToken = (userId, res = null) => {
-  // Generate JWT token with a payload that includes the user ID
-  const token = jwt.sign(
-    { userId },
-    process.env.KEUR_EXPRESS, 
-    { expiresIn: '30d' } 
-  )
+const generateToken = (res, userId) => {
+  // Create a JWT token with the userId as payload
+  const token = jwt.sign({ userId }, process.env.KEUR_EXPRESS, {
+    expiresIn: '30d', // Set token expiration to 30 days
+  })
 
-  if (res) {
-    
-    res.cookie('jwt', token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production', 
-      sameSite: 'strict', 
-      maxAge: 30 * 24 * 60 * 60 * 1000, 
-    })
-  }
-
-  return token 
+  // Set the cookie with the token
+  res.cookie('jwt', token, {
+    httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+    secure: process.env.NODE_ENV === 'production', // Set to true only in production
+    sameSite: 'strict', // Prevents CSRF attacks
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+  })
 }
+
 export default generateToken

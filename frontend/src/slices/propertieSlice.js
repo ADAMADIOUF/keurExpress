@@ -34,11 +34,10 @@ export const propertieApiSlice = apiSlice.injectEndpoints({
       query: (newProperty) => ({
         url: PROPERTIES_URL,
         method: 'POST',
-        body: newProperty, 
+        body: newProperty, // Correctly pass the new property data
       }),
       invalidatesTags: ['Propertie'],
     }),
-
     updatePropertie: builder.mutation({
       query: (data) => ({
         url: `${PROPERTIES_URL}/${data.propertieId}`,

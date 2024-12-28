@@ -1,5 +1,6 @@
 // src/components/NotFound.js
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const NotFound = () => {
   return (
@@ -8,6 +9,7 @@ const NotFound = () => {
       <p style={styles.message}>
         Sorry, the page you are looking for does not exist.
       </p>
+      <Link to={"/"}>Go Back to home page</Link>
     </div>
   )
 }

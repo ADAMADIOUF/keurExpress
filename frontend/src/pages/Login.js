@@ -49,10 +49,10 @@ const Login = () => {
       // Initiate Google login by redirecting to backend
       await fetch('http://localhost:5000/api/users/auth/google/init', {
         method: 'GET',
-        credentials: 'include',
+        credentials: 'include', // Include cookies if using session-based auth
       })
 
-      // Redirect the user to Google OAuth
+      // Redirect to Google's OAuth
       window.location.href = 'http://localhost:5000/api/users/auth/google'
     } catch (error) {
       console.error('Error initiating Google login:', error)
@@ -60,7 +60,7 @@ const Login = () => {
     }
   }
 
-  // Callback handling after Google OAuth
+  // Callback after Google OAuth
   useEffect(() => {
     const handleGoogleCallback = async () => {
       const url = window.location.href
@@ -80,8 +80,8 @@ const Login = () => {
             // Dispatch the user data to Redux
             dispatch(setCredentials(userData))
 
-            // Redirect to the profile page after successful login
-            navigate('/profile')
+            // Redirect after successful login
+            navigate(redirect)
           } else {
             toast.error('Failed to fetch user data after Google login')
           }
@@ -91,11 +91,11 @@ const Login = () => {
       }
     }
 
-    // Ensure we only run callback if we're on the correct URL after Google redirect
     if (window.location.href.includes('google')) {
       handleGoogleCallback()
     }
-  }, [navigate, dispatch])
+  }, [dispatch, navigate, redirect])
+
 
   return (
     <div style={styles.container}>

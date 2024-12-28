@@ -100,6 +100,7 @@ export const updateProperty = asyncHandler(async (req, res) => {
     location,
     garage,
     store,
+    isFeatured,
   } = req.body
 
   // Find the property by its ID
@@ -119,15 +120,13 @@ export const updateProperty = asyncHandler(async (req, res) => {
     property.location = location || property.location
     property.garage = garage || property.garage
     property.store = store || property.store
+    property.isFeatured = isFeatured || property.isFeatured
 
     // Save the updated property
     const updatedProperty = await property.save()
 
     // Send the updated property as a response
-    res.json({
-      success: true,
-      data: updatedProperty,
-    })
+     res.json(updatedProperty)
   } else {
     res.status(404)
     throw new Error('Property not found')

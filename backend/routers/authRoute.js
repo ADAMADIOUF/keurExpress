@@ -13,7 +13,8 @@ import {
 } from '../controllers/authController.js'
 
 import { protect, admin } from '../middleware/authMiddleware.js'
-import generateToken from '../utils/generateToken.js'
+import generateTokenGoogle from '../utils/generateTokenGoogle.js'
+
 const router = express.Router()
 router.get(
   '/auth/google',
@@ -29,7 +30,7 @@ router.get(
   }),
   (req, res) => {
     // Generate the token for the logged-in user
-    const token = generateToken(req.user._id, res) 
+    const token = generateTokenGoogle(req.user._id, res) 
     res.redirect('http://localhost:3000/profile')
   }
 )

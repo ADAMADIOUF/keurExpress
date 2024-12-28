@@ -83,6 +83,7 @@ const PropertieEdit = () => {
       garage,
       store,
       isFeatured,
+      
     }
 
     try {
@@ -106,9 +107,19 @@ const PropertieEdit = () => {
           })
       )
 
-      Promise.all(readerPromises).then((fileDataUrls) => {
-        setImages((prevImages) => [...prevImages, ...fileDataUrls])
-      })
+      Promise.all(readerPromises)
+        .then((fileDataUrls) => {
+          setImages((prevImages) => [...prevImages, ...fileDataUrls])
+          toast.success('Files uploaded successfully!', {
+            position: 'top-right', // Use the position string
+          })
+        })
+        .catch((error) => {
+          toast.error('Failed to upload files.', {
+            position: 'top-right', // Use the position string
+          })
+          console.error(error)
+        })
     }
   }
 

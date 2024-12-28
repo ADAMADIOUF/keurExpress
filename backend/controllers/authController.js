@@ -2,6 +2,7 @@ import User from "../models/User.js";
 
 import asyncHandler from "../middleware/asyncHandler.js"
 import generateToken from '../utils/generateToken.js'
+import generateTokenGoogle from "../utils/generateTokenGoogle.js";
 
 const generateNumericCode = (length) => {
   let code = ''
@@ -58,13 +59,13 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     
-    generateToken(user._id, res) 
+    generateToken(res, user._id) 
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role, // Include the role in the response
-      profileImage: user.profileImage || '/images/default-avatar.png', // Fallback image
+      role: user.role, 
+      profileImage: user.profileImage || '/images/default-avatar.png', 
     })
   } else {
     res.status(400)
@@ -104,7 +105,7 @@ export const googleAuthCallback = async (
     }
 
    
-    const token = generateToken(user._id) 
+    const token = generateTokenGoogle(user._id) 
     done(null, user, { message: 'Google Auth Success', token }) 
   } catch (err) {
     console.error('Google Auth Error:', err)
