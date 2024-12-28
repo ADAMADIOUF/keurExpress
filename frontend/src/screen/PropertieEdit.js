@@ -5,8 +5,11 @@ import {
   useGetPropertieByIdQuery,
   useUpdatePropertieMutation,
 } from '../slices/propertieSlice'
+import Map from '../components/Map' // Assuming the Map component is in the same folder
+
 const defaultImage =
   'https://cdn.prod.website-files.com/66a62e99c9fbe25684dce4d9/66a77d42a9add2f627785f17_Property%20Thumbnail-3.jpg'
+
 const PropertieEdit = () => {
   const { id: propertieId } = useParams()
   const [title, setTitle] = useState('')
@@ -22,12 +25,12 @@ const PropertieEdit = () => {
   const [status, setStatus] = useState('For Sale')
   const [propertyType, setPropertyType] = useState('')
   const [description, setDescription] = useState('')
-const [bedrooms, setBedrooms] = useState(5)
-const [bathrooms, setBathrooms] = useState(4)
-const [size, setSize] = useState(3500)
-const [garage, setGarage] = useState(false)
-const [store, setStore] = useState(false)
-const [isFeatured, setIsFeatured] = useState(false)
+  const [bedrooms, setBedrooms] = useState(5)
+  const [bathrooms, setBathrooms] = useState(4)
+  const [size, setSize] = useState(3500)
+  const [garage, setGarage] = useState(false)
+  const [store, setStore] = useState(false)
+  const [isFeatured, setIsFeatured] = useState(false)
 
   const {
     data: propertie,
@@ -38,30 +41,30 @@ const [isFeatured, setIsFeatured] = useState(false)
   const [updateProperty, { isLoading: updating }] = useUpdatePropertieMutation()
 
   useEffect(() => {
-  if (propertie) {
-    setTitle(propertie.title);
-    setPrice(propertie.price);
-    setImages(propertie.images || []);
-    setLocation(
-      propertie.location || {
-        city: '',
-        address: '',
-        lat: '',
-        lng: '',
-        map_url: '',
-      }
-    );
-    setStatus(propertie.status);
-    setPropertyType(propertie.propertyType);
-    setDescription(propertie.description);
-    setBedrooms(propertie.bedrooms || 5);
-    setBathrooms(propertie.bathrooms || 4);
-    setSize(propertie.size || 3500);
-    setGarage(propertie.garage || false);
-    setStore(propertie.store || false);
-    setIsFeatured(propertie.isFeatured || false);
-  }
-}, [propertie]);
+    if (propertie) {
+      setTitle(propertie.title)
+      setPrice(propertie.price)
+      setImages(propertie.images || [])
+      setLocation(
+        propertie.location || {
+          city: '',
+          address: '',
+          lat: '',
+          lng: '',
+          map_url: '',
+        }
+      )
+      setStatus(propertie.status)
+      setPropertyType(propertie.propertyType)
+      setDescription(propertie.description)
+      setBedrooms(propertie.bedrooms || 5)
+      setBathrooms(propertie.bathrooms || 4)
+      setSize(propertie.size || 3500)
+      setGarage(propertie.garage || false)
+      setStore(propertie.store || false)
+      setIsFeatured(propertie.isFeatured || false)
+    }
+  }, [propertie])
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -74,13 +77,12 @@ const [isFeatured, setIsFeatured] = useState(false)
       images,
       status,
       propertyType,
-      bedrooms, // Use state values
-      bathrooms, // Use state values
-      size, // Use state values
-      garage, // Use state values
-      store, // Use state values
-      isFeatured, // Use state values
-      
+      bedrooms,
+      bathrooms,
+      size,
+      garage,
+      store,
+      isFeatured,
     }
 
     try {
@@ -109,11 +111,32 @@ const [isFeatured, setIsFeatured] = useState(false)
       })
     }
   }
-const deleteImageHandler = (index) => {
-  const updatedImages = images.filter((_, i) => i !== index)
-  setImages(updatedImages)
-}
 
+  const deleteImageHandler = (index) => {
+    const updatedImages = images.filter((_, i) => i !== index)
+    setImages(updatedImages)
+  }
+
+  const handleCityChange = (e) => {
+    const city = e.target.value
+    setLocation((prevLocation) => ({
+      ...prevLocation,
+      city,
+    }))
+  }
+
+  const handleAddressChange = (e) => {
+    const address = e.target.value
+    setLocation((prevLocation) => ({
+      ...prevLocation,
+      address,
+    }))
+  }
+
+  // Generate full address dynamically with city and country
+  const getFullAddress = () => {
+    return `${location.address}, ${location.city}, Senegal`
+  }
 
   if (isLoading) return <div>Loading...</div>
   if (error)
@@ -161,15 +184,33 @@ const deleteImageHandler = (index) => {
             type='text'
             id='locationCity'
             value={location.city}
-            onChange={(e) =>
-              setLocation((prevLocation) => ({
-                ...prevLocation,
-                city: e.target.value,
-              }))
-            }
+            onChange={handleCityChange}
             required
           />
         </div>
+
+        <div>
+          <label htmlFor='locationAddress'>Address</label>
+          <input
+            type='text'
+            id='locationAddress'
+            value={location.address}
+            onChange={handleAddressChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor='fullAddress'>Full Address</label>
+          <input
+            type='text'
+            id='fullAddress'
+            value={getFullAddress()}
+            readOnly
+          />
+        </div>
+
+        <Map city={location.city} address={location.address} title={title} />
 
         <div>
           <label htmlFor='images'>Images</label>
@@ -205,6 +246,7 @@ const deleteImageHandler = (index) => {
             </div>
           )}
         </div>
+
         <div>
           <label htmlFor='status'>Status</label>
           <select
@@ -290,12 +332,13 @@ const deleteImageHandler = (index) => {
             onChange={(e) => setIsFeatured(e.target.checked)}
           />
         </div>
-        <button type='submit' disabled={updating}>
-          {updating ? 'Updating...' : 'Update Property'}
-        </button>
-      </form>
 
-      <Link to='/properties'>Back to Properties List</Link>
+        <div>
+          <button type='submit' disabled={updating}>
+            {updating ? 'Updating...' : 'Update Property'}
+          </button>
+        </div>
+      </form>
     </div>
   )
 }

@@ -143,9 +143,10 @@ const SinglePropertie = () => {
 
         <div className='map-container'>
           <Map
-            lng={propertie?.data?.location.lng}
-            lat={propertie?.data?.location.lat}
-            title={propertie?.data?.title}
+            city={propertie?.data?.location?.city}
+            address={propertie?.data?.location?.address}
+            lat={propertie?.data?.location?.lat}
+            lng={propertie?.data?.location?.lng}
           />
         </div>
       </div>
