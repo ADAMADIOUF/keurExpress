@@ -226,6 +226,7 @@ nav {
   height: 10rem;
 }
 @media screen and (min-width: 800px) {
+  
   .nav-center {
     max-width:var(--max-width);
     margin: 0 auto;
@@ -236,6 +237,7 @@ nav {
   }
   .nav-header {
     padding: 0;
+    
   }
   .nav-toggle {
     display: none;
@@ -267,6 +269,68 @@ nav {
     color: var(--clr-primary-7);
   }
 }
+/* Navigation Styles */
+.nav-item {
+  list-style: none;
+  margin: 0 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0056b3; /* Adjust to your theme's hover color */
+}
+
+.username {
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #555;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  border: 2px solid #0056b3; /* Optional border color */
+}
+
+.logout-button {
+  background-color: #ff4d4d; /* Logout button color */
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e60000; /* Darker red for hover effect */
+}
+
+/* Dropdown styles for admin links */
+.dropdown-item {
+  display: block;
+  color: #333;
+  padding: 10px 15px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f4f4f4; /* Light gray background on hover */
+  color: #0056b3;
+}
+
+
 /* Herooo */
 .hero {
   position: relative;

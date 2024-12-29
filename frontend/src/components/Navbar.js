@@ -43,9 +43,9 @@ const Navbar = () => {
   // Handle logout
   const logoutHandler = async () => {
     try {
-      await logoutApiCall().unwrap() // Call logout API
-      dispatch(logout()) // Dispatch the logout action
-      navigate('/') // Redirect to login page
+      await logoutApiCall().unwrap() 
+      dispatch(logout()) 
+      navigate('/') 
     } catch (error) {
       console.error(error)
     }
@@ -61,7 +61,7 @@ const Navbar = () => {
   }, [showLinks])
 
   return (
-    <nav>
+    <nav className='nav'>
       <div className='nav-center'>
         <div className='nav-header'>
           logo
@@ -94,60 +94,58 @@ const Navbar = () => {
               </li>
             )
           })}
-          
-         
-          {!userInfo ? (
-            <>
-              <li style={styles.navItem}>
-                <Link to='/login' style={styles.link}>
-                  Login
-                </Link>
-              </li>
-              <li style={styles.navItem}>
-                <Link to='/register' style={styles.link}>
-                  Register
-                </Link>
-              </li>
-            </>
-          ) : (
-            // If user info exists, show profile and logout buttons
-            <>
-              <li style={styles.navItem}>
-                <Link to='/profile' style={styles.link}>
-                  Profile
-                </Link>
-              </li>
-              <span className='username'>{userInfo.name}</span>
-              {userInfo.image ? (
-                <img
-                  src={userInfo.profileImage}
-                  alt='User Avatar'
-                  className='avatar-img'
-                />
-              ) : (
-                <FaUser />
-              )}
-{userInfo.role === 'admin' && (
-                  <>
-                    <Link to='/admin/dashboard' className='dropdown-item'>
-                       Dashboard
-                    </Link>
-                    <Link to='/admin/propertiesList' className='dropdown-item'>
-                     All properties
-                    </Link>
-                    <Link to='/admin/all-users' className='dropdown-item'>
-                      All Users
-                    </Link>
-                  </>
-                )}
-              <li style={styles.navItem}>
-                <button onClick={logoutHandler} style={styles.link}>
-                  Logout {isGoogleLogin ? '(Google)' : ''}
-                </button>
-              </li>
-            </>
-          )}
         </ul>
+        {!userInfo ? (
+          <>
+            <li style={styles.navItem}>
+              <Link to='/login' style={styles.link}>
+                Login
+              </Link>
+            </li>
+            <li style={styles.navItem}>
+              <Link to='/register' style={styles.link}>
+                Register
+              </Link>
+            </li>
+          </>
+        ) : (
+          // If user info exists, show profile and logout buttons
+          <>
+            <li style={styles.navItem}>
+              <Link to='/profile' style={styles.link}>
+                Profile
+              </Link>
+            </li>
+            <span className='username'>{userInfo.name}</span>
+            {userInfo.image ? (
+              <img
+                src={userInfo.profileImage}
+                alt='User Avatar'
+                className='avatar-img'
+              />
+            ) : (
+              <FaUser />
+            )}
+            {userInfo.role === 'admin' && (
+              <>
+                <Link to='/admin/dashboard' className='dropdown-item'>
+                  Dashboard
+                </Link>
+                <Link to='/admin/propertiesList' className='dropdown-item'>
+                  All properties
+                </Link>
+                <Link to='/admin/all-users' className='dropdown-item'>
+                  All Users
+                </Link>
+              </>
+            )}
+            <li style={styles.navItem}>
+              <button onClick={logoutHandler} className='logout-button'>
+                Logout {isGoogleLogin ? '(Google)' : ''}
+              </button>
+            </li>
+          </>
+        )}
       </div>
 
       {userInfo?.provider === 'google' && (

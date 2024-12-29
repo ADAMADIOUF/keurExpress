@@ -270,7 +270,7 @@ const PropertieEdit = () => {
             required
           >
             <option value='For Sale'>For Sale</option>
-            <option value='Sold'>Sold</option>
+            <option value='For Rent'>For Rent</option>
           </select>
         </div>
 

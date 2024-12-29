@@ -35,6 +35,12 @@ const router = createBrowserRouter(
         path='/search/:keyword/:location/:address/:propertyType/:minPrice/:maxPrice'
         element={<HomePage />}
       />
+      <Route
+        path='/search/:keyword/:location/:address'
+        element={<HomePage />}
+      />
+      <Route path='/search/:keyword/:location' element={<HomePage />} />
+      <Route path='/search/:keyword' element={<HomePage />} />
 
       <Route path='/propertie/:id' element={<SinglePropertie />} />
       <Route path='/agent/:id' element={<SingleAgent />} />
