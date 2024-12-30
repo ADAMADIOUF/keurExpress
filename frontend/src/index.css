@@ -1051,6 +1051,7 @@ hr {
   position: absolute;
   top: 5rem;
   left: 15rem;
+  display: none;
 }
 @media (max-width: 768px) {
   .heroResuable-title {
@@ -1059,6 +1060,13 @@ hr {
 
   .heroResuable-description {
     font-size: 1rem;
+  }
+  
+}
+@media (min-width:992px) {
+  .img-resuable-1{
+    display: block;
+    left: 45rem;
   }
 }
 /* Testimonial */
