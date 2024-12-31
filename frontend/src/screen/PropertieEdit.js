@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import {  useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   useGetPropertieByIdQuery,
   useUpdatePropertieMutation,
 } from '../slices/propertieSlice'
-import Map from '../components/Map' // Assuming the Map component is in the same folder
+import Map from '../components/Map' 
 
 const defaultImage =
   'https://cdn.prod.website-files.com/66a62e99c9fbe25684dce4d9/66a77d42a9add2f627785f17_Property%20Thumbnail-3.jpg'
 
 const PropertieEdit = () => {
+    const [imagePreview, setImagePreview] = useState('')
   const { id: propertieId } = useParams()
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(25000)
@@ -21,6 +22,13 @@ const PropertieEdit = () => {
     lat: '',
     lng: '',
     map_url: '',
+  })
+  const [userProfile, setUserProfile] = useState({
+    name: 'John',
+    lastName: 'Doe',
+    email: 'johndoe@example.com',
+    phoneNumber: '+221123456789',
+    profileImage: 'https://example.com/profile.jpg',
   })
   const [status, setStatus] = useState('For Sale')
   const [propertyType, setPropertyType] = useState('')
@@ -84,8 +92,7 @@ const PropertieEdit = () => {
       garage,
       store,
       isFeatured,
-      
-    
+      userProfile
 
       }
     const result = await updatedProduct(updatedProperty)
@@ -130,7 +137,20 @@ const PropertieEdit = () => {
     const updatedImages = images.filter((_, i) => i !== index)
     setImages(updatedImages)
   }
-
+const handleImageUpload = (e) => {
+  const file = e.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setImagePreview(reader.result)
+      setUserProfile({
+        ...userProfile,
+        profileImage: reader.result, // Store the image data URL
+      })
+    }
+    reader.readAsDataURL(file)
+  }
+}
   const handleCityChange = (e) => {
     const city = e.target.value
     setLocation((prevLocation) => ({
@@ -345,6 +365,73 @@ const PropertieEdit = () => {
             checked={isFeatured}
             onChange={(e) => setIsFeatured(e.target.checked)}
           />
+        </div>
+        <div>
+          <label htmlFor='userName'>First Name</label>
+          <input
+            type='text'
+            id='userName'
+            value={userProfile.name}
+            onChange={(e) =>
+              setUserProfile({ ...userProfile, name: e.target.value })
+            }
+          />
+        </div>
+
+        <div>
+          <label htmlFor='userLastName'>Last Name</label>
+          <input
+            type='text'
+            id='userLastName'
+            value={userProfile.lastName}
+            onChange={(e) =>
+              setUserProfile({ ...userProfile, lastName: e.target.value })
+            }
+          />
+        </div>
+
+        <div>
+          <label htmlFor='userEmail'>Email</label>
+          <input
+            type='email'
+            id='userEmail'
+            value={userProfile.email}
+            onChange={(e) =>
+              setUserProfile({ ...userProfile, email: e.target.value })
+            }
+          />
+        </div>
+
+        <div>
+          <label htmlFor='userPhone'>Phone Number</label>
+          <input
+            type='text'
+            id='userPhone'
+            value={userProfile.phoneNumber}
+            onChange={(e) =>
+              setUserProfile({ ...userProfile, phoneNumber: e.target.value })
+            }
+          />
+        </div>
+
+        <div>
+          <label htmlFor='profileImage'>Profile Image</label>
+          <input
+            type='file'
+            id='profileImage'
+            accept='image/*'
+            onChange={handleImageUpload}
+          />
+          {imagePreview && (
+            <div className='image-preview'>
+              <img
+                src={imagePreview}
+                alt='Profile Preview'
+                className='img-thumbnail'
+                style={{ maxWidth: '150px', maxHeight: '150px' }}
+              />
+            </div>
+          )}
         </div>
 
         <div>

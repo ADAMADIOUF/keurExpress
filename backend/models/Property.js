@@ -7,6 +7,13 @@ const PropertySchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    userProfile: {
+      name: { type: String, required: true },
+      lastName: { type: String, required: true },
+      email: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
+      profileImage: { type: String }, // URL for the profile image
+    },
     title: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
@@ -17,6 +24,7 @@ const PropertySchema = new mongoose.Schema(
       type: String,
       enum: ['For Sale', 'For Rent'],
       default: 'For Sale',
+      
     },
     propertyType: {
       type: String,

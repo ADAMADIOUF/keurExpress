@@ -69,7 +69,7 @@ if (propertyList.length === 0) {
        <SearchTermTwo/>
         <div className='property-list'>
           {propertyList.length > 0 ? (
-            propertyList.slice(0, 6).map((property) => (
+            propertyList.map((property) => (
               <div key={property._id} className='property-card'>
                 <Link to={`/propertie/${property._id}`}>
                   <img

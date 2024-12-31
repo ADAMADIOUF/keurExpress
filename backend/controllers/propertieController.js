@@ -20,6 +20,7 @@ export const createProperty = asyncHandler(async (req, res) => {
     garage,
     store,
     isFeatured,
+    userProfile,
   } = req.body
 
   const property = new Property({
@@ -36,6 +37,7 @@ export const createProperty = asyncHandler(async (req, res) => {
     garage,
     store,
     isFeatured,
+    userProfile,
     user: req.user._id,
   })
 
@@ -101,6 +103,7 @@ export const updateProperty = asyncHandler(async (req, res) => {
     garage,
     store,
     isFeatured,
+    userProfile,
   } = req.body
 
   // Find the property by its ID
@@ -120,7 +123,8 @@ export const updateProperty = asyncHandler(async (req, res) => {
     property.location = location || property.location
     property.garage = garage || property.garage
     property.store = store || property.store
-    property.isFeatured = isFeatured || property.isFeatured
+    property.isFeatured = isFeatured || property.isFeatured;
+     property.userProfile = userProfile || property.userProfile
 
     // Save the updated property
     const updatedProperty = await property.save()

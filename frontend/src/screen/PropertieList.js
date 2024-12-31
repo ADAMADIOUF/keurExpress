@@ -59,6 +59,18 @@ const PropertieList = () => {
         lng: -118.243683,
         map_url: 'https://maps.google.com',
       },
+      userProfile:{
+name:
+"John",
+lastName:
+"Doe",
+email:
+"johndoe@example.com",
+phoneNumber:
+"+221123456789",
+profileImage:
+"https://example.com/profile.jpg"
+      },
       images: [
         'https://cdn.prod.website-files.com/66a62e99c9fbe25684dce4d9/66a77ce1b423c8c8dc1647bc_Property%20Thumbnail-4.jpg',
         'https://cdn.prod.website-files.com/66a62e99c9fbe25684dce4d9/66a77ec820a8ddfa2bca7acc_Property%20Thumbnail-2.jpg',
@@ -131,6 +143,33 @@ const PropertieList = () => {
                 <p>
                   <strong>Size:</strong> {property.size} sq ft
                 </p>
+                {property.userProfile ? (
+                  <div className='user-profile'>
+                    <img
+                      src={
+                        property.userProfile.profileImage ||
+                        'https://via.placeholder.com/150'
+                      }
+                      alt={`${property.userProfile.name} ${property.userProfile.lastName}`}
+                      className='profile-image'
+                    />
+                    <div className='profile-info'>
+                      <h3>
+                        {property.userProfile.name}{' '}
+                        {property.userProfile.lastName}
+                      </h3>
+                      <p>
+                        <strong>Email:</strong> {property.userProfile.email}
+                      </p>
+                      <p>
+                        <strong>Phone:</strong>{' '}
+                        {property.userProfile.phoneNumber}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <p>No user profile available</p>
+                )}
               </div>
               <div className='property-actions'>
                 <Link

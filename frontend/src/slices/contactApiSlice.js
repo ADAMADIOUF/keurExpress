@@ -1,4 +1,4 @@
-import { CONTACT_URL } from '../contstants'
+import { CONTACT_URL, MESSAGE_URL } from '../contstants'
 import { apiSlice } from './apiSlice'
 
 export const contactApiSlice = apiSlice.injectEndpoints({
@@ -10,7 +10,14 @@ export const contactApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    fetchMessages: builder.query({
+      query: () => ({
+        url: MESSAGE_URL,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
-export const { useSendContactFormMutation } = contactApiSlice
+export const { useSendContactFormMutation, useFetchMessagesQuery } =
+  contactApiSlice

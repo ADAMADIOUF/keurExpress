@@ -12,7 +12,7 @@ import authRouter from "./routers/authRoute.js"
 import propertieRouter from './routers/propertieRoute.js'
 import agentsRouter from './routers/agentRouter.js'
 import blogRouter from './routers/blogRouter.js'
-
+import messageRouter from './routers/messageRouter.js';
 import contactRoute from './routers/contactRouter.js'
 dotenv.config()
 connectDB()
@@ -50,6 +50,7 @@ app.use('/api/properties', propertieRouter)
 app.use('/api/agents', agentsRouter)
 app.use('/api/blogs', blogRouter)
 
+app.use('/api/messages', messageRouter)
 const __dirname = path.resolve()
 
 if (process.env.NODE_ENV === 'production') {

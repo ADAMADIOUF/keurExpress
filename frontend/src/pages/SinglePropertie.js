@@ -5,6 +5,7 @@ import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Map from '../components/Map'
 import HeroReusable from '../components/HeroResuable'
+import MessagesList from '../screen/MessageList'
 
 const SinglePropertie = () => {
   const { id: propertieId } = useParams()
@@ -65,90 +66,104 @@ const SinglePropertie = () => {
         description={propertie.data.description}
       />
       <div className='singlePropertie-details section-center'>
-        <div className='singlepropertie-big-img'>
-          <img
-            src={mainImage || propertie?.data?.images[0]}
-            alt={propertie?.data?.title}
-          />
-        </div>
-        <div className='fisrt-details'>
-          <article>
-            <p>Per Month</p>
-            <p>{propertie?.data?.price} </p>
-          </article>
-          <article>
-            <p>Location</p>
-            <p>
-              {propertie?.data?.location.city},{' '}
-              {propertie?.data?.location.address}
-            </p>
-          </article>
-          <article>
-            <p>Type</p>
-            <p>{propertie?.data?.propertyType}</p>
-          </article>
-          <article>
-            <p>Size</p>
-            <p>{propertie?.data?.size} sq ft</p>
-          </article>
-          <article>
-            <p>Bathrooms</p>
-            <p>{propertie?.data?.bathrooms}</p>
-          </article>
-          <article>
-            <p>Bedrooms</p>
-            <p>{propertie?.data?.bedrooms}</p>
-          </article>
-          <article>
-            <p>Garage</p>
-            <p>{propertie?.data?.garage ? 'Yes' : 'No'}</p>
-          </article>
-          <article>
-            <p>Status</p>
-            <p>{propertie?.data?.status}</p>
-          </article>
-        </div>
-        <hr />
-        <h1>{propertie?.data?.title}</h1>
-        <p>{propertie?.data?.description}</p>
-
-        {/* Additional Information */}
         <article>
-          <p>Posted on</p>
-          <p>{new Date(propertie?.data?.datePosted).toLocaleDateString()}</p>
-        </article>
-        <article>
-          <p>Last updated</p>
-          <p>{new Date(propertie?.data?.updatedAt).toLocaleDateString()}</p>
-        </article>
-
-        {/* If images are available, display them */}
-        {propertie?.data?.images && propertie.data.images.length > 0 && (
-          <div className='property-images'>
-            <h3>Images:</h3>
-            {propertie.data.images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Property ${index + 1}`}
-                className={`thumbnail ${
-                  mainImage === image ? 'thumbnail-active' : ''
-                }`}
-                onClick={() => handleThumbnailImageClick(image)}
-                style={{ cursor: 'pointer', width: '100px', height: '100px' }}
-              />
-            ))}
+          <div className='singlepropertie-big-img'>
+            <img
+              src={mainImage || propertie?.data?.images[0]}
+              alt={propertie?.data?.title}
+            />
           </div>
-        )}
+          <div className='fisrt-details'>
+            <article>
+              <p>Per Month</p>
+              <p>{propertie?.data?.price} </p>
+            </article>
+            <article>
+              <p>Location</p>
+              <p>
+                {propertie?.data?.location.city},{' '}
+                {propertie?.data?.location.address}
+              </p>
+            </article>
+            <article>
+              <p>Type</p>
+              <p>{propertie?.data?.propertyType}</p>
+            </article>
+            <article>
+              <p>Size</p>
+              <p>{propertie?.data?.size} sq ft</p>
+            </article>
+            <article>
+              <p>Bathrooms</p>
+              <p>{propertie?.data?.bathrooms}</p>
+            </article>
+            <article>
+              <p>Bedrooms</p>
+              <p>{propertie?.data?.bedrooms}</p>
+            </article>
+            <article>
+              <p>Garage</p>
+              <p>{propertie?.data?.garage ? 'Yes' : 'No'}</p>
+            </article>
+            <article>
+              <p>Status</p>
+              <p>{propertie?.data?.status}</p>
+            </article>
+          </div>
+          <hr />
+          <h1>{propertie?.data?.title}</h1>
+          <p>{propertie?.data?.description}</p>
 
-        <div className='map-container'>
-          <Map
-            city={propertie?.data?.location?.city}
-            address={propertie?.data?.location?.address}
-            lat={propertie?.data?.location?.lat}
-            lng={propertie?.data?.location?.lng}
+          {/* Additional Information */}
+          <article>
+            <p>Posted on</p>
+            <p>{new Date(propertie?.data?.datePosted).toLocaleDateString()}</p>
+          </article>
+          <article>
+            <p>Last updated</p>
+            <p>{new Date(propertie?.data?.updatedAt).toLocaleDateString()}</p>
+          </article>
+
+          {propertie?.data?.images && propertie.data.images.length > 0 && (
+            <div className='property-images'>
+              <h3>Images:</h3>
+              {propertie.data.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Property ${index + 1}`}
+                  className={`thumbnail ${
+                    mainImage === image ? 'thumbnail-active' : ''
+                  }`}
+                  onClick={() => handleThumbnailImageClick(image)}
+                  style={{ cursor: 'pointer', width: '100px', height: '100px' }}
+                />
+              ))}
+            </div>
+          )}
+        </article>
+        <article className='person-property'>
+          <img
+            src={propertie?.data?.userProfile?.profileImage}
+            alt='User Profile'
+            style={{ width: '100px', height: '100px', borderRadius: '50%' }}
           />
-        </div>
+          <h3>
+            {propertie?.data?.userProfile?.name}{' '}
+            {propertie?.data?.userProfile?.lastName}
+          </h3>
+          <p>Email: {propertie?.data?.userProfile?.email}</p>
+          <p>Phone: {propertie?.data?.userProfile?.phoneNumber}</p>
+          <MessagesList/>
+          <div className='map-container'>
+            <Map
+              city={propertie?.data?.location?.city}
+              address={propertie?.data?.location?.address}
+              lat={propertie?.data?.location?.lat}
+              lng={propertie?.data?.location?.lng}
+            />
+          </div>
+        </article>
       </div>
     </div>
   )
