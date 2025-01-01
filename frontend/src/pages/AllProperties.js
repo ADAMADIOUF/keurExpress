@@ -89,7 +89,7 @@ if (propertyList.length === 0) {
                   {/* Link wrapping the description */}
                   <p className='property-description'>
                     <Link to={`/propertie/${property._id}`}>
-                      {property.description}
+                      {property.description.substring(0,40)}...
                     </Link>
                   </p>
 

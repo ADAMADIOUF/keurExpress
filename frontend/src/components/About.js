@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import HeroReusable from './HeroResuable'
 import HomeAbout from './HomeAbout'
 import ChooseUs from './ChooseUs'
@@ -12,13 +13,20 @@ const About = () => {
   return (
     <div className='about'>
       <div className='section-center'>
-        <HeroReusable
-          title={'About Us'}
-          subtitle={'Get Your Real Estate Experience With Keur Express'}
-          description={
-            'At Keur Express,we are committed to simplifying your real estate journey and helping you find the perfect home.'
-          }
-        />
+        <motion.div
+          className='hero-content'
+          initial={{ opacity: 0, y: -50 }} // Starting state
+          animate={{ opacity: 1, y: 0 }} // Ending state
+          transition={{ duration: 1, ease: 'easeOut' }} // Animation timing
+        >
+          <HeroReusable
+            title={'About Us'}
+            subtitle={'Get Your Real Estate Experience With Keur Express'}
+            description={
+              'At Keur Express, we are committed to simplifying your real estate journey and helping you find the perfect home.'
+            }
+          />
+        </motion.div>
         <HomeAbout />
       </div>
       <ChooseUs />
@@ -34,8 +42,8 @@ const About = () => {
         image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png' // Replace with an image relevant to About
         title='Learn More About Us'
         description='Discover our journey, mission, and values that drive Keur Express to deliver excellence every day.'
-        target='/contact' 
-        label=' Contact Us' 
+        target='/contact'
+        label=' Contact Us'
       />
     </div>
   )

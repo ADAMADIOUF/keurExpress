@@ -10,14 +10,14 @@ export const contactApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    fetchMessages: builder.query({
-      query: () => ({
-        url: MESSAGE_URL,
-        method: 'GET',
+    sendMessage: builder.mutation({
+      query: ({ propertyId, messageData }) => ({
+        url: `${MESSAGE_URL}/properties/${propertyId}/contact`,
+        method: 'POST',
+        body: messageData,
       }),
     }),
   }),
 })
 
-export const { useSendContactFormMutation, useFetchMessagesQuery } =
-  contactApiSlice
+export const { useSendContactFormMutation, useSendMessageMutation } = contactApiSlice

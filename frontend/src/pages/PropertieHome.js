@@ -14,7 +14,7 @@ const PropertieHome = () => {
     maxPrice="",
   } = useParams()
 
-  // Query properties with keyword, location, and address as parameters
+ 
   const {
     data: properties,
     error,
@@ -76,7 +76,7 @@ const PropertieHome = () => {
 
               <p className='property-description'>
                 <Link to={`/propertie/${property._id}`}>
-                  {property.description}
+                  {property.description.substring(0,50)}....
                 </Link>
               </p>
 

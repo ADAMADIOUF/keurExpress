@@ -19,7 +19,7 @@ const HomePage = () => {
       {!keyword && <HomeAbout />}
       <Property />
       {!keyword && <Testinonial />}
-      {keyword && <LastProperties />}
+      <LastProperties />
       {!keyword && <AgentsHeader />}
       {!keyword && <Blog />}
       {!keyword && (

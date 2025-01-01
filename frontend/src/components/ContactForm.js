@@ -24,13 +24,12 @@ const ContactForm = () => {
         Description: ${formData.description}`
       setIsFormSubmitted(true)
 
-      // Send the form data to the API or perform your logic here
       await sendContactForm({
         ...formData,
         message: emailContent,
       })
 
-      // Reset form data after successful submission
+      
       setFormData({
         firstName: '',
         subject: '',
@@ -39,9 +38,9 @@ const ContactForm = () => {
         address: '',
       })
 
-      // Show success message and reset the form after 10 seconds
+     
       setTimeout(() => {
-        setIsFormSubmitted(false) // Hide success message
+        setIsFormSubmitted(false) 
         setFormData({
           firstName: '',
           subject: '',

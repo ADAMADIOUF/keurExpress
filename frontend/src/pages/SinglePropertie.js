@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetPropertieByIdQuery } from '../slices/propertieSlice'
+
+import { FaPhone, FaWhatsapp } from 'react-icons/fa'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Map from '../components/Map'
@@ -8,6 +10,8 @@ import HeroReusable from '../components/HeroResuable'
 import MessagesList from '../screen/MessageList'
 
 const SinglePropertie = () => {
+
+  
   const { id: propertieId } = useParams()
  const [mainImage, setMainImage] = useState('')
   const {
@@ -16,7 +20,9 @@ const SinglePropertie = () => {
     isLoading,
     refetch,
   } = useGetPropertieByIdQuery(propertieId)
+const phoneNumber = propertie?.data?.userProfile?.phoneNumber
 
+  const whatsappLink = `https://wa.me/${phoneNumber?.replace(/\D/g, '')}`
 
 
   const handleThumbnailImageClick = (image) => {
@@ -146,15 +152,37 @@ const SinglePropertie = () => {
           <img
             src={propertie?.data?.userProfile?.profileImage}
             alt='User Profile'
-            style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+            style={{ width: '300px', height: '300px', borderRadius: '50%' }}
           />
           <h3>
             {propertie?.data?.userProfile?.name}{' '}
             {propertie?.data?.userProfile?.lastName}
           </h3>
           <p>Email: {propertie?.data?.userProfile?.email}</p>
-          <p>Phone: {propertie?.data?.userProfile?.phoneNumber}</p>
-          <MessagesList/>
+          <p>Contact Information:</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {/* Call by Phone */}
+            <a
+              href={`tel:${phoneNumber}`}
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <FaPhone style={{ marginRight: '5px' }} />
+              Call
+            </a>
+
+            {/* Open WhatsApp */}
+            <a
+              href={whatsappLink}
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ textDecoration: 'none', color: 'green' }}
+            >
+              <FaWhatsapp style={{ marginRight: '5px' }} />
+              WhatsApp
+            </a>
+          </div>
+          <MessagesList propertyId={propertieId} />
+
           <div className='map-container'>
             <Map
               city={propertie?.data?.location?.city}

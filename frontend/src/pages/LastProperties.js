@@ -36,9 +36,9 @@ const LastProperties = () => {
             </article>
             <article className='home-about-content'>
               <p>
-                Get to know the dedicated professionals behind Keur Express who are
-                committed to helping you navigate the real estate market with
-                confidence
+                Get to know the dedicated professionals behind Keur Express who
+                are committed to helping you navigate the real estate market
+                with confidence
               </p>
             </article>
           </div>
@@ -65,7 +65,7 @@ const LastProperties = () => {
                     {/* Link wrapping the description */}
                     <p className='property-description'>
                       <Link to={`/propertie/${property._id}`}>
-                        {property.description}
+                        {property.description.substring(0, 40)}...
                       </Link>
                     </p>
 
@@ -117,7 +117,7 @@ const LastProperties = () => {
           </div>
           <div className='view-all'>
             <button className='btn-view'>
-              <Link to={'/all-properties'}>View All Properties</Link>
+              <Link to={'/property'}>View All Properties</Link>
             </button>
           </div>
         </div>
