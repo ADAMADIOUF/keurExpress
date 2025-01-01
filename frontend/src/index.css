@@ -1218,7 +1218,7 @@ hr {
 .testimonial-item {
   text-align: center;
   padding: 1rem;
-  background-color: var(--clr-primary-10);
+  background-color: var(--clr-white);
   color: var(--clr-dark-grey);
   border-radius: 8px;
 }
@@ -1239,6 +1239,7 @@ hr {
 .testimonial-description {
   font-size: 1rem;
   margin-bottom: 0.5rem;
+  color: var(--clr-black);
 }
 
 .testimonial-profession {
