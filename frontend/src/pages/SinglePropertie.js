@@ -146,24 +146,6 @@ const SinglePropertie = () => {
             <p>Last updated</p>
             <p>{new Date(propertie?.data?.updatedAt).toLocaleDateString()}</p>
           </article>
-
-          {propertie?.data?.images && propertie.data.images.length > 0 && (
-            <div className='property-images'>
-              <h3>Images:</h3>
-              {propertie.data.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Property ${index + 1}`}
-                  className={`thumbnail ${
-                    mainImage === image ? 'thumbnail-active' : ''
-                  }`}
-                  onClick={() => handleThumbnailImageClick(image)}
-                  style={{ cursor: 'pointer', width: '100px', height: '100px' }}
-                />
-              ))}
-            </div>
-          )}
         </article>
         <article className='person-property'>
           <img
@@ -199,7 +181,23 @@ const SinglePropertie = () => {
             </a>
           </div>
           <MessagesList propertyId={propertieId} />
-
+          {propertie?.data?.images && propertie.data.images.length > 0 && (
+            <div className='property-images'>
+              <h3>Images:</h3>
+              {propertie.data.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Property ${index + 1}`}
+                  className={`thumbnail ${
+                    mainImage === image ? 'thumbnail-active' : ''
+                  }`}
+                  onClick={() => handleThumbnailImageClick(image)}
+                  style={{ cursor: 'pointer', width: '100px', height: '100px' }}
+                />
+              ))}
+            </div>
+          )}
           <div className='map-container'>
             <Map
               city={propertie?.data?.location?.city}
