@@ -3,11 +3,14 @@ import { FaBars, FaTimes, FaUser } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
+import { useTranslation } from 'react-i18next' 
+import '../config/i18n'
 import { useLogoutMutation } from '../slices/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+  const { t } = useTranslation()
   const [showLinks, setShowLinks] = useState(false)
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
@@ -26,7 +29,7 @@ const Navbar = () => {
   // Use the logout mutation from userApiSlice
   const [logoutApiCall] = useLogoutMutation()
 
-  // Check if the user is authenticated and if they logged in with Google
+  
   useEffect(() => {
     if (userInfo?.provider === 'google') {
       setIsGoogleLogin(true)
@@ -34,13 +37,11 @@ const Navbar = () => {
       setIsGoogleLogin(false)
     }
 
-    // If user is an admin, redirect to admin dashboard
+    
     if (userInfo?.role === 'isAdmin') {
       navigate('/admin/dashboard')
     }
-  }, [userInfo, navigate]) // Dependency on userInfo to update
-
-  // Handle logout
+  }, [userInfo, navigate]) 
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap() 
@@ -76,7 +77,7 @@ const Navbar = () => {
               return (
                 <li key={id}>
                   <a href={url} className={className ? className : ''}>
-                    {text}
+                   {t (text)}
                   </a>
                 </li>
               )
@@ -85,16 +86,20 @@ const Navbar = () => {
         </div>
 
         {/* Conditional rendering for login/register or profile/logout */}
-        <ul className='social-icons'>
-          {social.map((socialIcon) => {
-            const { id, url, icon } = socialIcon
-            return (
-              <li key={id}>
-                <a href={url}>{icon}</a>
-              </li>
-            )
-          })}
-        </ul>
+        {/* Conditional rendering for social icons */}
+        {!userInfo && (
+          <ul className='social-icons'>
+            {social.map((socialIcon) => {
+              const { id, url, icon } = socialIcon
+              return (
+                <li key={id}>
+                  <a href={url}>{icon}</a>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+
         {!userInfo ? (
           <>
             <li style={styles.navItem}>

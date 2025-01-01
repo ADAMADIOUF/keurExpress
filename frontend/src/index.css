@@ -130,12 +130,7 @@ p {
   max-width: var(--max-width);
 
 }
-.nav-center {
-  width: 90vw;
-  margin: 0 auto;
-  max-width: var(--max-width);
 
-}
 
 .title h3{
   text-transform:uppercase;
@@ -228,7 +223,7 @@ nav {
 @media screen and (min-width: 800px) {
   
   .nav-center {
-    max-width:var(--max-width);
+   
     margin: 0 auto;
     display: flex;
     align-items: center;

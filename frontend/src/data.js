@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 
 import { FaBehance, FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
-// Links with nanoid for unique IDs
+
 export const links = [
   {
     id: nanoid(),
