@@ -3,14 +3,14 @@ import { FaBars, FaTimes, FaUser } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
-import { useTranslation } from 'react-i18next' 
-import '../config/i18n'
+
+
 import { useLogoutMutation } from '../slices/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-  const { t } = useTranslation()
+ 
   const [showLinks, setShowLinks] = useState(false)
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
@@ -77,7 +77,7 @@ const Navbar = () => {
               return (
                 <li key={id}>
                   <a href={url} className={className ? className : ''}>
-                   {t (text)}
+                   {text}
                   </a>
                 </li>
               )

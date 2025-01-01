@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux'
 import { store } from './store'
-import './config/i18n'
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
