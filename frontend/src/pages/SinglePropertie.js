@@ -2,7 +2,15 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetPropertieByIdQuery } from '../slices/propertieSlice'
 
-import { FaPhone, FaWhatsapp } from 'react-icons/fa'
+import {
+  FaPhone,
+  FaWhatsapp,
+  FaMapMarkerAlt,
+  FaHome,
+  FaBed,
+  FaBath,
+  FaCar,
+} from 'react-icons/fa'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Map from '../components/Map'
@@ -10,24 +18,22 @@ import HeroReusable from '../components/HeroResuable'
 import MessagesList from '../screen/MessageList'
 
 const SinglePropertie = () => {
-
-  
   const { id: propertieId } = useParams()
- const [mainImage, setMainImage] = useState('')
+  const [mainImage, setMainImage] = useState('')
   const {
     data: propertie,
     error,
     isLoading,
     refetch,
   } = useGetPropertieByIdQuery(propertieId)
-const phoneNumber = propertie?.data?.userProfile?.phoneNumber
 
+  const phoneNumber = propertie?.data?.userProfile?.phoneNumber
   const whatsappLink = `https://wa.me/${phoneNumber?.replace(/\D/g, '')}`
-
 
   const handleThumbnailImageClick = (image) => {
     setMainImage(image)
   }
+
   if (!propertieId) {
     return <Error message='Property ID is missing!' />
   }
@@ -58,7 +64,6 @@ const phoneNumber = propertie?.data?.userProfile?.phoneNumber
       />
     )
   }
-  console.log('Propertie data:', propertie)
 
   if (!propertie) {
     return <Error message='Property details not found.' />
@@ -81,18 +86,24 @@ const phoneNumber = propertie?.data?.userProfile?.phoneNumber
           </div>
           <div className='fisrt-details'>
             <article>
-              <p>Per Month</p>
+              <p>
+                <FaHome style={{ marginRight: '5px' }} /> Per Month
+              </p>
               <p>{propertie?.data?.price} </p>
             </article>
             <article>
-              <p>Location</p>
+              <p>
+                <FaMapMarkerAlt style={{ marginRight: '5px' }} /> Location
+              </p>
               <p>
                 {propertie?.data?.location.city},{' '}
                 {propertie?.data?.location.address}
               </p>
             </article>
             <article>
-              <p>Type</p>
+              <p>
+                <FaHome style={{ marginRight: '5px' }} /> Type
+              </p>
               <p>{propertie?.data?.propertyType}</p>
             </article>
             <article>
@@ -100,15 +111,21 @@ const phoneNumber = propertie?.data?.userProfile?.phoneNumber
               <p>{propertie?.data?.size} sq ft</p>
             </article>
             <article>
-              <p>Bathrooms</p>
+              <p>
+                <FaBath style={{ marginRight: '5px' }} /> Bathrooms
+              </p>
               <p>{propertie?.data?.bathrooms}</p>
             </article>
             <article>
-              <p>Bedrooms</p>
+              <p>
+                <FaBed style={{ marginRight: '5px' }} /> Bedrooms
+              </p>
               <p>{propertie?.data?.bedrooms}</p>
             </article>
             <article>
-              <p>Garage</p>
+              <p>
+                <FaCar style={{ marginRight: '5px' }} /> Garage
+              </p>
               <p>{propertie?.data?.garage ? 'Yes' : 'No'}</p>
             </article>
             <article>
