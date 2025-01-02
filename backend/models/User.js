@@ -8,19 +8,19 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: function () {
-        return !this.googleId 
+        return !this.googleId
       },
     },
     role: {
-  type: String,
-  enum: ['seller', 'admin', 'user'],
-  default: 'user',
-},
+      type: String,
+      enum: ['seller', 'admin', 'user'],
+      default: 'user',
+    },
     contactNumber: { type: String },
     googleId: {
       type: String,
       unique: true,
-      sparse: true, 
+      sparse: true,
     },
     displayName: { type: String },
     profileImage: {
@@ -28,6 +28,20 @@ const UserSchema = new mongoose.Schema(
       default: '/images/default-avatar.png',
     },
     dateJoined: { type: Date, default: Date.now },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    lastLogin: {
+      type: Date,
+
+      default: Date.now(),
+    },
+    resetPasswordToken: String,
+    resetPasswordExpiresAt: Date,
+
+    verificationToken: String,
+    verificationExpiresAt: Date,
   },
   {
     timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields

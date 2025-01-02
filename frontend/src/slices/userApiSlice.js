@@ -23,15 +23,15 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['User'], // Invalidate user data after registration
     }),
     googleLogin: builder.mutation({
-  query: (token) => ({
-    url: `${USERS_URL}/auth/google/callback`,
-    method: 'POST', // Adjust method to POST
-    body: { token }, // Pass token in the body
-  }),
-  invalidatesTags: ['User'],
-}),
-      // Invalidates any relevant cache or updates user data after login
-     
+      query: (token) => ({
+        url: `${USERS_URL}/auth/google/callback`,
+        method: 'POST', // Adjust method to POST
+        body: { token }, // Pass token in the body
+      }),
+      invalidatesTags: ['User'],
+    }),
+    // Invalidates any relevant cache or updates user data after login
+
     logout: builder.mutation({
       // Accept token as an argument
       query: (token) => ({
@@ -96,10 +96,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUserDetails: builder.query({
       query: (userId) => ({
         url: `${USERS_URL}/${userId}`,
-        credentials: 'include', // Include credentials for getting user details
+        credentials: 'include', 
       }),
-      providesTags: ['User'], // Provide user tag for caching
+      providesTags: ['User'], 
       keepUnusedDataFor: 5,
+    }),
+    updateUser: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/${data.userId}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Users'],
     }),
   }),
 })
@@ -116,4 +124,5 @@ export const {
   useGetUsersQuery,
   useDeleteUserMutation,
   useGetUserDetailsQuery,
+  useUpdateUserMutation,
 } = usersApiSlice

@@ -142,8 +142,12 @@ const Login = () => {
       </button>
 
       <p style={styles.signupText}>
+        <Link to='/forgot-password'>Forgot your password?</Link>
         Don't have an account? <Link to='/register'>Sign up</Link>
       </p>
+      <div className='return-to-store'>
+        <Link to='/'>Return Home</Link>
+      </div>
     </div>
   )
 }

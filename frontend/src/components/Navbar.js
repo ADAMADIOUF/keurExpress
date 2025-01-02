@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { FaBars, FaTimes, FaUser } from 'react-icons/fa'
+import { FaBars, FaHeart, FaTimes, FaUser } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
@@ -53,40 +53,44 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    const linksHeight = linksRef.current.getBoundingClientRect().height
-    if (showLinks) {
-      linksContainerRef.current.style.height = `${linksHeight}px`
-    } else {
-      linksContainerRef.current.style.height = '0px'
+    if (linksContainerRef.current) {
+      const linksHeight = linksRef.current.getBoundingClientRect().height
+      linksContainerRef.current.style.height = showLinks
+        ? `${linksHeight}px`
+        : '0px'
     }
   }, [showLinks])
+
 
   return (
     <nav className='nav'>
       <div className='nav-center'>
-        <div className='nav-header'>
-          logo
-          <button className='nav-toggle' onClick={toggleLinks}>
-            {showLinks ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-        <div className='links-container' ref={linksContainerRef}>
-          <ul className='links' ref={linksRef}>
-            {links.map((link) => {
-              const { id, url, text, className } = link
-              return (
-                <li key={id}>
-                  <a href={url} className={className ? className : ''}>
-                   {text}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+        <div className='nav-flex'>
+          <div className='nav-header'>
+            logo
+            <button className='nav-toggle' onClick={toggleLinks}>
+              {showLinks ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
+          <div className='links-container' ref={linksContainerRef}>
+            <ul className='links' ref={linksRef}>
+              {links.map((link) => {
+                const { id, url, text, className } = link
+                return (
+                  <li key={id}>
+                    <a
+                      href={url}
+                      className={`${className ? className : ''} no-wrap`}
+                    >
+                      {text}
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         </div>
 
-        {/* Conditional rendering for login/register or profile/logout */}
-        {/* Conditional rendering for social icons */}
         {!userInfo && (
           <ul className='social-icons'>
             {social.map((socialIcon) => {
@@ -101,7 +105,7 @@ const Navbar = () => {
         )}
 
         {!userInfo ? (
-          <>
+          <div className='profle-flex'>
             <li style={styles.navItem}>
               <Link to='/login' style={styles.link}>
                 Login
@@ -112,13 +116,18 @@ const Navbar = () => {
                 Register
               </Link>
             </li>
-          </>
+          </div>
         ) : (
           // If user info exists, show profile and logout buttons
           <>
             <li style={styles.navItem}>
               <Link to='/profile' style={styles.link}>
-                Profile
+                <FaUser /> Profile
+              </Link>
+            </li>
+            <li style={styles.navItem}>
+              <Link to='/wishlist' style={styles.link}>
+                <FaHeart /> Wishlist
               </Link>
             </li>
             <span className='username'>{userInfo.name}</span>
@@ -139,7 +148,7 @@ const Navbar = () => {
                 <Link to='/admin/propertiesList' className='dropdown-item'>
                   All properties
                 </Link>
-                <Link to='/admin/all-users' className='dropdown-item'>
+                <Link to='/admin/userlist' className='dropdown-item'>
                   All Users
                 </Link>
               </>
@@ -153,7 +162,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {userInfo?.provider === 'google' && (
+      {/* {userInfo?.provider === 'google' && (
         <div style={styles.userInfo}>
           <img
             src={userInfo?.photo || 'https://via.placeholder.com/150'}
@@ -164,7 +173,7 @@ const Navbar = () => {
             {userInfo?.displayName || userInfo?.name}
           </p>
         </div>
-      )}
+      )} */}
     </nav>
   )
 }

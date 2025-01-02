@@ -14,6 +14,7 @@ import agentsRouter from './routers/agentRouter.js'
 import blogRouter from './routers/blogRouter.js'
 import messageRouter from './routers/messageRouter.js';
 import contactRoute from './routers/contactRouter.js'
+import wishlistRoutes from './routers/whislistRouter.js'
 dotenv.config()
 connectDB()
 const app = express()
@@ -51,6 +52,7 @@ app.use('/api/agents', agentsRouter)
 app.use('/api/blogs', blogRouter)
 
 app.use('/api/messages', messageRouter)
+app.use('/api/wishlist', wishlistRoutes)
 const __dirname = path.resolve()
 
 if (process.env.NODE_ENV === 'production') {

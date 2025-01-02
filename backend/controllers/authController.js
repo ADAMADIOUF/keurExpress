@@ -3,7 +3,11 @@ import User from "../models/User.js";
 import asyncHandler from "../middleware/asyncHandler.js"
 import generateToken from '../utils/generateToken.js'
 import generateTokenGoogle from "../utils/generateTokenGoogle.js";
-
+import crypto from 'crypto'
+import {
+  sendPasswordResetEmail,
+  sendResetSuccessEmail,
+} from '../mailtrap/mailtrap.js'
 const generateNumericCode = (length) => {
   let code = ''
   for (let i = 0; i < length; i++) {
@@ -11,6 +15,8 @@ const generateNumericCode = (length) => {
   }
   return code
 }
+
+const isAdmin = (req) => req.user && req.user.role === 'admin'
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { email, name, password, role } = req.body;
@@ -165,17 +171,22 @@ export const getUsers = asyncHandler(async (req, res) => {
 
 // Get a user by ID (Admin only)
 export const getUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id) // Get user by ID
+  if (!isAdmin(req)) {
+    res.status(403)
+    throw new Error('Access denied. Admins only.')
+  }
+
+  const user = await User.findById(req.params.id)
 
   if (user) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
-      buyer: user.buyer,
-      seller: user.seller,
-      profileImage: user.profileImage || '/images/default-avatar.png',
+      isAdmin: user.role === 'admin',
+      buyer: user.role === 'buyer',
+      seller: user.role === 'seller',
+      profileImage: user.profileImage,
     })
   } else {
     res.status(404)
@@ -185,28 +196,28 @@ export const getUserById = asyncHandler(async (req, res) => {
 
 // Update a user (Admin only)
 export const updateUser = asyncHandler(async (req, res) => {
-  const { name, email, isAdmin, buyer, seller } = req.body
+  if (!isAdmin(req)) {
+    res.status(403)
+    throw new Error('Access denied. Admins only.')
+  }
 
-  const user = await User.findById(req.params.id) // Find user by ID
+  const { name, email, role } = req.body
+
+  const user = await User.findById(req.params.id)
 
   if (user) {
     user.name = name || user.name
     user.email = email || user.email
-    user.isAdmin = isAdmin ?? user.isAdmin // Use nullish coalescing for boolean
-    user.buyer = buyer ?? user.buyer
-    user.seller = seller ?? user.seller
+    user.role = role || user.role
 
-    // Save updated user
     const updatedUser = await user.save()
 
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-      buyer: updatedUser.buyer,
-      seller: updatedUser.seller,
-      profileImage: updatedUser.profileImage || '/images/default-avatar.png',
+      role: updatedUser.role,
+      profileImage: updatedUser.profileImage,
     })
   } else {
     res.status(404)
@@ -216,17 +227,96 @@ export const updateUser = asyncHandler(async (req, res) => {
 
 // Delete a user (Admin only)
 export const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id) // Find user by ID
+  if (!isAdmin(req)) {
+    res.status(403)
+    throw new Error('Access denied. Admins only.')
+  }
+
+  const user = await User.findById(req.params.id)
 
   if (user) {
-    await user.remove() // Delete user
+    await user.remove()
     res.json({ message: 'User removed successfully' })
   } else {
     res.status(404)
     throw new Error('User not found')
   }
 })
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body
 
+  // Find the user by email
+  const user = await User.findOne({ email })
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+
+  // Generate reset token
+  const resetToken = crypto.randomBytes(20).toString('hex')
+
+  // Set reset password token and expiry time (1 hour from now)
+  user.resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+  user.resetPasswordExpiresAt = Date.now() + 3600000 // 1 hour
+
+  await user.save()
+
+  // Create reset password link
+  const resetUrl = `http://localhost:3000/reset-password/${resetToken}`
+
+  try {
+    // Send password reset email
+    await sendPasswordResetEmail(user.email, resetUrl)
+
+    res.status(200).json({ message: 'Reset link sent to your email' })
+  } catch (error) {
+    user.resetPasswordToken = undefined
+    user.resetPasswordExpiresAt = undefined
+    await user.save()
+
+    res
+      .status(500)
+      .json({ message: 'Email could not be sent', error: error.message })
+  }
+})
+
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { token } = req.params
+  const { password } = req.body
+
+  // Hash the token to match the stored token
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex')
+
+  // Find user by token and check if token has not expired
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpiresAt: { $gt: Date.now() }, // Token is still valid
+  })
+
+  if (!user) {
+    return res.status(400).json({ message: 'Invalid or expired reset token' })
+  }
+
+  // Set the new password
+  user.password = password
+  user.resetPasswordToken = undefined
+  user.resetPasswordExpiresAt = undefined
+
+  await user.save()
+
+  // Send password reset success email
+  await sendResetSuccessEmail(user.email)
+
+  res
+    .status(200)
+    .json({ message: 'Password reset successful, you can now log in' })
+})
 export const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('jwt', '', {
     httpOnly: true,

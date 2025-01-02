@@ -99,6 +99,9 @@ const Signup = () => {
       <p style={styles.loginText}>
         Already have an account? <Link to='/login'>Login</Link>
       </p>
+      <div className='return-to-store'>
+        <Link to='/'>Return Home</Link>
+      </div>
     </div>
   )
 }

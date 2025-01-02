@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetPropertieByIdQuery } from '../slices/propertieSlice'
-
+import { useAddToWishlistMutation, useCheckWishlistQuery } from '../slices/wishlistApiSlice'
 import {
   FaPhone,
   FaWhatsapp,
@@ -10,16 +10,22 @@ import {
   FaBed,
   FaBath,
   FaCar,
+  FaHeart,
 } from 'react-icons/fa'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Map from '../components/Map'
 import HeroReusable from '../components/HeroResuable'
 import MessagesList from '../screen/MessageList'
+import { toast } from 'react-toastify'
 
 const SinglePropertie = () => {
   const { id: propertieId } = useParams()
   const [mainImage, setMainImage] = useState('')
+  const [addToWishlist, { isLoading: loadingAddToWishlist }] =
+    useAddToWishlistMutation()
+    const { data: checkWishlistData, isLoading: isLoadingCheck } =
+      useCheckWishlistQuery(propertieId)
   const {
     data: propertie,
     error,
@@ -33,7 +39,20 @@ const SinglePropertie = () => {
   const handleThumbnailImageClick = (image) => {
     setMainImage(image)
   }
+   const isInWishlist = checkWishlistData?.isInWishlist
+const addToWishlistHandler = async () => {
+  if (isInWishlist) {
+    toast.info('This property is already in your wishlist!')
+    return
+  }
 
+  try {
+    await addToWishlist(propertieId).unwrap()
+    toast.success('Property added to wishlist!')
+  } catch (error) {
+    toast.error('Failed to add to wishlist. Please login.')
+  }
+}
   if (!propertieId) {
     return <Error message='Property ID is missing!' />
   }
@@ -84,6 +103,14 @@ const SinglePropertie = () => {
               alt={propertie?.data?.title}
             />
           </div>
+          <button
+            className='btn btn-danger'
+            onClick={addToWishlistHandler}
+            disabled={isLoading || isInWishlist} // Using 'isLoading' instead of 'isAdding'
+          >
+            <FaHeart />{' '}
+            {isInWishlist ? 'Already in Wishlist' : 'Add to Wishlist'}
+          </button>
           <div className='fisrt-details'>
             <article>
               <p>
