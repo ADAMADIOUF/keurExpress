@@ -8,7 +8,6 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='footer-container section-center'>
-      
         <div className='footer-about'>
           <img
             src='https://example.com/logo.png'
@@ -53,7 +52,7 @@ const Footer = () => {
               <Link to='/agent'>Agent</Link>
             </li>
             <li>
-              <Link to='/blog'>Blog</Link>
+              <Link to='/all-blogs'>Blog</Link>
             </li>
             <li>
               <Link to='/contact'>Contact</Link>
@@ -117,7 +116,7 @@ const Footer = () => {
             target='_blank'
             rel='noopener noreferrer'
           >
-            Brandbes
+          AbsaTech
           </a>{' '}
           - Powered by{' '}
           <a
@@ -125,8 +124,7 @@ const Footer = () => {
             target='_blank'
             rel='noopener noreferrer'
           >
-           
-           Adama Diouf
+            Adama Diouf
           </a>
         </p>
       </div>
