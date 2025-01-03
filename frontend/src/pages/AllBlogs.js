@@ -3,17 +3,16 @@ import HeroReusable from '../components/HeroResuable'
 import { Link } from 'react-router-dom'
 import { useGetPostsQuery } from '../slices/blogApiSlice'
 
-const Blog = () => {
-    const { data: posts, error, isLoading } = useGetPostsQuery()
-    console.log(posts)
-     if (isLoading) {
-       return <p>Loading...</p>
-     }
+const AllBlogs = () => {
+  const { data: posts, error, isLoading } = useGetPostsQuery()
+  console.log(posts)
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
 
-     if (error) {
-       return <p>Error loading posts.</p>
-     }
-  
+  if (error) {
+    return <p>Error loading posts.</p>
+  }
 
   return (
     <div className='blogs'>
@@ -25,14 +24,10 @@ const Blog = () => {
               subtitle={'Stay Informed With Our Real Estate Blog'}
             />
           </article>
-          <article className='view-all-blog'>
-            <button className='btn'>
-              <Link to={'/all-blogs'}>View All Blogs</Link>
-            </button>
-          </article>
+          
         </div>
         <div className='second-container-blog'>
-          {posts.slice(0, 3).map((blog, index) => (
+          {posts.map((blog, index) => (
             <div key={index} className='blog-card'>
               <img src={blog.image} alt={blog.title} className='blog-image' />
               <div className='blog-content'>
@@ -40,7 +35,7 @@ const Blog = () => {
                 <p>{blog.content}</p>
                 <div className='blog-meta'>
                   <span>{blog.publishedDate}</span>
-                  
+                 
                   <p>
                     <strong>Published on:</strong>{' '}
                     {new Date(blog.createdAt).toLocaleDateString()}
@@ -61,4 +56,4 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default AllBlogs

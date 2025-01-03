@@ -4,22 +4,27 @@ import asyncHandler from '../middleware/asyncHandler.js'
 // Create a new blog post
 export const createBlog = asyncHandler(async (req, res) => {
   const { title, content, categories, image, status } = req.body
-  const user = req.user._id // Assuming user is authenticated
+
+  // Check if user is available
+  if (!req.user) {
+    res.status(401)
+    throw new Error('Not authorized. User not found.')
+  }
+
+  const user = req.user._id
 
   const blog = new Blog({
     title,
     content,
-  
+    user, // Include the authenticated user
     categories,
     image,
     status,
-   
   })
 
   const createdBlog = await blog.save()
   res.status(201).json(createdBlog)
 })
-
 // Get all blog posts (can be filtered by status, categories, etc.)
 export const getBlogs = asyncHandler(async (req, res) => {
   const blogs = await Blog.find({ status: 'published' })
@@ -32,7 +37,7 @@ export const getBlogs = asyncHandler(async (req, res) => {
 export const getBlogById = asyncHandler(async (req, res) => {
   const blog = await Blog.findById(req.params.id)
     .populate('user', 'name email') // Populate author details
-    .populate('writtenBy', 'name') // Get author (written by)
+    
 
   if (!blog) {
     res.status(404)

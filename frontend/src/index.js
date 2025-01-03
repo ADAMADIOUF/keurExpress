@@ -33,6 +33,8 @@ import UserEditScreen from './screen/UserEditScreen';
 import ForgetPassword from './pages/ForgetPaasword';
 import ResetPassword from './pages/ResetPassword';
 import WishlistScreen from './screen/WishlistScreen';
+import SingleBlog from './pages/SingleBlog';
+import AllBlogs from './pages/AllBlogs';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -50,8 +52,10 @@ const router = createBrowserRouter(
 
       <Route path='/propertie/:id' element={<SinglePropertie />} />
       <Route path='/agent/:id' element={<SingleAgent />} />
+      <Route path='/blog/:id' element={<SingleBlog />} />
       <Route path='/all-agents' element={<AllAgents />} />
       <Route path='/property' element={<AllProperties />} />
+      <Route path='/all-blogs' element={<AllBlogs />} />
       <Route path='/partners' element={<Partenaire />} />
       <Route path='/about' element={<About />} />
       <Route path='/contact' element={<Contact />} />
@@ -60,8 +64,8 @@ const router = createBrowserRouter(
       <Route path='/forgot-password' element={<ForgetPassword />} />
       <Route path='/reset-password/:token' element={<ResetPassword />} />
       <Route path='' element={<PrivateRoute />}>
-      <Route path='/profile' element={<Profile />} />
-      <Route path='/wishlist' element={<WishlistScreen />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/wishlist' element={<WishlistScreen />} />
       </Route>
       <Route path='' element={<AdminRoute />}>
         <Route path='/admin/dashboard' element={<DashBoard />} />

@@ -33,11 +33,7 @@ const blogSchema = mongoose.Schema(
       type: Date,
       default: Date.now, // Automatically set the current date
     },
-    writtenBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
+    
   },
   { timestamps: true }
 )
