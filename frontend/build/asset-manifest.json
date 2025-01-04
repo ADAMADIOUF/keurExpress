@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.59e95d11.css",
-    "main.js": "/static/js/main.a2bcc46d.js",
+    "main.css": "/static/css/main.7835079f.css",
+    "main.js": "/static/js/main.8aff6bac.js",
     "static/media/keurexpress.mp4": "/static/media/keurexpress.5425f6bf2e3177f21ca1.mp4",
     "static/media/hero1.png": "/static/media/hero1.1db3cf297de84009e2bd.png",
     "static/media/homeabout.png": "/static/media/homeabout.652c2c9e342e400ed158.png",
     "static/media/keurexpress.png": "/static/media/keurexpress.c2fdb36b632a3341c736.png",
+    "static/media/keur-logo1.png": "/static/media/keur-logo1.3fe3b47aa34128455a3e.png",
     "static/media/hero2.png": "/static/media/hero2.6eed47cae6186e82e481.png",
     "index.html": "/index.html",
-    "main.59e95d11.css.map": "/static/css/main.59e95d11.css.map",
-    "main.a2bcc46d.js.map": "/static/js/main.a2bcc46d.js.map"
+    "main.7835079f.css.map": "/static/css/main.7835079f.css.map",
+    "main.8aff6bac.js.map": "/static/js/main.8aff6bac.js.map"
   },
   "entrypoints": [
-    "static/css/main.59e95d11.css",
-    "static/js/main.a2bcc46d.js"
+    "static/css/main.7835079f.css",
+    "static/js/main.8aff6bac.js"
   ]
 }
