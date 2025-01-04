@@ -54,14 +54,6 @@ app.use('/api/blogs', blogRouter)
 app.use('/api/messages', messageRouter)
 app.use('/api/wishlist', wishlistRoutes)
 const __dirname = path.resolve()
-app.get('/api/locales/:lng/:ns', (req, res) => {
-  const { lng, ns } = req.params
-  const filePath = path.join(
-    __dirname,
-    `frontend/public/locales/${lng}/${ns}.json`
-  )
-  res.sendFile(filePath)
-})
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'frontend/build')))
