@@ -33,7 +33,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "extract-translations": "i18next-parser"
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +65,11 @@
     ],
     "keySeparator": false,
     "namespaceSeparator": false,
-    "defaultNamespace": "translation"
+    "defaultNamespace": "translation",
+    "createOldCatalogs": false,
+    "sort": true,
+    "lineEnding": "auto",
+    "useKeysAsDefaultValue": true,
+    "defaultValue": ""
   }
 }
