@@ -1,16 +1,19 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom' // Import Link for navigation
+import { Link, useParams } from 'react-router-dom'
 import { useGetProperiesQuery } from '../slices/propertieSlice'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
+import { useTranslation } from 'react-i18next' // Import the translation hook
 
 const LastProperties = () => {
-    const { keyword = '',  } = useParams()
-    const {
-      data: properties,
-      error,
-      isLoading,
-    } = useGetProperiesQuery({ keyword })
+  const { keyword = '' } = useParams()
+  const { t } = useTranslation() // Hook for translations
+
+  const {
+    data: properties,
+    error,
+    isLoading,
+  } = useGetProperiesQuery({ keyword })
 
   if (isLoading) {
     return <Loading />
@@ -30,16 +33,12 @@ const LastProperties = () => {
             <article className='home-about-details'>
               <div className='hero-content hero-home-about'>
                 <div className='dote'></div>
-                <span className='hero-text'>Nearest Property</span>
-                <h3>Locate the Closest Property to You</h3>
+                <span className='hero-text'>{t('nearestProperty')}</span>
+                <h3>{t('locateClosestProperty')}</h3>
               </div>
             </article>
             <article className='home-about-content'>
-              <p>
-                Get to know the dedicated professionals behind Keur Express who
-                are committed to helping you navigate the real estate market
-                with confidence
-              </p>
+              <p>{t('propertyDescription')}</p>
             </article>
           </div>
 
@@ -62,19 +61,16 @@ const LastProperties = () => {
                       </Link>
                     </h2>
 
-                    {/* Link wrapping the description */}
                     <p className='property-description'>
                       <Link to={`/propertie/${property._id}`}>
                         {property.description.substring(0, 40)}...
                       </Link>
                     </p>
 
-                    {/* Property Price */}
                     <p className='property-price'>
-                      Price: ${property.price.toLocaleString()}
+                      {t('price')} ${property.price.toLocaleString()}
                     </p>
 
-                    {/* Property Location */}
                     <div className='property-location'>
                       <p>
                         {property.location.city}, {property.location.address}
@@ -85,39 +81,38 @@ const LastProperties = () => {
                         rel='noopener noreferrer'
                         className='property-map-link'
                       >
-                        View on map
+                        {t('viewOnMap')}
                       </a>
                     </div>
 
-                    {/* Property Stats */}
                     <div className='property-stats'>
                       <p>
-                        <strong>{property.bedrooms}</strong> Bedrooms
+                        <strong>{property.bedrooms}</strong> {t('bedrooms')}
                       </p>
                       <p>
-                        <strong>{property.bathrooms}</strong> Bathrooms
+                        <strong>{property.bathrooms}</strong> {t('bathrooms')}
                       </p>
                       <p>
-                        <strong>{property.size}</strong> sq. ft
+                        <strong>{property.size}</strong> {t('sqft')}
                       </p>
                     </div>
 
-                    {/* Property Status */}
                     <div className='property-status'>
                       <p>
-                        Status: <strong>{property.status}</strong>
+                        {t('status')}: <strong>{property.status}</strong>
                       </p>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p>No properties available</p>
+              <p>{t('noProperties')}</p>
             )}
           </div>
+
           <div className='view-all'>
             <button className='btn-view'>
-              <Link to={'/property'}>View All Properties</Link>
+              <Link to={'/property'}>{t('viewAllProperties')}</Link>
             </button>
           </div>
         </div>

@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
 
-
+import logo from "../assets/keur-logo1.png"
 import { useLogoutMutation } from '../slices/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
+import LanguageSwitcher from './LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 const Navbar = () => {
- 
+   const { t } = useTranslation()
   const [showLinks, setShowLinks] = useState(false)
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
@@ -67,7 +68,7 @@ const Navbar = () => {
       <div className='nav-center'>
         <div className='nav-flex'>
           <div className='nav-header'>
-            logo
+          <img src={logo} alt="" className="logo" />
             <button className='nav-toggle' onClick={toggleLinks}>
               {showLinks ? <FaTimes /> : <FaBars />}
             </button>
@@ -82,11 +83,12 @@ const Navbar = () => {
                       href={url}
                       className={`${className ? className : ''} no-wrap`}
                     >
-                      {text}
+                      {t(text)}
                     </a>
                   </li>
                 )
               })}
+              <LanguageSwitcher />
             </ul>
           </div>
         </div>
@@ -122,12 +124,12 @@ const Navbar = () => {
           <>
             <li style={styles.navItem}>
               <Link to='/profile' style={styles.link}>
-                <FaUser /> Profile
+                <FaUser /> {t('Profile')}
               </Link>
             </li>
             <li style={styles.navItem}>
               <Link to='/wishlist' style={styles.link}>
-                <FaHeart /> Wishlist
+                <FaHeart /> {t('Wishlist')}
               </Link>
             </li>
             <span className='username'>{userInfo.name}</span>
@@ -143,19 +145,19 @@ const Navbar = () => {
             {userInfo.role === 'admin' && (
               <>
                 <Link to='/admin/dashboard' className='dropdown-item'>
-                  Dashboard
+                  {t('Dashboard')}
                 </Link>
                 <Link to='/admin/propertiesList' className='dropdown-item'>
-                  All properties
+                  {t('All properties')}
                 </Link>
                 <Link to='/admin/userlist' className='dropdown-item'>
-                  All Users
+                  {t('All Users')}
                 </Link>
               </>
             )}
             <li style={styles.navItem}>
               <button onClick={logoutHandler} className='logout-button'>
-                Logout {isGoogleLogin ? '(Google)' : ''}
+                {t('Logout')} {isGoogleLogin ? `(Google)` : ''}
               </button>
             </li>
           </>

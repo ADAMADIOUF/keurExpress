@@ -35,6 +35,9 @@ import ResetPassword from './pages/ResetPassword';
 import WishlistScreen from './screen/WishlistScreen';
 import SingleBlog from './pages/SingleBlog';
 import AllBlogs from './pages/AllBlogs';
+import { I18nextProvider } from 'react-i18next'
+import i18n from './i18n' 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -84,9 +87,10 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <I18nextProvider i18n={i18n}>
+        <RouterProvider router={router} />
+      </I18nextProvider>
     </Provider>
   </React.StrictMode>
 )

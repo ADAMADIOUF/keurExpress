@@ -2,18 +2,19 @@ import React from 'react'
 import HeroReusable from '../components/HeroResuable'
 import { Link } from 'react-router-dom'
 import { useGetPostsQuery } from '../slices/blogApiSlice'
+import { useTranslation } from 'react-i18next'
 
 const Blog = () => {
-    const { data: posts, error, isLoading } = useGetPostsQuery()
-    console.log(posts)
-     if (isLoading) {
-       return <p>Loading...</p>
-     }
+  const { t } = useTranslation()
+  const { data: posts, error, isLoading } = useGetPostsQuery()
 
-     if (error) {
-       return <p>Error loading posts.</p>
-     }
-  
+  if (isLoading) {
+    return <p>{t('blog.loading')}</p>
+  }
+
+  if (error) {
+    return <p>{t('blog.errorLoading')}</p>
+  }
 
   return (
     <div className='blogs'>
@@ -21,13 +22,13 @@ const Blog = () => {
         <div className='home-about-container'>
           <article>
             <HeroReusable
-              title={'Our Blog'}
-              subtitle={'Stay Informed With Our Real Estate Blog'}
+              title={t('blog.title')}
+              subtitle={t('blog.subtitle')}
             />
           </article>
           <article className='view-all-blog'>
             <button className='btn'>
-              <Link to={'/all-blogs'}>View All Blogs</Link>
+              <Link to={'/all-blogs'}>{t('blog.viewAll')}</Link>
             </button>
           </article>
         </div>
@@ -40,17 +41,16 @@ const Blog = () => {
                 <p>{blog.content}</p>
                 <div className='blog-meta'>
                   <span>{blog.publishedDate}</span>
-                  
                   <p>
-                    <strong>Published on:</strong>{' '}
+                    <strong>{t('blog.publishedOn')}:</strong>{' '}
                     {new Date(blog.createdAt).toLocaleDateString()}
                   </p>
                   <p>
-                    <strong>By:</strong> {blog.user.name}
+                    <strong>{t('blog.by')}:</strong> {blog.user.name}
                   </p>
                 </div>
                 <Link to={`/blog/${blog._id}`} className='btn btn-primary'>
-                  Read More
+                  {t('blog.readMore')}
                 </Link>
               </div>
             </div>

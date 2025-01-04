@@ -9,8 +9,9 @@ import AgentsHeader from './AgentsHeader'
 import Blog from '../pages/Blog'
 import BannerReusable from './BannerResubale'
 import { useParams } from 'react-router-dom'
-
+import { useTranslation } from 'react-i18next'
 const HomePage = () => {
+    const { t } = useTranslation()
    const {  keyword } = useParams()
   return (
     <div>
@@ -25,10 +26,10 @@ const HomePage = () => {
       {!keyword && (
         <BannerReusable
           image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png'
-          title='Find Your Dream Home? Contact Us Today!'
-          description='Take the first step towards homeownership and reach out to our expert team at Keur Express.'
+          title={t('banner.title')}
+          description={t('banner.description')}
           target='/about'
-          label='More About Us'
+          label={t('banner.label')}
         />
       )}
     </div>

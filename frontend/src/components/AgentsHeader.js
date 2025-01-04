@@ -1,8 +1,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Agents from '../pages/Agents'
+import { useTranslation } from 'react-i18next'
 
 const AgentsHeader = () => {
+  const { t } = useTranslation()
+
   return (
     <motion.div
       className='agents'
@@ -26,13 +29,13 @@ const AgentsHeader = () => {
           >
             <div className='hero-content hero-home-about'>
               <div className='dote'></div>
-              <span className='hero-text'>Agent</span>
+              <span className='hero-text'>{t('agents.headerText')}</span>
               <motion.h3
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Your Trusted Real Estate Advisors
+                {t('agents.subHeader')}
               </motion.h3>
             </div>
           </motion.article>
@@ -44,11 +47,7 @@ const AgentsHeader = () => {
             animate={{ opacity: 1, y: 0 }} // Fade in and move up
             transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
           >
-            <p>
-              Get to know the dedicated professionals behind Keur Express who
-              are committed to helping you navigate the real estate market with
-              confidence
-            </p>
+            <p>{t('agents.description')}</p>
           </motion.article>
         </motion.div>
 

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion' // Import motion
+import { useTranslation } from 'react-i18next' // Import i18next translation hook
 import Questions from './Questions'
 import a from '../assets/homeabout.png'
 import { FaBath, FaBed } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
 import AboutBtn from './AboutBtn'
 
 const HomeAbout = () => {
   const [isImageMoving, setIsImageMoving] = useState(false) // Track image movement
+  const { t } = useTranslation() // Use the useTranslation hook to get translations
 
   return (
     <motion.div
@@ -27,7 +28,8 @@ const HomeAbout = () => {
           <div className='hero-content hero-home-about'>
             <div className='dote'></div>
             <span className='hero-text'>About Us</span>
-            <h3>Elevate Your Real Estate Experience With Keur Express</h3>
+            <h3>{t('homeAbout.title')}</h3>{' '}
+            {/* Use translation for the title */}
           </div>
         </motion.article>
         <motion.article
@@ -36,11 +38,8 @@ const HomeAbout = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <p>
-            At Keur Express, we are committed to simplifying your real estate
-            journey and helping you find the perfect home. With our dedicated
-            team of experts.
-          </p>
+          <p>{t('homeAbout.description')}</p>{' '}
+          {/* Use translation for the description */}
         </motion.article>
       </div>
       <hr />
@@ -65,15 +64,17 @@ const HomeAbout = () => {
           <div className='details-home-about-img'>
             <div className='home-about-content-img'>
               <article>
-                <h3>$567.00/Month</h3>
-                <p>New York City</p>
+                <h3>{t('homeAbout.price')}</h3>{' '}
+                {/* Use translation for price */}
+                <p>{t('homeAbout.location')}</p>{' '}
+                {/* Use translation for location */}
               </article>
               <article>
                 <span>
-                  <FaBed /> 3 Bed
+                  <FaBed /> {t('homeAbout.bedrooms')}
                 </span>
                 <span>
-                  <FaBath /> 2 Bath
+                  <FaBath /> {t('homeAbout.bathrooms')}
                 </span>
               </article>
             </div>

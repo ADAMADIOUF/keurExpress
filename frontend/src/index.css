@@ -163,6 +163,10 @@ nav {
   justify-content: space-between;
   padding: 1rem;
 }
+.logo{
+  width: 150px;
+  height: 150px;
+}
 .nav-toggle {
   font-size: 1.5rem;
   color: var(--clr-white);

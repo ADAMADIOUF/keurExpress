@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import ScrollTrigger from 'react-scroll-trigger'
 import CountUp from 'react-countup'
+import { useTranslation } from 'react-i18next' // Import useTranslation hook
+
 const ProgressBar = () => {
   const [count, setCount] = useState(false)
+  const { t } = useTranslation() // Initialize translation function
+
   useEffect(() => {
-      const loadingTimer = setTimeout(() => {
-        setCount(true)
-      }, 2000)
-  
-      return () => {
-        clearTimeout(loadingTimer)
-      }
-    }, [])
+    // Simulates a loading state when the component mounts
+    const loadingTimer = setTimeout(() => {
+      setCount(true)
+    }, 2000)
+
+    return () => {
+      clearTimeout(loadingTimer) // Cleanup timeout when the component unmounts
+    }
+  }, [])
+
+  // Reusable stats data with translation keys
+  const stats = [
+    { end: 430987, labelKey: 'propertyReady' },
+    { end: 543210, labelKey: 'happyCustomers' },
+    { end: 1200, labelKey: 'totalListings' },
+  ]
+
   return (
     <div className='progressBar'>
       <ScrollTrigger
@@ -19,32 +32,21 @@ const ProgressBar = () => {
         onExit={() => setCount(false)}
       >
         <div className='progress-bar'>
-          <div className='count'>
-            {count && (
-              <>
-                <CountUp start={0} end={430987} separator=',' duration={3} />+
-                Property Ready
-              </>
-            )}
-          </div>
-          <div className='count'>
-            {count && (
-              <>
-                <CountUp start={0} end={543210} separator=',' duration={3} />+
-                Happy Customers
-              </>
-            )}
-          </div>
-
-          {/* New Count */}
-          <div className='count'>
-            {count && (
-              <>
-                <CountUp start={0} end={1200} separator=',' duration={3} />+
-                Total Listings
-              </>
-            )}
-          </div>
+          {stats.map((stat, index) => (
+            <div className='count' key={index}>
+              {count && (
+                <>
+                  <CountUp
+                    start={0}
+                    end={stat.end}
+                    separator=','
+                    duration={3}
+                  />
+                  + {t(stat.labelKey)} {/* Translate the label */}
+                </>
+              )}
+            </div>
+          ))}
         </div>
       </ScrollTrigger>
     </div>

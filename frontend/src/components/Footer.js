@@ -1,10 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import a from "../assets/f1.png"
+import { useTranslation } from 'react-i18next'
+import a from '../assets/f1.png'
 import b from '../assets/f2.png'
 import c from '../assets/f3.png'
+
 const Footer = () => {
-   const currentYear = new Date().getFullYear()
+  const { t } = useTranslation()
+  const currentYear = new Date().getFullYear()
+
   return (
     <footer className='footer'>
       <div className='footer-container section-center'>
@@ -14,84 +18,86 @@ const Footer = () => {
             alt='NestBes Logo'
             className='footer-logo'
           />
-          <p>
-            Embark on a journey to find your ideal living space with NestBes.
-            Explore a curated selection of properties.
-          </p>
+          <p>{t('footer.about')}</p>
         </div>
 
         {/* Newsletter Signup */}
         <div className='footer-newsletter'>
-          <h4>Enter Your Email</h4>
+          <h4>{t('footer.newsletterTitle')}</h4>
           <form>
             <input
               type='email'
-              placeholder='Enter your email'
+              placeholder={t('footer.emailPlaceholder')}
               className='footer-input'
             />
             <button type='submit' className='btn'>
-              Subscribe
+              {t('footer.subscribe')}
             </button>
           </form>
         </div>
 
         {/* Quick Links */}
         <div className='footer-links'>
-          <h4>Quick Links</h4>
+          <h4>{t('footer.quickLinks')}</h4>
           <ul>
             <li>
-              <Link to='/'>Home</Link>
+              <Link to='/'>{t('footer.home')}</Link>
             </li>
             <li>
-              <Link to='/about'>About us</Link>
+              <Link to='/about'>{t('footer.aboutUs')}</Link>
             </li>
             <li>
-              <Link to='/property'>Property</Link>
+              <Link to='/property'>{t('footer.property')}</Link>
             </li>
             <li>
-              <Link to='/agent'>Agent</Link>
+              <Link to='/agent'>{t('footer.agent')}</Link>
             </li>
             <li>
-              <Link to='/all-blogs'>Blog</Link>
+              <Link to='/all-blogs'>{t('footer.blog')}</Link>
             </li>
             <li>
-              <Link to='/contact'>Contact</Link>
+              <Link to='/contact'>{t('footer.contact')}</Link>
             </li>
           </ul>
         </div>
 
         {/* Utility Pages */}
         <div className='footer-utility'>
-          <h4>Utility Pages</h4>
+          <h4>{t('footer.utilityPages')}</h4>
           <ul>
             <li>
-              <Link to='/password-protected'>Password Protected</Link>
+              <Link to='/password-protected'>
+                {t('footer.passwordProtected')}
+              </Link>
             </li>
             <li>
-              <Link to='/404'>404 Not Found</Link>
+              <Link to='/404'>{t('footer.pageNotFound')}</Link>
             </li>
             <li>
-              <Link to='/style-guide'>Style Guide</Link>
+              <Link to='/style-guide'>{t('footer.styleGuide')}</Link>
             </li>
             <li>
-              <Link to='/license'>License</Link>
+              <Link to='/license'>{t('footer.license')}</Link>
             </li>
             <li>
-              <Link to='/changelog'>Changelog</Link>
+              <Link to='/changelog'>{t('footer.changelog')}</Link>
             </li>
           </ul>
         </div>
 
         {/* Contact Information */}
         <div className='footer-contact'>
-          <h4>Contact</h4>
+          <h4>{t('footer.contact')}</h4>
           <p>
-            Email: <a href='mailto:contact@nestbes.com'>contact@nestbes.com</a>
+            {t('footer.email')}:{' '}
+            <a href='mailto:contact@nestbes.com'>contact@nestbes.com</a>
           </p>
           <p>
-            Phone: <a href='tel:(316) 555-0116'>(316) 555-0116</a>
+            {t('footer.phone')}: <a href='tel:(316) 555-0116'>(316) 555-0116</a>
           </p>
-          <p>Address: 1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+          <p>
+            {t('footer.address')}: 1901 Thornridge Cir. Shiloh, Hawaii 81063
+          </p>
         </div>
       </div>
       <div className='footer-image-absolute'>
@@ -110,15 +116,16 @@ const Footer = () => {
       </div>
       <div className='footer-copyright'>
         <p>
-          Copyright© {currentYear} <strong>Keur Express</strong> | Designed by{' '}
+          {t('footer.copyright')} {currentYear} <strong>Keur Express</strong> |{' '}
+          {t('footer.designedBy')}
           <a
             href='https://brandbes.com'
             target='_blank'
             rel='noopener noreferrer'
           >
-          AbsaTech
+            AbsaTech
           </a>{' '}
-          - Powered by{' '}
+          - {t('footer.poweredBy')}{' '}
           <a
             href='https://webflow.com'
             target='_blank'

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const SearchTerm = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation() // Use the useTranslation hook to get translations
 
   // Destructure the params from the URL
   const {
@@ -52,7 +54,7 @@ const SearchTerm = () => {
           name='keyword'
           onChange={(e) => setKeyword(e.target.value)}
           value={keyword}
-          placeholder='Search Houses...'
+          placeholder={t('search.placeholder_keyword')} // Use translation for keyword
           className='search-input'
         />
         <input
@@ -60,7 +62,7 @@ const SearchTerm = () => {
           name='location'
           onChange={(e) => setLocation(e.target.value)}
           value={location}
-          placeholder='Location'
+          placeholder={t('search.placeholder_location')} // Use translation for location
           className='search-input'
         />
         <input
@@ -68,11 +70,11 @@ const SearchTerm = () => {
           name='address'
           onChange={(e) => setAddress(e.target.value)}
           value={address}
-          placeholder='Address'
+          placeholder={t('search.placeholder_address')} // Use translation for address
           className='search-input'
         />
         <button type='submit' className='search-button search-input'>
-          Search
+          {t('search.button_search')} {/* Use translation for button */}
         </button>
       </form>
     </div>

@@ -9,6 +9,9 @@
     "chart.js": "^4.4.7",
     "cra-template": "1.2.0",
     "framer-motion": "^11.15.0",
+    "i18next": "^24.2.0",
+    "i18next-browser-languagedetector": "^8.0.2",
+    "i18next-http-backend": "^3.0.1",
     "icons": "^1.0.0",
     "mapbox-gl": "^3.9.0",
     "nanoid": "^5.0.9",
@@ -17,6 +20,7 @@
     "react-circular-progressbar": "^2.1.0",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.4.0",
     "react-icons": "^5.4.0",
     "react-progressbar": "^15.4.1",
     "react-redux": "^9.2.0",
@@ -48,5 +52,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+"devDependencies": {
+    "i18next-parser": "^9.1.0"
+  },
+  "i18next-parser": {
+    "output": "src/locales/$LOCALE/translation.json",
+    "locales": ["en", "fr"],
+    "keySeparator": false,
+    "namespaceSeparator": false, 
+    "defaultNamespace": "translation" 
   }
 }
