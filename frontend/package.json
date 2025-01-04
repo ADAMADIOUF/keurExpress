@@ -53,14 +53,17 @@
       "last 1 safari version"
     ]
   },
-"devDependencies": {
+  "devDependencies": {
     "i18next-parser": "^9.1.0"
   },
   "i18next-parser": {
     "output": "src/locales/$LOCALE/translation.json",
-    "locales": ["en", "fr"],
+    "locales": [
+      "en",
+      "fr"
+    ],
     "keySeparator": false,
-    "namespaceSeparator": false, 
-    "defaultNamespace": "translation" 
+    "namespaceSeparator": false,
+    "defaultNamespace": "translation"
   }
 }
