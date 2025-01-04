@@ -7,6 +7,9 @@ import frTranslations from './locales/fr/translation.json'
 const savedLanguage = localStorage.getItem('language') || 'en'
 
 i18n.use(initReactI18next).init({
+  backend: {
+    loadPath: '/locales/{{lng}}/translation.json', // This path should point to your static file location
+  },
   resources: {
     en: {
       translation: enTranslations,
