@@ -76,7 +76,7 @@ const PropertieHome = () => {
 
               <p className='property-description'>
                 <Link to={`/propertie/${property._id}`}>
-                  {property.description.substring(0,50)}....
+                  {property.description.substring(0, 50)}....
                 </Link>
               </p>
 
@@ -126,7 +126,7 @@ const PropertieHome = () => {
 
       <div className='view-all'>
         <button className='btn-view'>
-          <Link to={'/property'}>View All Properties</Link>
+          <Link to={'/property'}>Voir toutes les propriétés</Link>
         </button>
       </div>
     </>

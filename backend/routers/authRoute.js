@@ -12,6 +12,7 @@ import {
   deleteUser,
   resetPassword,
   forgotPassword,
+  authenticateWithClerk,
 } from '../controllers/authController.js'
 
 import { protect, admin } from '../middleware/authMiddleware.js'
@@ -47,4 +48,5 @@ router
   .delete(protect, admin, deleteUser)
 router.post('/forgot-password', forgotPassword)
 router.put('/reset-password/:token', resetPassword)
+router.post('/authenticate/clerk', authenticateWithClerk)
 export default router

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion' // Import motion
-import { useTranslation } from 'react-i18next' // Import i18next translation hook
+
 import Questions from './Questions'
 import a from '../assets/homeabout.png'
 import { FaBath, FaBed } from 'react-icons/fa'
@@ -8,8 +8,7 @@ import AboutBtn from './AboutBtn'
 
 const HomeAbout = () => {
   const [isImageMoving, setIsImageMoving] = useState(false) // Track image movement
-  const { t } = useTranslation() // Use the useTranslation hook to get translations
-
+  
   return (
     <motion.div
       className='homeAbout section-center'
@@ -17,7 +16,6 @@ const HomeAbout = () => {
       animate={{ opacity: 1, y: 0 }} // Ending state
       transition={{ duration: 1, ease: 'easeOut' }} // Animation duration
     >
-      {/* About Section */}
       <div className='home-about-container'>
         <motion.article
           className='home-about-details'
@@ -27,8 +25,10 @@ const HomeAbout = () => {
         >
           <div className='hero-content hero-home-about'>
             <div className='dote'></div>
-            <span className='hero-text'>About Us</span>
-            <h3>{t('homeAbout.title')}</h3>{' '}
+            <span className='hero-text'>À propos de nous</span>
+            <h3>
+              {'Élevez votre expérience immobilière avec Keur Express.'}
+            </h3>{' '}
             {/* Use translation for the title */}
           </div>
         </motion.article>
@@ -38,7 +38,11 @@ const HomeAbout = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <p>{t('homeAbout.description')}</p>{' '}
+          <p>
+            Chez Keur Express, nous nous engageons à simplifier votre parcours
+            immobilier et à vous aider à trouver la maison parfaite. Avec notre
+            équipe dédiée d'experts.
+          </p>{' '}
           {/* Use translation for the description */}
         </motion.article>
       </div>
@@ -64,17 +68,16 @@ const HomeAbout = () => {
           <div className='details-home-about-img'>
             <div className='home-about-content-img'>
               <article>
-                <h3>{t('homeAbout.price')}</h3>{' '}
-                {/* Use translation for price */}
-                <p>{t('homeAbout.location')}</p>{' '}
+                <h3>250.000CFA /Moi</h3> {/* Use translation for price */}
+                <p>Senegal,Thiaroy</p>
                 {/* Use translation for location */}
               </article>
               <article>
                 <span>
-                  <FaBed /> {t('homeAbout.bedrooms')}
+                  <FaBed />3 Chambres
                 </span>
                 <span>
-                  <FaBath /> {t('homeAbout.bathrooms')}
+                  <FaBath />2 Salles de bain
                 </span>
               </article>
             </div>

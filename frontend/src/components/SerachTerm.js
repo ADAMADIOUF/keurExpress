@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 
 const SearchTerm = () => {
   const navigate = useNavigate()
-  const { t } = useTranslation() // Use the useTranslation hook to get translations
 
   // Destructure the params from the URL
   const {
@@ -46,6 +44,17 @@ const SearchTerm = () => {
     }
   }
 
+  // Function to translate placeholders and button text into French
+  const translate = (key) => {
+    const translations = {
+      'search.placeholder_keyword': 'Rechercher un mot-clé',
+      'search.placeholder_location': 'Lieu',
+      'search.placeholder_address': 'Adresse',
+      'search.button_search': 'Rechercher',
+    }
+    return translations[key] || key
+  }
+
   return (
     <div className='search-term'>
       <form onSubmit={submitHandler} className='search-container'>
@@ -54,7 +63,7 @@ const SearchTerm = () => {
           name='keyword'
           onChange={(e) => setKeyword(e.target.value)}
           value={keyword}
-          placeholder={t('search.placeholder_keyword')} // Use translation for keyword
+          placeholder={translate('search.placeholder_keyword')} // Use translation for keyword
           className='search-input'
         />
         <input
@@ -62,7 +71,7 @@ const SearchTerm = () => {
           name='location'
           onChange={(e) => setLocation(e.target.value)}
           value={location}
-          placeholder={t('search.placeholder_location')} // Use translation for location
+          placeholder={translate('search.placeholder_location')} // Use translation for location
           className='search-input'
         />
         <input
@@ -70,11 +79,11 @@ const SearchTerm = () => {
           name='address'
           onChange={(e) => setAddress(e.target.value)}
           value={address}
-          placeholder={t('search.placeholder_address')} // Use translation for address
+          placeholder={translate('search.placeholder_address')} // Use translation for address
           className='search-input'
         />
         <button type='submit' className='search-button search-input'>
-          {t('search.button_search')} {/* Use translation for button */}
+          {translate('search.button_search')} {/* Use translation for button */}
         </button>
       </form>
     </div>

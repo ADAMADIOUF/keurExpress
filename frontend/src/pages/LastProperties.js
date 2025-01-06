@@ -3,11 +3,10 @@ import { Link, useParams } from 'react-router-dom'
 import { useGetProperiesQuery } from '../slices/propertieSlice'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
-import { useTranslation } from 'react-i18next' // Import the translation hook
 
 const LastProperties = () => {
   const { keyword = '' } = useParams()
-  const { t } = useTranslation() // Hook for translations
+ 
 
   const {
     data: properties,
@@ -33,12 +32,16 @@ const LastProperties = () => {
             <article className='home-about-details'>
               <div className='hero-content hero-home-about'>
                 <div className='dote'></div>
-                <span className='hero-text'>{t('nearestProperty')}</span>
-                <h3>{t('locateClosestProperty')}</h3>
+                <span className='hero-text'>{'Propriété la Plus Proche'}</span>
+                <h3>{'Trouvez la Propriété la Plus Près de Chez Vous'}</h3>
               </div>
             </article>
             <article className='home-about-content'>
-              <p>{t('propertyDescription')}</p>
+              <p>
+                {
+                  'Rencontrez les professionnels dédiés de Keur Express qui sont là pour vous aider à naviguer dans le marché immobilier en toute confiance.'
+                }
+              </p>
             </article>
           </div>
 
@@ -68,7 +71,7 @@ const LastProperties = () => {
                     </p>
 
                     <p className='property-price'>
-                      {t('price')} ${property.price.toLocaleString()}
+                      {'price'} ${property.price.toLocaleString()}
                     </p>
 
                     <div className='property-location'>
@@ -81,38 +84,38 @@ const LastProperties = () => {
                         rel='noopener noreferrer'
                         className='property-map-link'
                       >
-                        {t('viewOnMap')}
+                        {'viewOnMap'}
                       </a>
                     </div>
 
                     <div className='property-stats'>
                       <p>
-                        <strong>{property.bedrooms}</strong> {t('bedrooms')}
+                        <strong>{property.bedrooms}</strong> {'bedrooms'}
                       </p>
                       <p>
-                        <strong>{property.bathrooms}</strong> {t('bathrooms')}
+                        <strong>{property.bathrooms}</strong> {'bathrooms'}
                       </p>
                       <p>
-                        <strong>{property.size}</strong> {t('sqft')}
+                        <strong>{property.size}</strong> {'sqft'}
                       </p>
                     </div>
 
                     <div className='property-status'>
                       <p>
-                        {t('status')}: <strong>{property.status}</strong>
+                        {'status'}: <strong>{property.status}</strong>
                       </p>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p>{t('noProperties')}</p>
+              <p>{'noProperties'}</p>
             )}
           </div>
 
           <div className='view-all'>
             <button className='btn-view'>
-              <Link to={'/property'}>{t('viewAllProperties')}</Link>
+              <Link to={'/property'}>{'Voir toutes les propriétés'}</Link>
             </button>
           </div>
         </div>

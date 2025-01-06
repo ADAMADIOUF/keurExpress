@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ScrollTrigger from 'react-scroll-trigger'
 import CountUp from 'react-countup'
-import { useTranslation } from 'react-i18next' // Import useTranslation hook
 
 const ProgressBar = () => {
   const [count, setCount] = useState(false)
-  const { t } = useTranslation() // Initialize translation function
 
   useEffect(() => {
     // Simulates a loading state when the component mounts
@@ -18,12 +16,22 @@ const ProgressBar = () => {
     }
   }, [])
 
-  // Reusable stats data with translation keys
+  // Reusable stats data with translation keys for French
   const stats = [
-    { end: 430987, labelKey: 'propertyReady' },
-    { end: 543210, labelKey: 'happyCustomers' },
-    { end: 1200, labelKey: 'totalListings' },
+    { end: 430987, labelKey: 'proprietesPrêtes' }, // 'propertyReady' in French
+    { end: 543210, labelKey: 'clientsSatisfaits' }, // 'happyCustomers' in French
+    { end: 1200, labelKey: 'listingsTotaux' }, // 'totalListings' in French
   ]
+
+  // Function to translate label keys
+  const translate = (key) => {
+    const translations = {
+      proprietesPrêtes: 'Propriétés Prêtes',
+      clientsSatisfaits: 'Clients Satisfaits',
+      listingsTotaux: 'Annonces Totales',
+    }
+    return translations[key] || key
+  }
 
   return (
     <div className='progressBar'>
@@ -42,7 +50,7 @@ const ProgressBar = () => {
                     separator=','
                     duration={3}
                   />
-                  + {t(stat.labelKey)} {/* Translate the label */}
+                  + {translate(stat.labelKey)} {/* Translate the label */}
                 </>
               )}
             </div>

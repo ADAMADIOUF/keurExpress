@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: function () {
-        return !this.googleId
+        return !this.clerkId // Only require password if Clerk ID is not provided
       },
     },
     role: {
@@ -17,10 +17,10 @@ const UserSchema = new mongoose.Schema(
       default: 'user',
     },
     contactNumber: { type: String },
-    googleId: {
+    clerkId: {
       type: String,
       unique: true,
-      sparse: true,
+      sparse: true, // Allows null values to exist while keeping uniqueness
     },
     displayName: { type: String },
     profileImage: {
@@ -34,7 +34,6 @@ const UserSchema = new mongoose.Schema(
     },
     lastLogin: {
       type: Date,
-
       default: Date.now(),
     },
     resetPasswordToken: String,
@@ -63,6 +62,18 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)
 }
+UserSchema.statics.findOrCreateByClerkId = async function(clerkId, email, firstName, profileImage) {
+  let user = await this.findOne({ clerkId })
 
+  if (!user) {
+    user = await this.create({
+      clerkId,
+      email,
+      name: firstName,
+      profileImage,
+    })
+  }
+  return user
+}
 const User = mongoose.model('User', UserSchema)
 export default User

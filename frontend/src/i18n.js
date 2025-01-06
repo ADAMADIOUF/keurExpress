@@ -1,33 +1,22 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import enTranslations from './locales/en/translation.json'
-import frTranslations from './locales/fr/translation.json'
-import Backend from 'i18next-http-backend'
-// Retrieve the saved language from localStorage or default to 'en'
-const savedLanguage = localStorage.getItem('language') || 'en'
+import i18nextHttpBackend from 'i18next-http-backend'
+import i18nextLanguageDetector from 'i18next-browser-languagedetector'
 
-i18n.use(initReactI18next).init({
-  backend: {
-    loadPath: '/locales/{{lng}}/{{ns}}.json', // Match the backend's served path
-  },
-  resources: {
-    en: {
-      translation: enTranslations,
+i18n
+  .use(i18nextHttpBackend) // Use this to load translations from your backend
+  .use(i18nextLanguageDetector) // Language detector
+  .use(initReactI18next) // Pass i18next instance to react-i18next
+  .init({
+    fallbackLng: 'en', // Default language
+    debug: true,
+    backend: {
+      loadPath: 'http://localhost:5000/api/translate', // Set your translation API endpoint
     },
-    fr: {
-      translation: frTranslations,
+    detection: {
+      order: ['cookie', 'localStorage', 'navigator'],
+      caches: ['cookie'],
     },
-  },
-  lng: savedLanguage, // Use saved language
-  fallbackLng: 'en',
-  interpolation: {
-    escapeValue: false, // React already escapes values
-  },
-})
-
-i18n.on('languageChanged', (lng) => {
-  // Save the language to localStorage whenever it changes
-  localStorage.setItem('language', lng)
-})
+  })
 
 export default i18n

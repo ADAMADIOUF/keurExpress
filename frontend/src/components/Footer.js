@@ -1,12 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+
 import a from '../assets/f1.png'
 import b from '../assets/f2.png'
 import c from '../assets/f3.png'
 
 const Footer = () => {
-  const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
 
   return (
@@ -15,89 +14,89 @@ const Footer = () => {
         <div className='footer-about'>
           <img
             src='https://example.com/logo.png'
-            alt='NestBes Logo'
+            alt='Logo NestBes'
             className='footer-logo'
           />
-          <p>{t('footer.about')}</p>
+          <p>
+            {
+              'Embarquez dans un voyage pour trouver votre espace de vie idéal avec NestBes. Explorez une sélection de propriétés soigneusement choisies.'
+            }
+          </p>
         </div>
 
-        {/* Newsletter Signup */}
+        {/* Inscription à la Newsletter */}
         <div className='footer-newsletter'>
-          <h4>{t('footer.newsletterTitle')}</h4>
+          <h4>{'Entrez Votre Email'}</h4>
           <form>
             <input
               type='email'
-              placeholder={t('footer.emailPlaceholder')}
+              placeholder={'Entrez Votre Email'}
               className='footer-input'
             />
             <button type='submit' className='btn'>
-              {t('footer.subscribe')}
+              {"S'abonner"}
             </button>
           </form>
         </div>
 
-        {/* Quick Links */}
+        {/* Liens Rapides */}
         <div className='footer-links'>
-          <h4>{t('footer.quickLinks')}</h4>
+          <h4>{'Liens Rapides'}</h4>
           <ul>
             <li>
-              <Link to='/'>{t('footer.home')}</Link>
+              <Link to='/'>{'Accueil'}</Link>
             </li>
             <li>
-              <Link to='/about'>{t('footer.aboutUs')}</Link>
+              <Link to='/about'>{'À propos'}</Link>
             </li>
             <li>
-              <Link to='/property'>{t('footer.property')}</Link>
+              <Link to='/property'>{'Propriétés'}</Link>
             </li>
             <li>
-              <Link to='/agent'>{t('footer.agent')}</Link>
+              <Link to='/agent'>{'Agents'}</Link>
             </li>
             <li>
-              <Link to='/all-blogs'>{t('footer.blog')}</Link>
+              <Link to='/all-blogs'>{'Blog'}</Link>
             </li>
             <li>
-              <Link to='/contact'>{t('footer.contact')}</Link>
+              <Link to='/contact'>{'Contact'}</Link>
             </li>
           </ul>
         </div>
 
-        {/* Utility Pages */}
+        {/* Pages Utilitaires */}
         <div className='footer-utility'>
-          <h4>{t('footer.utilityPages')}</h4>
+          <h4>{'Pages Utilitaires'}</h4>
           <ul>
             <li>
-              <Link to='/password-protected'>
-                {t('footer.passwordProtected')}
-              </Link>
+              <Link to='/password-protected'>{'Protégé par mot de passe'}</Link>
             </li>
             <li>
-              <Link to='/404'>{t('footer.pageNotFound')}</Link>
+              <Link to='/404'>{'Page Non Trouvée'}</Link>
             </li>
             <li>
-              <Link to='/style-guide'>{t('footer.styleGuide')}</Link>
+              <Link to='/style-guide'>{'Guide de style'}</Link>
             </li>
             <li>
-              <Link to='/license'>{t('footer.license')}</Link>
+              <Link to='/license'>{'Licence'}</Link>
             </li>
             <li>
-              <Link to='/changelog'>{t('footer.changelog')}</Link>
+              <Link to='/changelog'>{'Journal des modifications'}</Link>
             </li>
           </ul>
         </div>
 
-        {/* Contact Information */}
+        {/* Informations de Contact */}
         <div className='footer-contact'>
-          <h4>{t('footer.contact')}</h4>
+          <h4>{'Contact'}</h4>
           <p>
-            {t('footer.email')}:{' '}
+            {'Email'}:{' '}
             <a href='mailto:contact@nestbes.com'>contact@nestbes.com</a>
           </p>
           <p>
-            {t('footer.phone')}: <a href='tel:(316) 555-0116'>(316) 555-0116</a>
+            {'Téléphone'}: <a href='tel:(316) 555-0116'>(316) 555-0116</a>
           </p>
-          <p>
-            {t('footer.address')}: 1901 Thornridge Cir. Shiloh, Hawaii 81063
-          </p>
+          <p>{'Adresse'}: 1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
         </div>
       </div>
       <div className='footer-image-absolute'>
@@ -116,8 +115,8 @@ const Footer = () => {
       </div>
       <div className='footer-copyright'>
         <p>
-          {t('footer.copyright')} {currentYear} <strong>Keur Express</strong> |{' '}
-          {t('footer.designedBy')}
+          {'Copyright'} {currentYear} <strong>Keur Express</strong> |{' '}
+          {'Conçu par'}
           <a
             href='https://brandbes.com'
             target='_blank'
@@ -125,7 +124,7 @@ const Footer = () => {
           >
             AbsaTech
           </a>{' '}
-          - {t('footer.poweredBy')}{' '}
+          - {'Propulsé par'}{' '}
           <a
             href='https://webflow.com'
             target='_blank'

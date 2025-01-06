@@ -1,4 +1,4 @@
-import { CONTACT_URL, MESSAGE_URL } from '../contstants'
+import { CONTACT_URL, MESSAGE_URL,TRANSLATION_URL } from '../contstants'
 import { apiSlice } from './apiSlice'
 
 export const contactApiSlice = apiSlice.injectEndpoints({
@@ -17,7 +17,18 @@ export const contactApiSlice = apiSlice.injectEndpoints({
         body: messageData,
       }),
     }),
+    translateText: builder.mutation({
+      query: ({ text, targetLanguage }) => ({
+        url: TRANSLATION_URL,
+        method: 'POST',
+        body: { text, targetLanguage },
+      }),
+    }),
   }),
 })
 
-export const { useSendContactFormMutation, useSendMessageMutation } = contactApiSlice
+export const {
+  useSendContactFormMutation,
+  useSendMessageMutation,
+  useTranslateTextMutation,
+} = contactApiSlice

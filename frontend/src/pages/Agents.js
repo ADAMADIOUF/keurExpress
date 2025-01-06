@@ -4,10 +4,10 @@ import Loading from '../components/Loading'
 import Error from '../components/Error'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram } from 'react-icons/fa' // Import icons
-import { useTranslation } from 'react-i18next'
+
 
 const Agents = () => {
-  const { t } = useTranslation()
+
   const { data: agents, error, isLoading } = useGetAgentsQuery()
 
   if (isLoading) {
@@ -15,7 +15,7 @@ const Agents = () => {
   }
 
   if (error) {
-    return <Error message={t('agents.errorMessage')} />
+    return <Error message={('agents.errorMessage')} />
   }
 
   const agentsList = agents || []
@@ -72,27 +72,27 @@ const Agents = () => {
                       target='_blank'
                       rel='noopener noreferrer'
                     >
-                      {t('agentTwo.visitWebsite')}
+                      {'agentTwo.visitWebsite'}
                     </a>
                   </div>
                 )}
                 {/* View Details Link */}
                 <article className='agent-view-all'>
                   <Link to={`/agent/${agent._id}`}>
-                    {t('agentTwo.viewDetails')}
+                    {'agentTwo.viewDetails'}
                   </Link>
                 </article>
               </div>
             </div>
           ))
         ) : (
-          <p>{t('agentTwo.noAgents')}</p>
+          <p>{'agentTwo.noAgents'}</p>
         )}
       </div>
 
       <div className='view-all'>
         <button className='btn'>
-          <Link to='/all-agents'>{t('agentTwo.viewAll')}</Link>
+          <Link to='/all-agents'>{'Voir Tous les Agents'}</Link>
         </button>
       </div>
     </div>

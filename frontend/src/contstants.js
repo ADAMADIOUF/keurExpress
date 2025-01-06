@@ -2,6 +2,7 @@ export const BASE_URL = ''
 export const PROPERTIES_URL = `/api/properties`
 export const AGENTS_URL = `/api/agents` 
 export const BLOGS_URL = `/api/blogs`
+export const TRANSLATION_URL = `/api/translation`
 export const USERS_URL = `/api/users`
 export const USERS_LOGIN_GOOGLE = `/api/auth`
 export const ORDERS_URL = `/api/orders`

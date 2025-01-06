@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion' // Importing motion for animations
-import { useTranslation } from 'react-i18next' // Import i18next translation hook
+
 import a from '../assets/c1.png'
 import b from '../assets/c2.png'
 import c from '../assets/c3.png'
@@ -8,14 +8,18 @@ import d from '../assets/c4.png'
 import e from '../assets/c5.png'
 
 const Companies = () => {
-  const { t } = useTranslation() // Use the useTranslation hook to get translations
+ 
 
   return (
     <div className='companies'>
       <div className='section-center'>
         <div className='companies-title'>
           <div className='line'></div>
-          <h2 dangerouslySetInnerHTML={{ __html: t('companies.title') }} />{' '}
+          <h2
+            dangerouslySetInnerHTML={{
+              __html: ' Approuvé par plus de 1000 entreprises... ',
+            }}
+          />{' '}
           {/* Use translation for title */}
           <div className='line'></div>
         </div>

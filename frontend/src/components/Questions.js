@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
-import { useTranslation } from 'react-i18next' // Import i18next translation hook
+
 
 const Questions = ({ setIsImageMoving }) => {
   const [isOpen, setIsOpen] = useState(null) // To manage which question is open
-  const { t } = useTranslation() // Use the useTranslation hook to get translations
+ 
 
   // Toggle function to open or close a specific question
   const toggleQuestion = (index) => {
@@ -17,13 +17,13 @@ const Questions = ({ setIsImageMoving }) => {
     <div className='questions'>
       <div className='question-item'>
         <div className='question-title' onClick={() => toggleQuestion(1)}>
-          <h2>{t('questions.mission')}</h2>{' '}
-          {/* Use translation for mission title */}
+          <h2>{'Notre mission'}</h2> {/* Use translation for mission title */}
           {isOpen === 1 ? <FaAngleUp /> : <FaAngleDown />} {/* Toggle icon */}
         </div>
         {isOpen === 1 && (
           <p className='question-description'>
-            {t('questions.missionDescription')}{' '}
+            {`Notre mission est d'offrir un service exceptionnel et des innovations qui
+    améliorent la vie de nos clients.`}{' '}
             {/* Use translation for mission description */}
           </p>
         )}
@@ -31,42 +31,42 @@ const Questions = ({ setIsImageMoving }) => {
 
       <div className='question-item'>
         <div className='question-title' onClick={() => toggleQuestion(2)}>
-          <h2>{t('questions.transparency')}</h2>{' '}
+          <h2>{'Transparence et intégrité'}</h2>{' '}
           {/* Use translation for transparency title */}
           {isOpen === 2 ? <FaAngleUp /> : <FaAngleDown />} {/* Toggle icon */}
         </div>
         {isOpen === 2 && (
           <p className='question-description'>
-            {t('questions.transparencyDescription')}{' '}
-            {/* Use translation for transparency description */}
+            Nous maintenons la transparence et l'intégrité en garantissant
+            l'honnêteté et l'ouverture dans tout ce que nous faisons.
           </p>
         )}
       </div>
 
       <div className='question-item'>
         <div className='question-title' onClick={() => toggleQuestion(3)}>
-          <h2>{t('questions.customerCentric')}</h2>{' '}
+          <h2>{'Approche centrée sur le client'}</h2>{' '}
           {/* Use translation for customer-centric title */}
           {isOpen === 3 ? <FaAngleUp /> : <FaAngleDown />} {/* Toggle icon */}
         </div>
         {isOpen === 3 && (
           <p className='question-description'>
-            {t('questions.customerCentricDescription')}{' '}
-            {/* Use translation for customer-centric description */}
+            Nous nous concentrons sur la compréhension et la satisfaction des
+            besoins de nos clients pour fournir des solutions de haute qualité.
           </p>
         )}
       </div>
 
       <div className='question-item'>
         <div className='question-title' onClick={() => toggleQuestion(4)}>
-          <h2>{t('questions.innovation')}</h2>{' '}
+          <h2>{'Technologie innovante'}</h2>{' '}
           {/* Use translation for innovation title */}
           {isOpen === 4 ? <FaAngleUp /> : <FaAngleDown />} {/* Toggle icon */}
         </div>
         {isOpen === 4 && (
           <p className='question-description'>
-            {t('questions.innovationDescription')}{' '}
-            {/* Use translation for innovation description */}
+            Nous adoptons les technologies de pointe pour créer des produits et
+            services innovants qui favorisent le progrès.
           </p>
         )}
       </div>

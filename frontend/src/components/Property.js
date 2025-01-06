@@ -1,9 +1,8 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next' // Import i18next translation hook
+
 import PropertieHome from '../pages/PropertieHome'
 
 const Property = () => {
-  const { t } = useTranslation() // Use the translation hook
 
   return (
     <div className='property'>
@@ -12,15 +11,17 @@ const Property = () => {
           <article className='home-about-details'>
             <div className='hero-content hero-home-about'>
               <div className='dote'></div>
-              <span className='hero-text'>{t('property')}</span>{' '}
+              <span className='hero-text'>Propriété</span>{' '}
               {/* Translated text for 'Property' */}
-              <h3>{t('findYourPerfectHome')}</h3>{' '}
+              <h3>Trouvez votre maison idéale avec Keur Express</h3>{' '}
               {/* Translated text for 'Find Your Perfect Home With Keur Express' */}
             </div>
           </article>
           <article className='home-about-content'>
             <p>
-              {t('discoverHomes')} {/* Translated text for the description */}
+              Où vous pouvez découvrir une large gamme de maisons disponibles à
+              la vente et à la location. Parcourez nos annonces soigneusement
+              sélectionnées ci-dessous pour trouver la propriété idéale.
             </p>
           </article>
         </div>

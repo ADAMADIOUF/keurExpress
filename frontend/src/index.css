@@ -163,10 +163,27 @@ nav {
   justify-content: space-between;
   padding: 1rem;
 }
-.logo{
-  width: 150px;
-  height: 150px;
+
+.logo {
+  width: 150px; 
+  height: 100px; 
+  object-fit: contain; 
 }
+
+@media (min-width: 768px) {
+  .logo {
+    width: 200px; 
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo {
+    width: 300px; 
+    height: 150px;
+  }
+}
+
+
 .nav-toggle {
   font-size: 1.5rem;
   color: var(--clr-white);
@@ -179,9 +196,7 @@ nav {
   color: var(--clr-white);
   transform: rotate(90deg);
 }
-.logo {
-  height: 40px;
-}
+
 .links a {
   color: var(--clr-primary-3);
   font-size: 1.2rem;

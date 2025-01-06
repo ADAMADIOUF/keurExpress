@@ -5,6 +5,7 @@ import { useLoginMutation } from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
 import { toast } from 'react-toastify'
 import { FcGoogle } from 'react-icons/fc'
+import GoogleLoginWithClerk from './GoogleLoginWithClerk'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -40,60 +41,7 @@ const Login = () => {
     }
   }
 
-  // Google Login Handler
-  const handleGoogleLogin = async () => {
-    try {
-      
-      await fetch('http://localhost:5000/api/users/auth/google/init', {
-        method: 'GET',
-        credentials: 'include',
-      })
-
-      // Redirect the user to Google OAuth
-      window.location.href = 'http://localhost:5000/api/users/auth/google'
-    } catch (error) {
-      console.error('Error initiating Google login:', error)
-      toast.error('Failed to initiate Google login')
-    }
-  }
-
-  // Callback handling after Google OAuth
-  useEffect(() => {
-    const handleGoogleCallback = async () => {
-      const url = window.location.href
-      if (url.includes('google')) {
-        try {
-          const res = await fetch(
-            'http://localhost:5000/api/users/auth/google/success',
-            {
-              method: 'GET',
-              credentials: 'include', // Ensure cookies are included
-            }
-          )
-
-          if (res.ok) {
-            const userData = await res.json()
-
-            // Dispatch the user data to Redux
-            dispatch(setCredentials(userData))
-
-            // Redirect to the profile page after successful login
-            navigate('/profile')
-          } else {
-            toast.error('Failed to fetch user data after Google login')
-          }
-        } catch (error) {
-          toast.error('Error in Google callback, please try again.')
-        }
-      }
-    }
-
-    // Ensure we only run callback if we're on the correct URL after Google redirect
-    if (window.location.href.includes('google')) {
-      handleGoogleCallback()
-    }
-  }, [navigate, dispatch])
-
+  
   return (
     <div style={styles.container}>
       <h2>Login</h2>
@@ -129,18 +77,8 @@ const Login = () => {
 
       <p style={styles.orText}>or</p>
 
-      {/* Google login button */}
-      <button
-        onClick={handleGoogleLogin}
-        style={styles.googleButton}
-        className='google-login'
-      >
-        Login with Google{' '}
-        <span>
-          <FcGoogle />
-        </span>
-      </button>
-
+     
+<GoogleLoginWithClerk/>
       <p style={styles.signupText}>
         <Link to='/forgot-password'>Forgot your password?</Link>
         Don't have an account? <Link to='/register'>Sign up</Link>

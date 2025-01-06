@@ -2,7 +2,6 @@ import User from "../models/User.js";
 
 import asyncHandler from "../middleware/asyncHandler.js"
 import generateToken from '../utils/generateToken.js'
-import generateTokenGoogle from "../utils/generateTokenGoogle.js";
 import crypto from 'crypto'
 import {
   sendPasswordResetEmail,
@@ -79,45 +78,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-// Google authentication callback (existing)
 
-export const googleAuthCallback = async (
-  accessToken,
-  refreshToken,
-  profile,
-  done
-) => {
-  try {
-    console.log(profile)
-
-    if (!profile.id || !profile.emails || !profile.emails[0]?.value) {
-      return done(new Error('Invalid Google profile structure'), null)
-    }
-
-   
-    let user = await User.findOne({
-      $or: [{ googleId: profile.id }, { email: profile.emails[0]?.value }],
-    })
-
-    if (!user) {
-      user = new User({
-        googleId: profile.id,
-        name: `${profile.name.givenName} ${profile.name.familyName}`,
-        email: profile.emails[0]?.value,
-        profileImage:
-          profile.photos?.[0]?.value || '/images/default-avatar.png',
-      })
-      await user.save()
-    }
-
-   
-    const token = generateTokenGoogle(user._id) 
-    done(null, user, { message: 'Google Auth Success', token }) 
-  } catch (err) {
-    console.error('Google Auth Error:', err)
-    done(err, null)
-  }
-}
 
 export const getProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id) 
@@ -323,4 +284,29 @@ export const logoutUser = asyncHandler(async (req, res) => {
     expires: new Date(0),
   })
   res.status(200).json({ message: 'logout successfully' })
+})
+
+export const authenticateWithClerk = asyncHandler(async (req, res) => {
+  try {
+    const { googleToken } = req.body // Get the Google token from the request
+
+    // Use the Clerk SDK to authenticate the user with the Google token
+    const user = await clerkClient.users.create({
+      googleOAuthToken: googleToken, // Pass the token to Clerk
+    })
+
+    // Respond with the user details or token
+    generateToken(res, user._id)
+
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profileImage: user.profileImage,
+    })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Authentication error', error: error.message })
+  }
 })

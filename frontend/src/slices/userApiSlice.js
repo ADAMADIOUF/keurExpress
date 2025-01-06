@@ -96,9 +96,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUserDetails: builder.query({
       query: (userId) => ({
         url: `${USERS_URL}/${userId}`,
-        credentials: 'include', 
+        credentials: 'include',
       }),
-      providesTags: ['User'], 
+      providesTags: ['User'],
       keepUnusedDataFor: 5,
     }),
     updateUser: builder.mutation({
@@ -108,6 +108,15 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ['Users'],
+    }),
+    clerkGoogleLogin: builder.mutation({
+      query: (googleToken) => ({
+        url: `${USERS_URL}/authenticate/clerk`, // Adjust the endpoint as needed
+        method: 'POST',
+        body: { token: googleToken }, // Send Google token in the body
+        credentials: 'include', // Include credentials for Google login
+      }),
+      invalidatesTags: ['User'], // Invalidate user data after Clerk Google login
     }),
   }),
 })
@@ -125,4 +134,5 @@ export const {
   useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation,
+  useClerkGoogleLoginMutation,
 } = usersApiSlice

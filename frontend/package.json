@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@clerk/clerk-react": "^5.21.0",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.5.0",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "cra-template": "1.2.0",
     "framer-motion": "^11.15.0",
@@ -20,6 +22,7 @@
     "react-circular-progressbar": "^2.1.0",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
+    "react-google-login": "^5.2.2",
     "react-i18next": "^15.4.0",
     "react-icons": "^5.4.0",
     "react-progressbar": "^15.4.1",
@@ -33,8 +36,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "extract-translations": "i18next-parser"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -54,9 +56,6 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "i18next-parser": "^9.1.0"
-  },
   "i18next-parser": {
     "output": "src/locales/$LOCALE/translation.json",
     "locales": [
@@ -65,11 +64,6 @@
     ],
     "keySeparator": false,
     "namespaceSeparator": false,
-    "defaultNamespace": "translation",
-    "createOldCatalogs": false,
-    "sort": true,
-    "lineEnding": "auto",
-    "useKeysAsDefaultValue": true,
-    "defaultValue": ""
+    "defaultNamespace": "translation"
   }
 }

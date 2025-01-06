@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
 
-import logo from "../assets/keur-logo1.png"
+import logo from "../assets/logokeurexpress1.png"
 import { useLogoutMutation } from '../slices/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import LanguageSwitcher from './LanguageSwitcher'
-import { useTranslation } from 'react-i18next'
+import TranslateComponent from './TranslateComponent'
+
+
 const Navbar = () => {
-   const { t } = useTranslation()
+  
   const [showLinks, setShowLinks] = useState(false)
   const linksContainerRef = useRef(null)
   const linksRef = useRef(null)
@@ -68,7 +69,7 @@ const Navbar = () => {
       <div className='nav-center'>
         <div className='nav-flex'>
           <div className='nav-header'>
-          <img src={logo} alt="" className="logo" />
+            <img src={logo} alt='' className='logo' />
             <button className='nav-toggle' onClick={toggleLinks}>
               {showLinks ? <FaTimes /> : <FaBars />}
             </button>
@@ -83,12 +84,11 @@ const Navbar = () => {
                       href={url}
                       className={`${className ? className : ''} no-wrap`}
                     >
-                      {t(text)}
+                      {text}
                     </a>
                   </li>
                 )
               })}
-              <LanguageSwitcher />
             </ul>
           </div>
         </div>
@@ -105,7 +105,7 @@ const Navbar = () => {
             })}
           </ul>
         )}
-
+       
         {!userInfo ? (
           <div className='profle-flex'>
             <li style={styles.navItem}>
@@ -124,12 +124,12 @@ const Navbar = () => {
           <>
             <li style={styles.navItem}>
               <Link to='/profile' style={styles.link}>
-                <FaUser /> {t('Profile')}
+                <FaUser /> {'Profile'}
               </Link>
             </li>
             <li style={styles.navItem}>
               <Link to='/wishlist' style={styles.link}>
-                <FaHeart /> {t('Wishlist')}
+                <FaHeart /> {'Wishlist'}
               </Link>
             </li>
             <span className='username'>{userInfo.name}</span>
@@ -145,19 +145,19 @@ const Navbar = () => {
             {userInfo.role === 'admin' && (
               <>
                 <Link to='/admin/dashboard' className='dropdown-item'>
-                  {t('Dashboard')}
+                  {'Dashboard'}
                 </Link>
                 <Link to='/admin/propertiesList' className='dropdown-item'>
-                  {t('All properties')}
+                  {'All properties'}
                 </Link>
                 <Link to='/admin/userlist' className='dropdown-item'>
-                  {t('All Users')}
+                  {'All Users'}
                 </Link>
               </>
             )}
             <li style={styles.navItem}>
               <button onClick={logoutHandler} className='logout-button'>
-                {t('Logout')} {isGoogleLogin ? `(Google)` : ''}
+                {'Logout'} {isGoogleLogin ? `(Google)` : ''}
               </button>
             </li>
           </>

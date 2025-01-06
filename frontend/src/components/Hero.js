@@ -1,7 +1,7 @@
 import React from 'react'
-import { motion } from 'framer-motion' // Importing motion from framer-motion
+import { motion } from 'framer-motion' 
 import { FaArrowDown, FaMapMarkerAlt } from 'react-icons/fa'
-import { useTranslation } from 'react-i18next' // Importing useTranslation hook
+
 
 import bigimg from '../assets/hero1.png'
 import a from '../assets/herorounded.png'
@@ -10,10 +10,9 @@ import SearchTerm from './SerachTerm'
 import ProgressBar from './ProgressBar'
 
 const Hero = () => {
-  const { t } = useTranslation() // Access the translation function
-  const title = t('property') // Translated 'Property'
-  const price = '1500'
-  const location = t('about') // Example using 'About' translation
+  const title = 'Bel appartement' 
+  const price = '1500' 
+  const location = 'Sénégal, Medina' 
 
   return (
     <div className='hero section-center'>
@@ -26,12 +25,16 @@ const Hero = () => {
             transition={{ duration: 1, ease: 'easeOut' }} // Animation duration and easing
           >
             <div className='dote'></div>
-            <span className='hero-text'>{t('home')}</span>{' '}
-            {/* Translated 'Home' */}
+            <span className='hero-text'>Trouvez Votre Maison de Rêve</span>
             <h2>
-              {t('about')} <span className='hero-text-2'>Keur Express</span>
+              Découvrez Votre Maison de Rêve avec{' '}
+              <span className='hero-text-2'>Keur Express</span>
             </h2>
-            <p>{t('partners')}</p> {/* Translated 'Partners' */}
+            <p>
+              Partez à la recherche de votre espace de vie idéal avec Keur
+              Express. Explorez une sélection de propriétés soigneusement
+              choisies.
+            </p>
           </motion.div>
 
           <ProgressBar />
@@ -65,7 +68,7 @@ const Hero = () => {
             <img src={b} alt='Second Hero' className='second-hero-img' />
             <h2 className='title'>{title}</h2>
             <p className='price'>
-              ${price} {t('perMonth')}
+              ${price} {'perMonth'}
             </p>{' '}
             {/* Add 'perMonth' translation */}
             <div className='location'>

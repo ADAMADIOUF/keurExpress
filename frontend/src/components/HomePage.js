@@ -9,9 +9,9 @@ import AgentsHeader from './AgentsHeader'
 import Blog from '../pages/Blog'
 import BannerReusable from './BannerResubale'
 import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+
 const HomePage = () => {
-    const { t } = useTranslation()
+   
    const {  keyword } = useParams()
   return (
     <div>
@@ -26,10 +26,13 @@ const HomePage = () => {
       {!keyword && (
         <BannerReusable
           image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png'
-          title={t('banner.title')}
-          description={t('banner.description')}
+          title={`Trouvez Votre Maison de Rêve ? Contactez-Nous Aujourd'hui !`}
+          description={`Faites le premier pas vers l'accession à la propriété et contactez notre équipe d'experts chez Keur Express.
+
+En Savoir Plus Sur Nous
+Apprenez-en davantage sur qui nous sommes et comment nous pouvons vous aider à trouver la maison idéale.`}
           target='/about'
-          label={t('banner.label')}
+          label={'En Savoir Plus Sur Nous'}
         />
       )}
     </div>
