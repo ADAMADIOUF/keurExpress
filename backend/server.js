@@ -1,5 +1,5 @@
 import express from 'express'
-import { Clerk } from '@clerk/clerk-sdk-node' // Correct import
+
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
 import authRouter from './routers/authRoute.js'
@@ -19,8 +19,6 @@ dotenv.config()
 // Connect to the database
 connectDB()
 
-// Initialize Clerk SDK
-const clerk = Clerk({ apiKey: process.env.CLERK_API_KEY }) // Correct initialization
 
 const app = express()
 const port = process.env.PORT || 5000
