@@ -286,27 +286,27 @@ export const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'logout successfully' })
 })
 
-export const authenticateWithClerk = asyncHandler(async (req, res) => {
-  try {
-    const { googleToken } = req.body // Get the Google token from the request
+// export const authenticateWithClerk = asyncHandler(async (req, res) => {
+//   try {
+//     const { googleToken } = req.body // Get the Google token from the request
 
-    // Use the Clerk SDK to authenticate the user with the Google token
-    const user = await clerkClient.users.create({
-      googleOAuthToken: googleToken, // Pass the token to Clerk
-    })
+//     // Use the Clerk SDK to authenticate the user with the Google token
+//     const user = await clerkClient.users.create({
+//       googleOAuthToken: googleToken, // Pass the token to Clerk
+//     })
 
-    // Respond with the user details or token
-    generateToken(res, user._id)
+//     // Respond with the user details or token
+//     generateToken(res, user._id)
 
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      profileImage: user.profileImage,
-    })
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'Authentication error', error: error.message })
-  }
-})
+//     res.status(200).json({
+//       _id: user._id,
+//       name: user.name,
+//       email: user.email,
+//       profileImage: user.profileImage,
+//     })
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: 'Authentication error', error: error.message })
+//   }
+// })
