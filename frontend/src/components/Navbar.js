@@ -53,7 +53,10 @@ const Navbar = () => {
       console.error(error)
     }
   }
-
+  const handleLogoClick = () => {
+    navigate('/')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   useEffect(() => {
     if (linksContainerRef.current) {
       const linksHeight = linksRef.current.getBoundingClientRect().height
@@ -69,7 +72,15 @@ const Navbar = () => {
       <div className='nav-center'>
         <div className='nav-flex'>
           <div className='nav-header'>
-            <img src={logo} alt='' className='logo' />
+            <Link to={'/'}>
+              {' '}
+              <button
+                onClick={handleLogoClick}
+                style={{ border: 'none', background: 'none' }}
+              >
+                <img src={logo} alt='Logo' className='logo' />
+              </button>
+            </Link>
             <button className='nav-toggle' onClick={toggleLinks}>
               {showLinks ? <FaTimes /> : <FaBars />}
             </button>
@@ -105,7 +116,7 @@ const Navbar = () => {
             })}
           </ul>
         )}
-       
+
         {!userInfo ? (
           <div className='profle-flex'>
             <li style={styles.navItem}>
