@@ -1,6 +1,40 @@
 import Agent from '../models/Agent.js'
 import asyncHandler from '../middleware/asyncHandler.js'
 // Get all agents
+export const createAgents = asyncHandler(async (req, res) => {
+  console.log(req.body) // Log the incoming body
+
+  const {
+    name,
+    address,
+    profession,
+    contactNumber,
+    contactEmail,
+    description,
+    socialMedia,
+    website,
+    about,
+    image,
+  } = req.body
+
+  const agent = new Agent({
+    name,
+    address,
+    profession,
+    contactNumber,
+    contactEmail,
+    description,
+    socialMedia,
+    website,
+    about,
+    image,
+    user: req.user._id, // assuming `req.user._id` stores the authenticated user ID
+  })
+
+  const createdAgent = await agent.save()
+  res.status(201).json(createdAgent)
+})
+
 export const getAgents = asyncHandler( async (req, res) => {
   try {
     const agents = await Agent.find()

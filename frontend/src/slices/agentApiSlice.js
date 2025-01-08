@@ -30,6 +30,16 @@ export const agentApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Agent'],
     }),
 
+    // Add multiple agents (bulk creation)
+    createAgents: builder.mutation({
+      query: (data) => ({
+        url: `${AGENTS_URL}/create-agents`, 
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Agent'],
+    }),
+
     // Update an agent by ID
     updateAgent: builder.mutation({
       query: (data) => ({
@@ -55,6 +65,7 @@ export const {
   useGetAgentsQuery,
   useGetAgentByIdQuery,
   useAddAgentMutation,
+  useCreateAgentsMutation, 
   useUpdateAgentMutation,
   useDeleteAgentMutation,
 } = agentApiSlice

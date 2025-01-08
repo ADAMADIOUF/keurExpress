@@ -35,6 +35,8 @@ import ResetPassword from './pages/ResetPassword';
 import WishlistScreen from './screen/WishlistScreen';
 import SingleBlog from './pages/SingleBlog';
 import AllBlogs from './pages/AllBlogs';
+import AgentList from './screen/AgentList';
+import AgentEdit from './screen/AgentEdit';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,6 +76,11 @@ const router = createBrowserRouter(
         <Route
           path='/admin/propertiesList/:id/edit'
           element={<PropertieEdit />}
+        />
+        <Route path='/admin/agentList' element={<AgentList />} />
+        <Route
+          path='/admin/agentList/:id/edit'
+          element={<AgentEdit />}
         />
         <Route path='/admin/userlist' element={<UserListScreen />} />
         <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
