@@ -43,15 +43,15 @@ Découvrez les dernières informations, conseils et actualités du monde de l'im
                 <div className='blog-meta'>
                   <span>{blog.publishedDate}</span>
                   <p>
-                    <strong>{'blog.publishedOn'}:</strong>{' '}
+                    <strong>{'Publié le'}:</strong>{' '}
                     {new Date(blog.createdAt).toLocaleDateString()}
                   </p>
                   <p>
-                    <strong>{'blog.by'}:</strong> {blog.user.name}
+                    <strong>{'Par'}:</strong> {blog.user.name}
                   </p>
                 </div>
                 <Link to={`/blog/${blog._id}`} className='btn btn-primary'>
-                  {'blog.readMore'}
+                  {'Lire plus'}
                 </Link>
               </div>
             </div>

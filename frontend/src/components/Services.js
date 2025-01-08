@@ -35,24 +35,24 @@ const Services = () => {
           <article className='hero-details'>
             <div className='hero-content'>
               <div className='dote'></div>
-              <span className='hero-text'>What Sets Keur Express</span>
+              <span className='hero-text'>Ce qui distingue Keur Express</span>
             </div>
             {/* Service Cards */}
             {[
               {
-                title: 'Tailored Solutions',
+                title: 'Solutions Personnalisées',
                 description:
-                  'We craft customized strategies to meet your specific requirements and goals, ensuring exceptional outcomes.',
+                  'Nous élaborons des stratégies sur mesure pour répondre à vos besoins et objectifs spécifiques, garantissant des résultats exceptionnels.',
               },
               {
-                title: 'Clear Communication',
+                title: 'Communication Claire',
                 description:
-                  'We prioritize open and honest communication, keeping you informed and involved every step of the way.',
+                  'Nous privilégions une communication ouverte et honnête, en vous tenant informé et impliqué à chaque étape.',
               },
               {
-                title: 'Cutting-Edge Innovation',
+                title: 'Innovation de Pointe',
                 description:
-                  'Leveraging advanced technologies and modern tools, we deliver innovative solutions for a competitive edge.',
+                  'En utilisant des technologies avancées et des outils modernes, nous proposons des solutions innovantes pour un avantage concurrentiel.',
               },
             ].map((service, index) => (
               <motion.div
@@ -119,7 +119,7 @@ const Services = () => {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
               >
                 <source src={v} type='video/mp4' />
-                Your browser does not support the video tag.
+                Votre navigateur ne supporte pas la lecture de vidéos.
               </motion.video>
             </div>
           )}

@@ -17,24 +17,27 @@ const MessageList = ({ propertyId }) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
+const handleSubmit = async (e) => {
+  e.preventDefault()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    await sendMessage({ propertyId, messageData: formData })
-
-    if (isSuccess) {
-      setIsFormSubmitted(true)
-      setTimeout(() => {
-        setIsFormSubmitted(false)
-        setFormData({
-          senderName: '',
-          senderEmail: '',
-          senderPhone: '',
-          message: '',
-        })
-      }, 10000)
-    }
+  // Send the message
+  try {
+    await sendMessage({ propertyId, messageData: formData }).unwrap()
+    setIsFormSubmitted(true)
+    setTimeout(() => {
+      setIsFormSubmitted(false)
+      setFormData({
+        senderName: '',
+        senderEmail: '',
+        senderPhone: '',
+        message: '',
+      })
+    }, 10000)
+  } catch (error) {
+    console.error('Error sending message:', error)
   }
+}
+
 
   return (
     <>

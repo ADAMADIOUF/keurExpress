@@ -13,7 +13,7 @@ import { useGetProperiesQuery } from '../slices/propertieSlice'
 import { useGetUsersQuery } from '../slices/userApiSlice'
 import { useParams } from 'react-router-dom'
 
-// Register the chart components
+// Enregistrer les composants du graphique
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend)
 
 const DashBoard = () => {
@@ -45,36 +45,39 @@ const DashBoard = () => {
     isLoading: usersLoading,
   } = useGetUsersQuery()
 
-  console.log('Properties data:', properties)
-  console.log('Users data:', usersData)
+  console.log('Données des propriétés:', properties)
+  console.log('Données des utilisateurs:', usersData)
 
-  // Handle loading and error states
+  // Gérer les états de chargement et d'erreur
   if (propertiesLoading || usersLoading) {
-    return <div>Loading...</div>
+    return <div>Chargement...</div>
   }
 
   if (propertiesError || usersError) {
-    console.error('Error loading data:', propertiesError || usersError)
+    console.error(
+      'Erreur de chargement des données:',
+      propertiesError || usersError
+    )
     return (
       <div>
-        <p>Error loading data</p>
-        <p>Check console for more details.</p>
+        <p>Erreur de chargement des données</p>
+        <p>Vérifiez la console pour plus de détails.</p>
       </div>
     )
   }
 
-  // Safely calculate total counts
+  // Calculer en toute sécurité les totaux
   const totalUsers = Array.isArray(usersData) ? usersData.length : 0
   const totalProperties = Array.isArray(properties?.data)
     ? properties.data.length
-    : 0 // Access properties.data
+    : 0 // Accéder à properties.data
 
-  // Chart data for users and properties
+  // Données du graphique pour les utilisateurs et les propriétés
   const chartData = {
-    labels: ['Users', 'Properties'],
+    labels: ['Utilisateurs', 'Propriétés'],
     datasets: [
       {
-        label: 'Total Count',
+        label: 'Nombre total',
         data: [totalUsers, totalProperties],
         backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
         borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
@@ -83,13 +86,13 @@ const DashBoard = () => {
     ],
   }
 
-  // Chart options
+  // Options du graphique
   const options = {
     responsive: true,
     plugins: {
       title: {
         display: true,
-        text: 'Users vs Properties',
+        text: 'Utilisateurs vs Propriétés',
       },
       tooltip: {
         enabled: true,
@@ -104,17 +107,17 @@ const DashBoard = () => {
 
   return (
     <div className='dashboard-container'>
-      <h2>Dashboard</h2>
+      <h2>Tableau de bord</h2>
       <div className='chart-container'>
         <Bar data={chartData} options={options} />
       </div>
       <div className='summary-container'>
         <div className='summary-card'>
-          <h3>Total Users</h3>
+          <h3>Utilisateurs totaux</h3>
           <p>{totalUsers}</p>
         </div>
         <div className='summary-card'>
-          <h3>Total Properties</h3>
+          <h3>Propriétés totales</h3>
           <p>{totalProperties}</p>
         </div>
       </div>

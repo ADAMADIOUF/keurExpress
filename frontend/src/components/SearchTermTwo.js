@@ -19,7 +19,7 @@ const SearchTermTwo = () => {
   const [minPrice, setMinPrice] = useState(urlMinPrice || '')
   const [maxPrice, setMaxPrice] = useState(urlMaxPrice || '')
 
-  // Update the state values when URL params change
+  // Mettre à jour les valeurs de l'état lorsque les paramètres URL changent
   useEffect(() => {
     if (urlKeyword) setKeyword(urlKeyword)
     if (urlLocation) setLocation(urlLocation)
@@ -36,7 +36,7 @@ const SearchTermTwo = () => {
     urlMaxPrice,
   ])
 
-  // Handle form submission
+  // Gestion de la soumission du formulaire
   const submitHandler = (e) => {
     e.preventDefault()
     if (
@@ -51,7 +51,7 @@ const SearchTermTwo = () => {
         `/search/${keyword.trim()}/${location.trim()}/${address.trim()}/${propertyType.trim()}/${minPrice.trim()}/${maxPrice.trim()}`
       )
     } else {
-      navigate('/') // Navigate to homepage if no search query is provided
+      navigate('/') // Naviguer vers la page d'accueil si aucune requête de recherche n'est fournie
     }
   }
 
@@ -63,7 +63,7 @@ const SearchTermTwo = () => {
           name='keyword'
           onChange={(e) => setKeyword(e.target.value)}
           value={keyword}
-          placeholder='Search Houses...'
+          placeholder='Rechercher des maisons...'
           className='search-input'
         />
         <input
@@ -71,7 +71,7 @@ const SearchTermTwo = () => {
           name='location'
           onChange={(e) => setLocation(e.target.value)}
           value={location}
-          placeholder='Location'
+          placeholder='Lieu'
           className='search-input'
         />
         <input
@@ -79,7 +79,7 @@ const SearchTermTwo = () => {
           name='address'
           onChange={(e) => setAddress(e.target.value)}
           value={address}
-          placeholder='Address'
+          placeholder='Adresse'
           className='search-input'
         />
         <input
@@ -87,7 +87,7 @@ const SearchTermTwo = () => {
           name='propertyType'
           onChange={(e) => setPropertyType(e.target.value)}
           value={propertyType}
-          placeholder='Property Type'
+          placeholder='Type de propriété'
           className='search-input'
         />
         <input
@@ -95,7 +95,7 @@ const SearchTermTwo = () => {
           name='minPrice'
           onChange={(e) => setMinPrice(e.target.value)}
           value={minPrice}
-          placeholder='Min Price'
+          placeholder='Prix min'
           className='search-input'
         />
         <input
@@ -103,11 +103,11 @@ const SearchTermTwo = () => {
           name='maxPrice'
           onChange={(e) => setMaxPrice(e.target.value)}
           value={maxPrice}
-          placeholder='Max Price'
+          placeholder='Prix max'
           className='search-input'
         />
         <button type='submit' className='search-button search-input'>
-          Search
+          Rechercher
         </button>
       </form>
     </div>

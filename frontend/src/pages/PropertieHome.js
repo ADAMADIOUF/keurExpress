@@ -80,12 +80,12 @@ const PropertieHome = () => {
                 </Link>
               </p>
 
-              {/* Property Price */}
+              {/* Prix de la propriété */}
               <p className='property-price'>
-                Price: ${property.price.toLocaleString()}
+                Prix : ${property.price.toLocaleString()}
               </p>
 
-              {/* Property Location */}
+              {/* Localisation de la propriété */}
               <div className='property-location'>
                 <p>
                   {property.location.city}, {property.location.address}
@@ -96,27 +96,41 @@ const PropertieHome = () => {
                   rel='noopener noreferrer'
                   className='property-map-link'
                 >
-                  View on map
+                  Voir sur la carte
                 </a>
               </div>
 
-              {/* Property Stats */}
+              {/* Statistiques de la propriété */}
               <div className='property-stats'>
-                <p>
-                  <strong>{property.bedrooms}</strong> Bedrooms
-                </p>
-                <p>
-                  <strong>{property.bathrooms}</strong> Bathrooms
-                </p>
-                <p>
-                  <strong>{property.size}</strong> sq. ft
-                </p>
+                {property.bedrooms && (
+                  <p>
+                    <strong>{property.bedrooms}</strong> Chambres
+                  </p>
+                )}
+
+                {property.bathrooms && (
+                  <p>
+                    <strong>{property.bathrooms}</strong> Salles de bain
+                  </p>
+                )}
+
+                {property.livingrooms && (
+                  <p>
+                    <strong>{property.livingrooms}</strong> salons
+                  </p>
+                )}
+
+                {property.size && (
+                  <p>
+                    <strong>{property.size}</strong> m²
+                  </p>
+                )}
               </div>
 
-              {/* Property Status */}
+              {/* Statut de la propriété */}
               <div className='property-status'>
                 <p>
-                  Status: <strong>{property.status}</strong>
+                  Statut : <strong>{property.status}</strong>
                 </p>
               </div>
             </div>

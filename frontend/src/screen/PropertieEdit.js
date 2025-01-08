@@ -33,6 +33,7 @@ const PropertieEdit = () => {
   const [status, setStatus] = useState('For Sale')
   const [propertyType, setPropertyType] = useState('')
   const [description, setDescription] = useState('')
+   const [livingrooms, setLivingrooms] = useState(1)
   const [bedrooms, setBedrooms] = useState(5)
   const [bathrooms, setBathrooms] = useState(4)
   const [size, setSize] = useState(3500)
@@ -65,6 +66,7 @@ const PropertieEdit = () => {
       setStatus(propertie.status)
       setPropertyType(propertie.propertyType)
       setDescription(propertie.description)
+      setLivingrooms(propertie.livingrooms || 1)
       setBedrooms(propertie.bedrooms || 5)
       setBathrooms(propertie.bathrooms || 4)
       setSize(propertie.size || 3500)
@@ -86,6 +88,7 @@ const PropertieEdit = () => {
       images,
       status,
       propertyType,
+      livingrooms,
       bedrooms,
       bathrooms,
       size,
@@ -178,10 +181,10 @@ const handleImageUpload = (e) => {
 
   return (
     <div className='container'>
-      <h1>Edit Property</h1>
+      <h1>Modifier la propriété</h1>
       <form onSubmit={submitHandler}>
         <div>
-          <label htmlFor='title'>Title</label>
+          <label htmlFor='title'>Titre</label>
           <input
             type='text'
             id='title'
@@ -192,7 +195,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='price'>Price</label>
+          <label htmlFor='price'>Prix</label>
           <input
             type='number'
             id='price'
@@ -213,7 +216,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='locationCity'>City</label>
+          <label htmlFor='locationCity'>Ville</label>
           <input
             type='text'
             id='locationCity'
@@ -224,7 +227,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='locationAddress'>Address</label>
+          <label htmlFor='locationAddress'>Adresse</label>
           <input
             type='text'
             id='locationAddress'
@@ -235,7 +238,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='fullAddress'>Full Address</label>
+          <label htmlFor='fullAddress'>Adresse complète</label>
           <input
             type='text'
             id='fullAddress'
@@ -261,51 +264,73 @@ const handleImageUpload = (e) => {
                 <div key={index} className='image-item'>
                   <img
                     src={image || defaultImage}
-                    alt={`Image ${index + 1}`}
+                    alt={`Thumbnail ${index + 1}`} // More descriptive
                     className='img-thumbnail'
                   />
+
                   <button
                     type='button'
                     className='btn-delete'
                     onClick={() => deleteImageHandler(index)}
                   >
-                    Delete
+                    Supprimer
                   </button>
                 </div>
               ))}
             </div>
           ) : (
             <div className='image-preview'>
-              <img src={defaultImage} alt='Default' className='img-thumbnail' />
+              <img
+                src={defaultImage}
+                alt='Par défaut'
+                className='img-thumbnail'
+              />
             </div>
           )}
         </div>
 
         <div>
-          <label htmlFor='status'>Status</label>
+          <label htmlFor='status'>Statut</label>
           <select
             id='status'
             value={status}
             onChange={(e) => setStatus(e.target.value)}
             required
           >
-            <option value='For Sale'>For Sale</option>
-            <option value='For Rent'>For Rent</option>
+            <option value='For Sale'>À vendre</option>
+            <option value='For Rent'>À louer</option>
           </select>
         </div>
 
         <div>
-          <label htmlFor='propertyType'>Property Type</label>
-          <input
-            type='text'
+          <label htmlFor='propertyType'>Type de propriété</label>
+          <select
             id='propertyType'
             value={propertyType}
             onChange={(e) => setPropertyType(e.target.value)}
             required
+          >
+            <option value=''>Sélectionnez un type</option>
+            <option value='Villa'>Villa</option>
+            <option value='Apartment'>Appartement</option>
+            <option value='House'>Maison</option>
+            <option value='Commercial'>Commercial</option>
+            <option value='Land'>Terrain</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor='livingrooms'>Salons</label>
+          <input
+            type='number'
+            id='livingrooms'
+            value={livingrooms}
+            onChange={(e) => setLivingrooms(e.target.value)}
+            required
           />
         </div>
         <div>
-          <label htmlFor='bedrooms'>Bedrooms</label>
+          <label htmlFor='bedrooms'>Chambres</label>
           <input
             type='number'
             id='bedrooms'
@@ -316,7 +341,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='bathrooms'>Bathrooms</label>
+          <label htmlFor='bathrooms'>Salles de bain</label>
           <input
             type='number'
             id='bathrooms'
@@ -327,7 +352,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='size'>Size (sq ft)</label>
+          <label htmlFor='size'>Surface (en m²)</label>
           <input
             type='number'
             id='size'
@@ -338,7 +363,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='garage'>Has Garage</label>
+          <label htmlFor='garage'>Garage</label>
           <input
             type='checkbox'
             id='garage'
@@ -348,7 +373,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='store'>Has Store</label>
+          <label htmlFor='store'>Magasin</label>
           <input
             type='checkbox'
             id='store'
@@ -358,7 +383,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='isFeatured'>Is Featured</label>
+          <label htmlFor='isFeatured'>Est en vedette</label>
           <input
             type='checkbox'
             id='isFeatured'
@@ -367,7 +392,7 @@ const handleImageUpload = (e) => {
           />
         </div>
         <div>
-          <label htmlFor='userName'>First Name</label>
+          <label htmlFor='userName'>Prénom</label>
           <input
             type='text'
             id='userName'
@@ -379,7 +404,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='userLastName'>Last Name</label>
+          <label htmlFor='userLastName'>Nom de famille</label>
           <input
             type='text'
             id='userLastName'
@@ -403,7 +428,7 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='userPhone'>Phone Number</label>
+          <label htmlFor='userPhone'>Numéro de téléphone</label>
           <input
             type='text'
             id='userPhone'
@@ -415,7 +440,8 @@ const handleImageUpload = (e) => {
         </div>
 
         <div>
-          <label htmlFor='profileImage'>Profile Image</label>
+          <label htmlFor='profileImage'>Image de profil</label>
+
           <input
             type='file'
             id='profileImage'
@@ -426,17 +452,23 @@ const handleImageUpload = (e) => {
             <div className='image-preview'>
               <img
                 src={imagePreview}
-                alt='Profile Preview'
+                alt='Aperçu du profil'
                 className='img-thumbnail'
                 style={{ maxWidth: '150px', maxHeight: '150px' }}
               />
             </div>
           )}
         </div>
-
+        <button
+          type='button'
+          className='btn-delete'
+          onClick={() => setImagePreview(null)} // Reset image preview when clicked
+        >
+          Supprimer l'image
+        </button>
         <div>
           <button type='submit' disabled={updating}>
-            {updating ? 'Updating...' : 'Update Property'}
+            {updating ? 'Mise à jour...' : 'Mettre à jour la propriété'}
           </button>
         </div>
       </form>

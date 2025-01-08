@@ -17,10 +17,10 @@ const ContactForm = () => {
 
     try {
       let emailContent = `
-        First Name: ${formData.firstName}
-        Subject: ${formData.subject}
-        Phone Number: ${formData.phone}
-        Address: ${formData.address}
+        Prénom: ${formData.firstName}
+        Sujet: ${formData.subject}
+        Numéro de téléphone: ${formData.phone}
+        Adresse: ${formData.address}
         Description: ${formData.description}`
       setIsFormSubmitted(true)
 
@@ -29,7 +29,6 @@ const ContactForm = () => {
         message: emailContent,
       })
 
-      
       setFormData({
         firstName: '',
         subject: '',
@@ -38,19 +37,21 @@ const ContactForm = () => {
         address: '',
       })
 
-     
       setTimeout(() => {
-        setIsFormSubmitted(false) 
+        setIsFormSubmitted(false)
         setFormData({
           firstName: '',
           subject: '',
           phone: '',
           description: '',
           address: '',
-        }) // Reset form
-      }, 10000) // 10 seconds delay before resetting form
+        }) // Réinitialiser le formulaire
+      }, 10000) // Délai de 10 secondes avant de réinitialiser le formulaire
     } catch (error) {
-      console.error('An error occurred while submitting the form:', error)
+      console.error(
+        "Une erreur s'est produite lors de l'envoi du formulaire:",
+        error
+      )
     }
   }
 
@@ -61,10 +62,10 @@ const ContactForm = () => {
           <div className='form-contact-container'>
             <article>
               <div>
-                <h3>Name</h3>
+                <h3>Nom</h3>
                 <input
                   type='text'
-                  placeholder='Enter your name'
+                  placeholder='Entrez votre nom'
                   id='firstName'
                   value={formData.firstName}
                   onChange={(e) =>
@@ -75,10 +76,10 @@ const ContactForm = () => {
                 />
               </div>
               <div>
-                <h3>Phone</h3>
+                <h3>Téléphone</h3>
                 <input
                   type='text'
-                  placeholder='Enter your number'
+                  placeholder='Entrez votre numéro'
                   id='phoneNumber'
                   value={formData.phone}
                   onChange={(e) =>
@@ -94,7 +95,7 @@ const ContactForm = () => {
                 <h3>Email</h3>
                 <input
                   type='email'
-                  placeholder='Enter your email here'
+                  placeholder='Entrez votre email ici'
                   id='Email'
                   value={formData.address}
                   onChange={(e) =>
@@ -105,10 +106,10 @@ const ContactForm = () => {
                 />
               </div>
               <div>
-                <h3>Subject</h3>
+                <h3>Sujet</h3>
                 <input
                   type='text'
-                  placeholder='Write your subject'
+                  placeholder='Écrivez votre sujet'
                   id='Subject'
                   value={formData.subject}
                   onChange={(e) =>
@@ -123,7 +124,7 @@ const ContactForm = () => {
                 <h3>Message</h3>
                 <textarea
                   name=''
-                  placeholder='Write your message'
+                  placeholder='Écrivez votre message'
                   value={formData.description}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
@@ -134,13 +135,13 @@ const ContactForm = () => {
             </article>
           </div>
           <button type='submit' className='btn' disabled={isLoading}>
-            {isLoading ? 'Sending...' : 'Send Message'}
+            {isLoading ? 'Envoi...' : 'Envoyer le message'}
           </button>
         </form>
       )}
       {isFormSubmitted && !isError && (
         <div className='success-message'>
-          The message has been sent successfully! We will respond to you soon.
+          Le message a été envoyé avec succès ! Nous vous répondrons bientôt.
         </div>
       )}
     </div>

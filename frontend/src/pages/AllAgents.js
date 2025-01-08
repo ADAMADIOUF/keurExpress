@@ -24,12 +24,13 @@ const AllAgents = () => {
   return (
     <div className='agents-container'>
       <HeroReusable
-        title={'All Agents'}
-        subtitle={'Trusted Real Estate Advisors'}
-        description={
-          'Get to know the dedicated professionals behind NestBes who are committed to helping you navigate the real estate market with confidence'
-        }
-      />
+  title={'Tous les Agents'}
+  subtitle={'Conseillers Immobiliers de Confiance'}
+  description={
+    'Découvrez les professionnels dévoués derrière NestBes qui s’engagent à vous aider à naviguer sur le marché immobilier en toute confiance.'
+  }
+/>
+
       <div className='section-center'>
         <div className='agents-list'>
           {agentsList.length > 0 ? (
@@ -99,12 +100,13 @@ const AllAgents = () => {
       </div>
       <ChooseUs />
       <BannerReusable
-        image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png'
-        title='Find Your Dream Home? Contact Us Today!'
-        description='Take the first step towards homeownership and reach out to our expert team at Keur Express.'
-        target='/about' // Route to navigate to
-        label='More About Us'
-      />
+  image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png'
+  title='Trouvez la Maison de Vos Rêves ? Contactez-Nous Aujourd’hui !'
+  description='Faites le premier pas vers la propriété en contactant notre équipe d’experts chez Keur Express.'
+  target='/about' // Route pour naviguer
+  label='En Savoir Plus Sur Nous'
+/>
+
     </div>
   )
 }

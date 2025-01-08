@@ -10,26 +10,30 @@ const ContactEmail = () => {
               src='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/669395bccd99474748a4b581_Phone%20Icon.svg'
               alt=''
             />
-            <h3>Phone Number</h3>
-            <p>Phone: (505) 555-0125</p>
-            <p>Phone: (505) 555-0125</p>
+            <h3>Numéro de Téléphone</h3>
+            <p>Téléphone : +1(701) 500-32-59</p>
+            <p>Téléphone : +221(77) 545-91-02</p>
+            <p>Téléphone : +212(626) 79-48-08</p>
           </article>
           <article>
             <img
               src='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/669395bc0b6d04e3c066c53a_Message%20Icon.svg'
               alt=''
             />
-            <h3>Email Address</h3>
-            <p>Email: contact@nestbes.com</p>
-            <p>Email: info@nestbes.com</p>
+            <h3>Adresse Email</h3>
+            <p>Email : absatechgalsen@gamil.com</p>
+            <p>Email : adamadiouf2017@gmail.com</p>
+            <p>Email : moulaye1904@gmail.com</p>
           </article>
           <article>
             <img
               src='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/669395bc659895fa7c00c8f5_Location%20Fill%20Icon.svg'
               alt=''
             />
-            <h3>Location</h3>
-            <p>8502 Preston Rd. Inglewood, Maine 98380</p>
+            <h3>Emplacement</h3>
+            <p>Minot,North Dakota,USA 58703</p>
+            <p>Senegal,Keur Massar,Ainoumady</p>
+            <p>Maroc,12345,maroc</p>
           </article>
         </div>
       </div>

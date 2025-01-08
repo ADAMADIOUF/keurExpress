@@ -53,20 +53,21 @@ if (propertyList.length === 0) {
 
   return (
     <>
-    {keyword && (
-            <Link to='/' className='back-btn'>
-              Go Back
-            </Link>
-          )}
+      {keyword && (
+        <Link to='/' className='back-btn'>
+          Go Back
+        </Link>
+      )}
       <HeroReusable
-        title={'All Property'}
-        subtitle={'Find Your Perfect Home With Keur Express'}
+        title={'Toutes les propriétés'}
+        subtitle={'Trouvez votre maison idéale avec Keur Express'}
         description={
-          'Where you can discover a diverse range of homes available for sale and rent. Browse through our curated listings below to find your ideal property'
+          'Découvrez une large gamme de maisons disponibles à la vente et à la location. Parcourez nos annonces sélectionnées ci-dessous pour trouver la propriété de vos rêves.'
         }
       />
+
       <div className='section-center'>
-       <SearchTermTwo/>
+        <SearchTermTwo />
         <div className='property-list'>
           {propertyList.length > 0 ? (
             propertyList.map((property) => (
@@ -86,19 +87,19 @@ if (propertyList.length === 0) {
                     </Link>
                   </h2>
 
-                  {/* Link wrapping the description */}
+                  {/* Lien englobant la description */}
                   <p className='property-description'>
                     <Link to={`/propertie/${property._id}`}>
-                      {property.description.substring(0,40)}...
+                      {property.description.substring(0, 40)}...
                     </Link>
                   </p>
 
-                  {/* Property Price */}
+                  {/* Prix de la propriété */}
                   <p className='property-price'>
-                    Price: ${property.price.toLocaleString()}
+                    Prix : ${property.price.toLocaleString()}
                   </p>
 
-                  {/* Property Location */}
+                  {/* Localisation de la propriété */}
                   <div className='property-location'>
                     <p>
                       {property.location.city}, {property.location.address}
@@ -109,37 +110,43 @@ if (propertyList.length === 0) {
                       rel='noopener noreferrer'
                       className='property-map-link'
                     >
-                      View on map
+                      Voir sur la carte
                     </a>
                   </div>
 
-                  {/* Property Stats */}
+                  {/* Statistiques de la propriété */}
                   <div className='property-stats'>
-                    <p>
-                      <strong>{property.bedrooms}</strong> Bedrooms
-                    </p>
-                    <p>
-                      <strong>{property.bathrooms}</strong> Bathrooms
-                    </p>
-                    <p>
-                      <strong>{property.size}</strong> sq. ft
-                    </p>
-                  </div>
+                    {property.bedrooms && (
+                      <p>
+                        <strong>{property.bedrooms}</strong> Chambres
+                      </p>
+                    )}
 
-                  {/* Property Status */}
-                  <div className='property-status'>
-                    <p>
-                      Status: <strong>{property.status}</strong>
-                    </p>
+                    {property.bathrooms && (
+                      <p>
+                        <strong>{property.bathrooms}</strong> Salles de bain
+                      </p>
+                    )}
+
+                    {property.livingrooms && (
+                      <p>
+                        <strong>{property.livingrooms}</strong> salons
+                      </p>
+                    )}
+
+                    {property.size && (
+                      <p>
+                        <strong>{property.size}</strong> m²
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <p>No properties available</p>
+            <p>Aucune propriété disponible</p>
           )}
         </div>
-        
       </div>
     </>
   )

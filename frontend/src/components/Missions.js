@@ -5,8 +5,8 @@ const Missions = () => {
   return (
     <motion.div
       className='mission'
-      initial={{ opacity: 0, y: -50 }} // Starting state
-      animate={{ opacity: 1, y: 0 }} // Ending state
+      initial={{ opacity: 0, y: -50 }} // État de départ
+      animate={{ opacity: 1, y: 0 }} // État final
       transition={{ duration: 1, ease: 'easeOut' }}
     >
       <div className='section-center'>
@@ -21,20 +21,21 @@ const Missions = () => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           <article>
-            {/* Mission Content */}
+            {/* Contenu de la mission */}
             <motion.div
               className='hero-content'
-              initial={{ opacity: 0, y: -50 }} // Starting state
-              animate={{ opacity: 1, y: 0 }} // Ending state
+              initial={{ opacity: 0, y: -50 }} // État de départ
+              animate={{ opacity: 1, y: 0 }} // État final
               transition={{ duration: 1, ease: 'easeOut' }}
             >
               <div className='dote'></div>
-              <span className='hero-text'>Our Mission</span>
-              <h3>Empowering Your Real Estate Journey</h3>
+              <span className='hero-text'>Notre Mission</span>
+              <h3>Donner du pouvoir à votre parcours immobilier</h3>
               <p>
-                To empower individuals and families to make informed real estate
-                decisions and achieve their homeownership goals. We understand
-                that buying or selling a home.
+                Donner aux individus et aux familles les moyens de prendre des
+                décisions immobilières éclairées et de réaliser leurs objectifs
+                d'accession à la propriété. Nous comprenons que l'achat ou la
+                vente d'une maison.
               </p>
             </motion.div>
 
@@ -45,7 +46,7 @@ const Missions = () => {
               transition={{ duration: 0.8, ease: 'easeInOut' }}
             />
 
-            {/* Mission Cards */}
+            {/* Cartes de mission */}
             <motion.div
               className='mission-card'
               initial={{ opacity: 0, y: 20 }}
@@ -65,10 +66,11 @@ const Missions = () => {
                   src='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a7212b0799a98c7cf4300e_Mission%20Icon1.svg'
                   alt=''
                 />
-                <h3>Client-Centric Approach</h3>
+                <h3>Approche centrée sur le client</h3>
                 <p>
-                  Putting our clients' needs first is at the core of our
-                  mission. We strive to understand your unique goals.
+                  Mettre les besoins de nos clients en premier est au cœur de
+                  notre mission. Nous nous efforçons de comprendre vos objectifs
+                  uniques.
                 </p>
               </motion.div>
               <motion.div
@@ -79,16 +81,16 @@ const Missions = () => {
                   src='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a7212b6920c9abb4a11e94_Mission%20Icon2.svg'
                   alt=''
                 />
-                <h3>Make Informed Decisions</h3>
+                <h3>Prendre des décisions éclairées</h3>
                 <p>
-                  We believe in empowering our clients to make informed
-                  decisions. Through clear communication.
+                  Nous croyons en l'autonomisation de nos clients pour prendre
+                  des décisions éclairées. Grâce à une communication claire.
                 </p>
               </motion.div>
             </motion.div>
           </article>
 
-          {/* Mission Image */}
+          {/* Image de la mission */}
           <motion.article
             className='img-mission'
             initial={{ opacity: 0, x: 50 }}
@@ -102,7 +104,7 @@ const Missions = () => {
           </motion.article>
         </motion.div>
 
-        {/* Star Icon Animation */}
+        {/* Animation de l'icône en étoile */}
         <motion.div
           className='img-mission-absolute'
           initial={{ opacity: 0, scale: 0.5, rotate: -45 }}

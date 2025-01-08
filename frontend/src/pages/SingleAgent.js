@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import Error from '../components/Error'
 import Loading from '../components/Loading'
 import HeroReusable from '../components/HeroResuable'
-import { FaFacebook, FaInstagram } from 'react-icons/fa' // Import icons for social media
+import { FaFacebook, FaInstagram } from 'react-icons/fa' // Importer les icônes pour les réseaux sociaux
 
 const SingleAgent = () => {
   const { id: agentId } = useParams()
@@ -23,7 +23,7 @@ const SingleAgent = () => {
   if (error) {
     return (
       <Error
-        message='Failed to load agent details.'
+        message="Échec du chargement des détails de l\'agent."
         action={
           <button
             onClick={refetch}
@@ -36,7 +36,7 @@ const SingleAgent = () => {
               cursor: 'pointer',
             }}
           >
-            Retry
+            Réessayer
           </button>
         }
       />
@@ -44,7 +44,7 @@ const SingleAgent = () => {
   }
 
   if (!agent) {
-    return <Error message='Agent details not found.' />
+    return <Error message="Détails de l\'agent non trouvés." />
   }
 
   return (
@@ -58,16 +58,16 @@ const SingleAgent = () => {
       <div className='agent-details-container'>
         <div className='agent-info'>
           <img src={agent.image} alt='' />
-          <h2>About {agent.name}</h2>
+          <h2>À propos de {agent.name}</h2>
           <p>{agent.about}</p>
           <p>
-            <strong>Address:</strong> {agent.address}
+            <strong>Adresse :</strong> {agent.address}
           </p>
           <p>
-            <strong>Contact:</strong> {agent.contactEmail}
+            <strong>Contact :</strong> {agent.contactEmail}
           </p>
           <p>
-            <strong>Phone:</strong> {agent.contactNumber}
+            <strong>Téléphone :</strong> {agent.contactNumber}
           </p>
         </div>
 
@@ -95,7 +95,7 @@ const SingleAgent = () => {
         <div className='agent-websiteSingle'>
           {agent.website && (
             <a href={agent.website} target='_blank' rel='noopener noreferrer'>
-              Visit Website
+              Visiter le site
             </a>
           )}
         </div>

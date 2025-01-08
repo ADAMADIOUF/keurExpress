@@ -31,7 +31,7 @@ const Approach = () => {
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
                 <h3>
-                  $3699.00 <span></span>/Month
+                  $3699.00 <span></span>/Mois
                 </h3>
               </motion.div>
               <div className='approach-content'>
@@ -65,12 +65,13 @@ const Approach = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.6 }}
               />
-              <span className='hero-text'>Our Mission</span>
-              <h3>Empowering Your Real Estate Journey</h3>
+              <span className='hero-text'>Notre Mission</span>
+              <h3>Favoriser Votre Parcours Immobilier</h3>
               <p>
-                To empower individuals and families to make informed real estate
-                decisions and achieve their homeownership goals. We understand
-                that buying or selling a home.
+                Donner aux individus et aux familles les moyens de prendre des
+                décisions immobilières éclairées et d'atteindre leurs objectifs
+                de propriété. Nous comprenons que l'achat ou la vente d'une
+                maison est un processus complexe.
               </p>
             </div>
             <div className='approach-listings'>
@@ -84,12 +85,13 @@ const Approach = () => {
                   <span>
                     <FaCheckCircle />
                   </span>
-                  <h3>Listening to Your Needs:</h3>
+                  <h3>Écouter Vos Besoins :</h3>
                 </div>
                 <p>
-                  We start by listening. Understanding your specific needs,
-                  preferences, and objectives allows us to tailor our approach
-                  to meet your unique requirements.
+                  Nous commençons par écouter. Comprendre vos besoins
+                  spécifiques, vos préférences et vos objectifs nous permet
+                  d'adapter notre approche pour répondre à vos exigences
+                  uniques.
                 </p>
               </motion.div>
               <motion.div
@@ -102,11 +104,12 @@ const Approach = () => {
                   <span>
                     <FaCheckCircle />
                   </span>
-                  <h3>Customized Solutions:</h3>
+                  <h3>Solutions Personnalisées :</h3>
                 </div>
                 <p>
-                  We craft a personalized plan to address your goals, offering
-                  solutions that are practical and aligned with your vision.
+                  Nous élaborons un plan personnalisé pour atteindre vos
+                  objectifs, offrant des solutions pratiques et en accord avec
+                  votre vision.
                 </p>
               </motion.div>
             </div>

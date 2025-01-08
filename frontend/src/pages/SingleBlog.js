@@ -7,28 +7,28 @@ const SingleBlog = () => {
   const { id: blogId } = useParams()
   const { data: post, error, isLoading, refetch } = useGetPostByIdQuery(blogId)
   const { userInfo } = useSelector((state) => state.auth)
-  if (isLoading) return <p>Loading...</p> // Show loading state
-  if (error) return <p>Error fetching blog post</p> // Show error state
-  if (!post) return <p>Blog not found</p> // Show message if no post is found
+
+  if (isLoading) return <p>Chargement...</p> // Afficher l'état de chargement
+  if (error) return <p>Erreur lors de la récupération du blog</p> // Afficher l'état d'erreur
+  if (!post) return <p>Blog non trouvé</p> // Afficher le message si aucun blog n'est trouvé
 
   return (
     <div>
       <div className='single-blog-container'>
-        <h1>{post.title}</h1> {/* Display blog title */}
+        <h1>{post.title}</h1> {/* Afficher le titre du blog */}
         <div className='author-info'>
-          <p>Published on: {new Date(post.createdAt).toLocaleDateString()}</p>
-          <h3>Post By "{post.user.name}"</h3> {/* Display author's name */}
+          <p>Publié le : {new Date(post.createdAt).toLocaleDateString()}</p>
+          <h3>Publié par : "{post.user.name}"</h3>{' '}
+          {/* Afficher le nom de l'auteur */}
         </div>
         <div className='post-content'>
-          <p>{post.content}</p> {/* Display the content of the blog */}
+          <p>{post.content}</p> {/* Afficher le contenu du blog */}
         </div>
         {post.image && (
           <div className='post-image'>
             <img src={post.image} alt={post.title} />
           </div>
         )}
-       
-        
       </div>
     </div>
   )

@@ -20,10 +20,10 @@ const About = () => {
           transition={{ duration: 1, ease: 'easeOut' }} // Animation timing
         >
           <HeroReusable
-            title={'About Us'}
-            subtitle={'Get Your Real Estate Experience With Keur Express'}
+            title={'À Propos de Nous'}
+            subtitle={'Vivez votre expérience immobilière avec Keur Express'}
             description={
-              'At Keur Express, we are committed to simplifying your real estate journey and helping you find the perfect home.'
+              'Chez Keur Express, nous nous engageons à simplifier votre parcours immobilier et à vous aider à trouver la maison parfaite.'
             }
           />
         </motion.div>
@@ -39,11 +39,11 @@ const About = () => {
       <Missions />
       <Approach />
       <BannerReusable
-        image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png' // Replace with an image relevant to About
-        title='Learn More About Us'
-        description='Discover our journey, mission, and values that drive Keur Express to deliver excellence every day.'
+        image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png' // Remplacer par une image pertinente pour À propos
+        title='En savoir plus sur nous'
+        description='Découvrez notre parcours, notre mission et nos valeurs qui poussent Keur Express à offrir l’excellence chaque jour.'
         target='/contact'
-        label=' Contact Us'
+        label='Contactez-nous'
       />
     </div>
   )

@@ -118,57 +118,59 @@ const Navbar = () => {
         )}
 
         {!userInfo ? (
-          <div className='profle-flex'>
-            <li style={styles.navItem}>
+          <div className='profile-flex'>
+            <li style={styles.navItem} className='no-wrap'>
               <Link to='/login' style={styles.link}>
-                Login
+                Connexion
               </Link>
             </li>
             <li style={styles.navItem}>
               <Link to='/register' style={styles.link}>
-                Register
+                S'inscrire
               </Link>
             </li>
           </div>
         ) : (
-          // If user info exists, show profile and logout buttons
           <>
             <li style={styles.navItem}>
-              <Link to='/profile' style={styles.link}>
-                <FaUser /> {'Profile'}
+              <Link to='/profile' style={styles.link} className='no-wrap'>
+                <FaUser /> {'Profil'}
               </Link>
             </li>
-            <li style={styles.navItem}>
+            <li style={styles.navItem} className='no-wrap'>
               <Link to='/wishlist' style={styles.link}>
-                <FaHeart /> {'Wishlist'}
+                <FaHeart /> {'Liste de souhaits'}
               </Link>
             </li>
             <span className='username'>{userInfo.name}</span>
             {userInfo.image ? (
               <img
                 src={userInfo.profileImage}
-                alt='User Avatar'
+                alt="Avatar de l'utilisateur"
                 className='avatar-img'
               />
             ) : (
               <FaUser />
             )}
             {userInfo.role === 'admin' && (
-              <>
-                <Link to='/admin/dashboard' className='dropdown-item'>
-                  {'Dashboard'}
+              <div className='admin-nav'>
+                <Link to='/admin/dashboard' className='dropdown-item no-wrap'>
+                  {'Tableau de bord'}
                 </Link>
-                <Link to='/admin/propertiesList' className='dropdown-item'>
-                  {'All properties'}
+                <Link
+                  to='/admin/propertiesList'
+                  className='dropdown-item no-wrap'
+                >
+                  {'Toutes les propriétés'}
                 </Link>
-                <Link to='/admin/userlist' className='dropdown-item'>
-                  {'All Users'}
+                <Link to='/admin/userlist' className='dropdown-item no-wrap'>
+                  {'Tous les utilisateurs'}
                 </Link>
-              </>
+              </div>
             )}
             <li style={styles.navItem}>
-              <button onClick={logoutHandler} className='logout-button'>
-                {'Logout'} {isGoogleLogin ? `(Google)` : ''}
+              <button onClick={logoutHandler} className='logout-button no-wrap'>
+                {'Se déconnecter'} {isGoogleLogin ? `(Google)` : ''}
               </button>
             </li>
           </>

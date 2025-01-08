@@ -24,13 +24,13 @@ const PropertySchema = new mongoose.Schema(
       type: String,
       enum: ['For Sale', 'For Rent'],
       default: 'For Sale',
-      
     },
     propertyType: {
       type: String,
       enum: ['Villa', 'Apartment', 'House', 'Commercial', 'Land'],
       required: true,
     },
+    livingrooms: { type: Number, required: true },
     bedrooms: { type: Number, required: true },
     bathrooms: { type: Number, required: true },
     size: { type: Number, required: true },

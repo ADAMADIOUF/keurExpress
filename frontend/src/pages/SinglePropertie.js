@@ -11,7 +11,10 @@ import {
   FaBath,
   FaCar,
   FaHeart,
+  FaGitSquare,
+  FaCouch,
 } from 'react-icons/fa'
+
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 import Map from '../components/Map'
@@ -42,15 +45,15 @@ const SinglePropertie = () => {
    const isInWishlist = checkWishlistData?.isInWishlist
 const addToWishlistHandler = async () => {
   if (isInWishlist) {
-    toast.info('This property is already in your wishlist!')
+    toast.info('Cette propriété est déjà dans votre liste de souhaits !')
     return
   }
 
   try {
     await addToWishlist(propertieId).unwrap()
-    toast.success('Property added to wishlist!')
+    toast.success('Propriété ajoutée à la liste de souhaits !')
   } catch (error) {
-    toast.error('Failed to add to wishlist. Please login.')
+    toast.error(`Échec de l'ajout à la liste de souhaits. Veuillez vous connecter.`)
   }
 }
   if (!propertieId) {
@@ -91,7 +94,7 @@ const addToWishlistHandler = async () => {
   return (
     <div className='singlePropertie'>
       <HeroReusable
-        title={'Property Details'}
+        title={'Détails de la propriété'}
         titleTwo={propertie.data.title}
         description={propertie.data.description}
       />
@@ -108,95 +111,126 @@ const addToWishlistHandler = async () => {
             onClick={addToWishlistHandler}
             disabled={isLoading || isInWishlist} // Using 'isLoading' instead of 'isAdding'
           >
-            <FaHeart />{' '}
-            {isInWishlist ? 'Already in Wishlist' : 'Add to Wishlist'}
+            <FaHeart color={isInWishlist ? 'red' : 'gray'} />{' '}
+            {isInWishlist
+              ? 'Déjà dans la liste de souhaits'
+              : 'Ajouter à la liste de souhaits'}
           </button>
-          <div className='fisrt-details'>
+          <div className='fisrt-details no-wrap'>
             <article>
               <p>
-                <FaHome style={{ marginRight: '5px' }} /> Per Month
+                <FaHome style={{ marginRight: '5px' }} /> Par mois
               </p>
               <p>{propertie?.data?.price} </p>
             </article>
+
             <article>
               <p>
-                <FaMapMarkerAlt style={{ marginRight: '5px' }} /> Location
+                <FaMapMarkerAlt style={{ marginRight: '5px' }} /> Emplacement
               </p>
               <p>
                 {propertie?.data?.location.city},{' '}
                 {propertie?.data?.location.address}
               </p>
             </article>
+
             <article>
               <p>
                 <FaHome style={{ marginRight: '5px' }} /> Type
               </p>
               <p>{propertie?.data?.propertyType}</p>
             </article>
-            <article>
-              <p>Size</p>
-              <p>{propertie?.data?.size} sq ft</p>
-            </article>
+
             <article>
               <p>
-                <FaBath style={{ marginRight: '5px' }} /> Bathrooms
+                <FaGitSquare style={{ marginRight: '5px' }} /> Superficie
               </p>
-              <p>{propertie?.data?.bathrooms}</p>
+              <p>{propertie?.data?.size} m²</p>
             </article>
-            <article>
-              <p>
-                <FaBed style={{ marginRight: '5px' }} /> Bedrooms
-              </p>
-              <p>{propertie?.data?.bedrooms}</p>
-            </article>
+
+            {propertie?.data?.livingrooms && (
+              <article>
+                <p>
+                  <FaCouch style={{ marginRight: '5px' }} /> salons
+                </p>
+                <p>{propertie?.data?.livingrooms}</p>
+              </article>
+            )}
+
+            {propertie?.data?.bathrooms && (
+              <article>
+                <p>
+                  <FaBath style={{ marginRight: '5px' }} /> Salles de bains
+                </p>
+                <p>{propertie?.data?.bathrooms}</p>
+              </article>
+            )}
+
+            {propertie?.data?.bedrooms && (
+              <article>
+                <p>
+                  <FaBed style={{ marginRight: '5px' }} /> Chambres
+                </p>
+                <p>{propertie?.data?.bedrooms}</p>
+              </article>
+            )}
+
             <article>
               <p>
                 <FaCar style={{ marginRight: '5px' }} /> Garage
               </p>
-              <p>{propertie?.data?.garage ? 'Yes' : 'No'}</p>
+              <p>{propertie?.data?.garage ? 'Oui' : 'Non'}</p>
             </article>
+
             <article>
-              <p>Status</p>
+              <p>Statut</p>
               <p>{propertie?.data?.status}</p>
             </article>
           </div>
+
           <hr />
           <h1>{propertie?.data?.title}</h1>
           <p>{propertie?.data?.description}</p>
 
-          {/* Additional Information */}
+          {/* Informations supplémentaires */}
           <article>
-            <p>Posted on</p>
+            <p>Publié le</p>
             <p>{new Date(propertie?.data?.datePosted).toLocaleDateString()}</p>
           </article>
           <article>
-            <p>Last updated</p>
+            <p>Dernière mise à jour</p>
             <p>{new Date(propertie?.data?.updatedAt).toLocaleDateString()}</p>
           </article>
         </article>
         <article className='person-property'>
           <img
-            src={propertie?.data?.userProfile?.profileImage}
-            alt='User Profile'
+            src={
+              propertie?.data?.userProfile?.profileImage &&
+              propertie?.data?.userProfile?.profileImage !== ''
+                ? propertie?.data?.userProfile?.profileImage
+                : 'https://static.vecteezy.com/system/resources/thumbnails/002/172/762/small_2x/house-front-view-illustration-free-vector.jpg'
+            }
+            alt="Photo de profil de l'utilisateur"
             style={{ width: '300px', height: '300px', borderRadius: '50%' }}
           />
+
           <h3>
             {propertie?.data?.userProfile?.name}{' '}
             {propertie?.data?.userProfile?.lastName}
           </h3>
-          <p>Email: {propertie?.data?.userProfile?.email}</p>
-          <p>Contact Information:</p>
+          <p>Email : {propertie?.data?.userProfile?.email}</p>
+          <p>Informations de contact :</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {/* Call by Phone */}
+            {/* Appeler par téléphone */}
             <a
               href={`tel:${phoneNumber}`}
               style={{ textDecoration: 'none', color: 'black' }}
             >
               <FaPhone style={{ marginRight: '5px' }} />
-              Call
+              Appeler
             </a>
 
-            {/* Open WhatsApp */}
+            {/* Ouvrir WhatsApp */}
             <a
               href={whatsappLink}
               target='_blank'
@@ -210,12 +244,12 @@ const addToWishlistHandler = async () => {
           <MessagesList propertyId={propertieId} />
           {propertie?.data?.images && propertie.data.images.length > 0 && (
             <div className='property-images'>
-              <h3>Images:</h3>
+              <h3>Images :</h3>
               {propertie.data.images.map((image, index) => (
                 <img
                   key={index}
                   src={image}
-                  alt={`Property ${index + 1}`}
+                  alt={`Propriété ${index + 1}`}
                   className={`thumbnail ${
                     mainImage === image ? 'thumbnail-active' : ''
                   }`}

@@ -46,71 +46,78 @@ const LastProperties = () => {
           </div>
 
           <div className='property-list'>
-            {propertyList.length > 0 ? (
-              propertyList.slice(3, 6).map((property) => (
-                <div key={property._id} className='property-card'>
-                  <Link to={`/propertie/${property._id}`}>
-                    <img
-                      src={property.images[0]}
-                      alt={property.title}
-                      className='property-image'
-                    />
-                  </Link>
+            {propertyList.slice(3, 6).map((property) => (
+              <div key={property._id} className='property-card'>
+                <Link to={`/propertie/${property._id}`}>
+                  <img
+                    src={property.images[0]}
+                    alt={property.title}
+                    className='property-image'
+                  />
+                </Link>
 
-                  <div className='property-details'>
-                    <h2 className='property-title'>
-                      <Link to={`/propertie/${property._id}`}>
-                        {property.title}
-                      </Link>
-                    </h2>
+                <div className='property-details'>
+                  <h2 className='property-title'>
+                    <Link to={`/propertie/${property._id}`}>
+                      {property.title}
+                    </Link>
+                  </h2>
 
-                    <p className='property-description'>
-                      <Link to={`/propertie/${property._id}`}>
-                        {property.description.substring(0, 40)}...
-                      </Link>
+                  <p className='property-description'>
+                    <Link to={`/propertie/${property._id}`}>
+                      {property.description.substring(0, 50)}....
+                    </Link>
+                  </p>
+
+                  {/* Prix de la propriété */}
+                  <p className='property-price'>
+                    Prix : ${property.price.toLocaleString()}
+                  </p>
+
+                  {/* Localisation de la propriété */}
+                  <div className='property-location'>
+                    <p>
+                      {property.location.city}, {property.location.address}
                     </p>
+                    <a
+                      href={property.location.map_url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='property-map-link'
+                    >
+                      Voir sur la carte
+                    </a>
+                  </div>
 
-                    <p className='property-price'>
-                      {'price'} ${property.price.toLocaleString()}
-                    </p>
+                  {/* Statistiques de la propriété */}
+                  <div className='property-stats'>
+                    {property.bedrooms && (
+                      <p>
+                        <strong>{property.bedrooms}</strong> Chambres
+                      </p>
+                    )}
 
-                    <div className='property-location'>
+                    {property.bathrooms && (
                       <p>
-                        {property.location.city}, {property.location.address}
+                        <strong>{property.bathrooms}</strong> Salles de bain
                       </p>
-                      <a
-                        href={property.location.map_url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='property-map-link'
-                      >
-                        {'viewOnMap'}
-                      </a>
-                    </div>
+                    )}
 
-                    <div className='property-stats'>
+                    {property.livingrooms && (
                       <p>
-                        <strong>{property.bedrooms}</strong> {'bedrooms'}
+                        <strong>{property.livingrooms}</strong> salons
                       </p>
-                      <p>
-                        <strong>{property.bathrooms}</strong> {'bathrooms'}
-                      </p>
-                      <p>
-                        <strong>{property.size}</strong> {'sqft'}
-                      </p>
-                    </div>
+                    )}
 
-                    <div className='property-status'>
+                    {property.size && (
                       <p>
-                        {'status'}: <strong>{property.status}</strong>
+                        <strong>{property.size}</strong> m²
                       </p>
-                    </div>
+                    )}
                   </div>
                 </div>
-              ))
-            ) : (
-              <p>{'noProperties'}</p>
-            )}
+              </div>
+            ))}
           </div>
 
           <div className='view-all'>

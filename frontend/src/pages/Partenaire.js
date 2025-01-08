@@ -33,12 +33,13 @@ const Partenaire = () => {
     <div className='partenaire'>
       <div className='section-center'>
         <HeroReusable
-          title={'All Partners'}
-          subtitle={'Our Trusted Partners'}
-          description={
-            'Meet the companies and professionals who collaborate with us to deliver exceptional real estate services and solutions, ensuring your experience is seamless and successful.'
-          }
-        />
+  title={'Tous les Partenaires'}
+  subtitle={'Nos Partenaires de Confiance'}
+  description={
+    'Rencontrez les entreprises et les professionnels qui collaborent avec nous pour offrir des services et solutions immobiliers exceptionnels, garantissant une expérience fluide et réussie.'
+  }
+/>
+
         <div className='partenaire-container'>
           <h2 className='partenaire-title'>Nos Partenaires</h2>
           <div className='partenaire-grid'>

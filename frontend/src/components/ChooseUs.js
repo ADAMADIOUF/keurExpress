@@ -15,12 +15,13 @@ const ChooseUs = () => {
       <div className='section-center'>
         {/* Section Heading */}
         <HomeAboutSection
-          heroText='Why Choose Us'
-          heading='Why Choose Keur Express for Real Estate Partner'
-          description="At Keur Express, we understand that choosing a real estate partner is a significant decision. Here's why we stand out from the rest."
+          heroText='Pourquoi Nous Choisir'
+          heading='Pourquoi Choisir Keur Express comme Partenaire Immobilier'
+          description='Chez Keur Express, nous comprenons que choisir un partenaire immobilier est une décision importante. Voici pourquoi nous nous démarquons des autres.'
         />
+
         <hr />
-        {/* Features and Progress Indicators */}
+        
         <CardChooseUs />
         <ProgressBar />
       </div>

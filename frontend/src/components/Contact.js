@@ -10,10 +10,10 @@ const Contact = () => {
     <div className='contact'>
       <div className='section-center'>
         <HeroReusable
-          title={'Contact Us'}
-          subtitle={"Let's Start Your Real Estate Journey Together"}
+          title={'Contactez-Nous'}
+          subtitle={'Commençons Votre Aventure Immobilière Ensemble'}
           description={
-            'Contact us today to explore your real estate options, ask questions, or schedule a consultation. Our team of expert agents is here to provide personalized.'
+            'Contactez-nous dès aujourd’hui pour explorer vos options immobilières, poser vos questions ou planifier une consultation. Notre équipe d’agents experts est là pour vous offrir un service personnalisé.'
           }
         />
       </div>
@@ -24,10 +24,10 @@ const Contact = () => {
       <MapContact />
       <BannerReusable
         image='https://cdn.prod.website-files.com/668f4d3cb04ed39f764a5ecc/66a1f24bfd8a60fbf773f029_Footer%20Top%20CTA%20Image.png' // Replace with an image relevant to About
-        title='Learn More About Us'
-        description='Discover our journey, mission, and values that drive Keur Express to deliver excellence every day.'
-        target='/about' // Route to navigate to
-        label='More About Us' // Text for the button
+        title='En savoir plus sur nous'
+        description="Découvrez notre parcours, notre mission et nos valeurs qui poussent Keur Express à offrir l'excellence chaque jour."
+        target='/about'
+        label='En savoir plus sur nous'
       />
     </div>
   )

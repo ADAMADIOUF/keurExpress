@@ -14,6 +14,7 @@ export const createProperty = asyncHandler(async (req, res) => {
     images,
     status,
     propertyType,
+    livingrooms,
     bedrooms,
     bathrooms,
     size,
@@ -31,6 +32,7 @@ export const createProperty = asyncHandler(async (req, res) => {
     images,
     status,
     propertyType,
+    livingrooms,
     bedrooms,
     bathrooms,
     size,
@@ -89,27 +91,33 @@ export const getSingleProperty = asyncHandler(async (req, res) => {
 // Update a property
 // PUT /api/properties/:id
 export const updateProperty = asyncHandler(async (req, res) => {
-  const {
-    title,
-    description,
-    price,
-    images,
-    status,
-    propertyType,
-    bedrooms,
-    bathrooms,
-    size,
-    location,
-    garage,
-    store,
-    isFeatured,
-    userProfile,
-  } = req.body
+  try {
+    const {
+      title,
+      description,
+      price,
+      images,
+      status,
+      propertyType,
+      livingrooms,
+      bedrooms,
+      bathrooms,
+      size,
+      location,
+      garage,
+      store,
+      isFeatured,
+      userProfile,
+    } = req.body
 
-  // Find the property by its ID
-  const property = await Property.findById(req.params.id)
+    // Find the property by its ID
+    const property = await Property.findById(req.params.id)
 
-  if (property) {
+    if (!property) {
+      res.status(404).json({ success: false, message: 'Property not found' })
+      return
+    }
+
     // Update the property fields
     property.title = title || property.title
     property.description = description || property.description
@@ -117,23 +125,32 @@ export const updateProperty = asyncHandler(async (req, res) => {
     property.images = images || property.images
     property.status = status || property.status
     property.propertyType = propertyType || property.propertyType
+    property.livingrooms = livingrooms || property.livingrooms
     property.bedrooms = bedrooms || property.bedrooms
     property.bathrooms = bathrooms || property.bathrooms
     property.size = size || property.size
     property.location = location || property.location
     property.garage = garage || property.garage
     property.store = store || property.store
-    property.isFeatured = isFeatured || property.isFeatured;
-     property.userProfile = userProfile || property.userProfile
+    property.isFeatured = isFeatured || property.isFeatured
+    property.userProfile = userProfile || property.userProfile
 
     // Save the updated property
     const updatedProperty = await property.save()
 
-    // Send the updated property as a response
-     res.json(updatedProperty)
-  } else {
-    res.status(404)
-    throw new Error('Property not found')
+    // Respond with the updated property
+    res.status(200).json({
+      success: true,
+      message: 'Property updated successfully',
+      data: updatedProperty,
+    })
+  } catch (error) {
+    console.error(`Error updating property: ${error.message}`)
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: error.message,
+    })
   }
 })
 // Delete a property
