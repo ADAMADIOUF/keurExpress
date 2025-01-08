@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { links, social } from '../data'
 import { logout } from '../slices/authSlice'
 
-import logo from "../assets/logokeurexpress1.png"
+import logo from "../assets/hero.png"
 import { useLogoutMutation } from '../slices/userApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'

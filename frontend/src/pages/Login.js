@@ -5,7 +5,7 @@ import { useLoginMutation } from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
 import { toast } from 'react-toastify'
 import { FcGoogle } from 'react-icons/fc'
-import GoogleLoginWithClerk from './GoogleLoginWithClerk'
+
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -78,7 +78,7 @@ const Login = () => {
       <p style={styles.orText}>or</p>
 
      
-<GoogleLoginWithClerk/>
+
       <p style={styles.signupText}>
         <Link to='/forgot-password'>Forgot your password?</Link>
         Don't have an account? <Link to='/register'>Sign up</Link>
