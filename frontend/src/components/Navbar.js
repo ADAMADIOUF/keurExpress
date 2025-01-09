@@ -163,11 +163,11 @@ const Navbar = () => {
                 >
                   {'Toutes les propriétés'}
                 </Link>
-                <Link
-                  to='/admin/agentList'
-                  className='dropdown-item no-wrap'
-                >
+                <Link to='/admin/agentList' className='dropdown-item no-wrap'>
                   {'Toutes les agents'}
+                </Link>
+                <Link to='/admin/blogList' className='dropdown-item no-wrap'>
+                  {'Toutes les blogs'}
                 </Link>
                 <Link to='/admin/userlist' className='dropdown-item no-wrap'>
                   {'Tous les utilisateurs'}

@@ -3,8 +3,10 @@ import {
   createBlog,
   getBlogs,
   getBlogById,
+  updateBlog,
+  deleteBlog,
 } from '../controllers/blogControoler.js'
-import { protect } from '../middleware/authMiddleware.js' // Assuming protect middleware for authentication
+import { protect, admin } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
@@ -15,6 +17,12 @@ router.get('/', getBlogs)
 router.get('/:id', getBlogById)
 
 // Route to create a new blog (authentication required)
-router.post('/',protect, createBlog)
+router.post('/', protect, createBlog)
+
+// Route to update a blog by ID (authentication and authorization required)
+router.put('/:id', protect, updateBlog)
+
+// Route to delete a blog by ID (authentication and authorization required)
+router.delete('/:id', protect, deleteBlog)
 
 export default router

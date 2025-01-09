@@ -37,6 +37,8 @@ import SingleBlog from './pages/SingleBlog';
 import AllBlogs from './pages/AllBlogs';
 import AgentList from './screen/AgentList';
 import AgentEdit from './screen/AgentEdit';
+import BlogList from './screen/BlogList';
+import BlogEdit from './screen/BlogEdit';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -78,10 +80,9 @@ const router = createBrowserRouter(
           element={<PropertieEdit />}
         />
         <Route path='/admin/agentList' element={<AgentList />} />
-        <Route
-          path='/admin/agentList/:id/edit'
-          element={<AgentEdit />}
-        />
+        <Route path='/admin/agentList/:id/edit' element={<AgentEdit />} />
+        <Route path='/admin/blogList' element={<BlogList />} />
+        <Route path='/admin/blogList/:id/edit' element={<BlogEdit />} />
         <Route path='/admin/userlist' element={<UserListScreen />} />
         <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
       </Route>
