@@ -39,14 +39,14 @@ Découvrez les dernières informations, conseils et actualités du monde de l'im
               <img src={blog.image} alt={blog.title} className='blog-image' />
               <div className='blog-content'>
                 <h3>{blog.title}</h3>
-                <p>{blog.content}</p>
+                <p>{blog.content.substring(0,50)}...</p>
                 <div className='blog-meta'>
                   <span>{blog.publishedDate}</span>
                   <p>
                     <strong>{'Publié le'}:</strong>{' '}
                     {new Date(blog.createdAt).toLocaleDateString()}
                   </p>
-                  <p>
+                  <p className='no-wrap'>
                     <strong>{'Par'}:</strong> {blog.user.name}
                   </p>
                 </div>
