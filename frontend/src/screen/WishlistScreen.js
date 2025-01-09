@@ -4,6 +4,7 @@ import {
   useRemoveFromWishlistMutation,
 } from '../slices/wishlistApiSlice'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Loader from '../components/Loading'
 import Message from '../components/Error'
 
@@ -13,7 +14,8 @@ const WishlistScreen = () => {
   const [removeFromWishlist, { isLoading: loadingRemove }] =
     useRemoveFromWishlistMutation()
 
-  console.log(wishlist, 'Wishlist Data')
+  // Accessing userInfo from Redux store
+  const { userInfo } = useSelector((state) => state.auth)
 
   const handleRemoveFromWishlist = async (propertyId) => {
     await removeFromWishlist(propertyId)
@@ -29,8 +31,20 @@ const WishlistScreen = () => {
     return <Loader />
   }
 
+  // If no userInfo is available, prompt to add items to the wishlist
+  if (!userInfo) {
+    return (
+      <Message variant='warning'>Please add items to your wishlist.</Message>
+    )
+  }
+
+  // Handle different error situations more specifically
   if (error) {
-    return <Message variant='danger'>Failed to load wishlist</Message>
+    let errorMessage = 'An unexpected error occurred. Please try again later.'
+    if (error?.data?.message) {
+      errorMessage = error.data.message // More specific error message from the API
+    }
+    return <Message variant='danger'>{errorMessage}</Message>
   }
 
   return (

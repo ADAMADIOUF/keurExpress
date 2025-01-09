@@ -1941,66 +1941,58 @@ hr {
 
 }
 /* Partners */
-.partenaire{
-  padding: 3rem 0;
-}
-.partenaire-container {
-  margin-top: 4rem;
+.partenaire {
+  padding: 2rem 0;
 }
 
 .partenaire-title {
-  font-size: 2rem;
-  color: var(--clr-primary-3);
+  text-align: center;
   margin-bottom: 2rem;
 }
 
 .partenaire-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  justify-items: center;
 }
 
 .partenaire-item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.partenaire-item:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .partenaire-logo {
-  max-width: 100%;
-  height: auto;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
   margin-bottom: 1rem;
 }
 
-.partenaire-item p {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--clr-primary-3);
-}
-
-.contact-info {
-  font-size: 1rem;
-  color: var(--clr-secondary);
-  margin-top: 0.5rem;
-}
-
-.contact-info a {
+.contact-info a,
+.website a {
+  color: var(--clr-primary-5);
   text-decoration: none;
-  color: var(--clr-primary-3);
 }
 
-.contact-info a:hover {
-  text-decoration: underline;
+.social-media {
+  margin-top: 1rem;
 }
+
+.social-icon {
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.social-icon:hover {
+  color:var(--clr-primary-5-hover);
+}
+
 /* AboutPage */
 .services{
   background-color: var(--clr-white);

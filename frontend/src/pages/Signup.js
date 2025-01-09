@@ -19,36 +19,38 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    // Validate passwords match
+    // Vérifier si les mots de passe correspondent
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
+      setError('Les mots de passe ne correspondent pas')
       return
     }
 
     try {
       const res = await register({ name, email, password }).unwrap()
 
-      // Dispatch user credentials to Redux store
+      // Dispatch des informations d'utilisateur dans le store Redux
       dispatch(setCredentials(res))
 
-      // Redirect user to the login page after successful registration
+      // Rediriger l'utilisateur vers la page de profil après une inscription réussie
       navigate('/profile')
     } catch (error) {
-      setError(error?.data?.message || 'Registration failed. Please try again.')
+      setError(
+        error?.data?.message || "Échec de l'inscription. Veuillez réessayer."
+      )
       toast.error(
-        error?.data?.message || 'Registration failed. Please try again.'
+        error?.data?.message || "Échec de l'inscription. Veuillez réessayer."
       )
     }
   }
 
   return (
     <div style={styles.container}>
-      <h2>Sign Up</h2>
+      <h2>S'inscrire</h2>
       <form onSubmit={submitHandler} style={styles.form}>
         {error && <p style={styles.error}>{error}</p>}
 
         <label style={styles.label}>
-          Name
+          Nom
           <input
             type='text'
             value={name}
@@ -70,7 +72,7 @@ const Signup = () => {
         </label>
 
         <label style={styles.label}>
-          Password
+          Mot de passe
           <input
             type='password'
             value={password}
@@ -81,7 +83,7 @@ const Signup = () => {
         </label>
 
         <label style={styles.label}>
-          Confirm Password
+          Confirmer le mot de passe
           <input
             type='password'
             value={confirmPassword}
@@ -92,15 +94,15 @@ const Signup = () => {
         </label>
 
         <button type='submit' style={styles.button}>
-          {isLoading ? 'Registering...' : 'Sign Up'}
+          {isLoading ? 'Enregistrement...' : "S'inscrire"}
         </button>
       </form>
 
       <p style={styles.loginText}>
-        Already have an account? <Link to='/login'>Login</Link>
+        Vous avez déjà un compte ? <Link to='/login'>Se connecter</Link>
       </p>
       <div className='return-to-store'>
-        <Link to='/'>Return Home</Link>
+        <Link to='/'>Retour à l'accueil</Link>
       </div>
     </div>
   )

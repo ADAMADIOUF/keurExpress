@@ -143,14 +143,14 @@ const Navbar = () => {
               </Link>
             </li>
             <span className='username'>{userInfo.name}</span>
-            {userInfo.image ? (
+            {userInfo && userInfo.image ? (
               <img
-                src={userInfo.profileImage}
+                src={userInfo.image}
                 alt="Avatar de l'utilisateur"
                 className='avatar-img'
               />
             ) : (
-              <FaUser />
+             <img src={userInfo.image} alt="" srcset="" />
             )}
             {userInfo.role === 'admin' && (
               <div className='admin-nav'>
@@ -165,6 +165,9 @@ const Navbar = () => {
                 </Link>
                 <Link to='/admin/agentList' className='dropdown-item no-wrap'>
                   {'Toutes les agents'}
+                </Link>
+                <Link to='/admin/partnerList' className='dropdown-item no-wrap'>
+                  {'Toutes les partenairs'}
                 </Link>
                 <Link to='/admin/blogList' className='dropdown-item no-wrap'>
                   {'Toutes les blogs'}

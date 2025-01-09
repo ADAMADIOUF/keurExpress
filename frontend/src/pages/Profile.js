@@ -1,159 +1,111 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import {
-  useProfileQuery,
-  useUpdateProfileMutation,
-} from '../slices/userApiSlice'
-import { logout, setCredentials } from '../slices/authSlice'
+import { useProfileMutation } from '../slices/userApiSlice'
+import { setCredentials } from '../slices/authSlice'
+import { useUploadPostImageMutation } from '../slices/userApiSlice'
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { data: user, isLoading, isError, error } = useProfileQuery() // Fetch user profile using RTK query
-  const [updateProfile] = useUpdateProfileMutation() // Mutation for updating profile
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [image, setImage] = useState(null) // Base64 or URL
+
+  const { userInfo } = useSelector((state) => state.auth)
+  const [updateProfile, { isLoading: loadingUpdateProfile }] =
+    useProfileMutation()
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadPostImageMutation()
 
   useEffect(() => {
-    if (user) {
-      setName(user.name || '')
-      setEmail(user.email || '')
+    if (userInfo) {
+      setName(userInfo.name)
+      setEmail(userInfo.email)
+      setImage(userInfo.image)
     }
-  }, [user])
+  }, [userInfo])
 
-  const handleUpdate = async (e) => {
-    e.preventDefault()
-    const updatedData = { name, email, password }
-
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData()
+    formData.append('image', e.target.files[0])
     try {
-      const updatedUser = await updateProfile(updatedData).unwrap() // Call the mutation
-      dispatch(setCredentials(updatedUser)) // Update user info in Redux
-      toast.success('Profile updated successfully!')
+      const res = await uploadProductImage(formData).unwrap()
+      setImage(res.image)
+      toast.success(res.message)
     } catch (error) {
-      toast.error(error?.message || 'Failed to update profile')
+      toast.error(error?.data?.message || error.error)
     }
   }
 
-  const handleLogout = () => {
-    dispatch(logout()) // Clear user data in Redux
-    navigate('/') // Redirect to login page
-    toast.success('Logged out successfully!')
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match')
+    } else {
+      try {
+        const updatedProfile = {
+          _id: userInfo._id,
+          name,
+          email,
+          password,
+          image,
+        }
+        const res = await updateProfile(updatedProfile).unwrap()
+        dispatch(setCredentials(res))
+        toast.success('Profile updated successfully')
+      } catch (error) {
+        toast.error(error?.data?.message || error.error)
+      }
+    }
   }
 
-  if (isLoading) {
-    return <p>Loading profile...</p>
-  }
-
-  if (isError) {
-    toast.error(error?.message || 'Failed to fetch profile')
-    navigate('/login')
-    return null
-  }
+  if (loadingUpdateProfile || loadingUpload) return <p>Loading...</p>
 
   return (
-    <div style={styles.container}>
-      {user ? (
-        <>
-          <h2>Welcome, {user.name || user.email}</h2>
-          <div style={styles.profileInfo}>
-            <form onSubmit={handleUpdate} style={styles.form}>
-              <label htmlFor='name'>Name:</label>
-              <input
-                type='text'
-                id='name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                style={styles.input}
-                required
-              />
-
-              <label htmlFor='email'>Email:</label>
-              <input
-                type='email'
-                id='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={styles.input}
-                required
-              />
-
-              <label htmlFor='password'>Password:</label>
-              <input
-                type='password'
-                id='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={styles.input}
-                placeholder='Leave empty to keep the same'
-              />
-
-              <button type='submit' style={styles.button}>
-                Update Profile
-              </button>
-            </form>
-          </div>
-
-          <button onClick={handleLogout} style={styles.logoutButton}>
-            Logout
-          </button>
-        </>
-      ) : (
-        <p>No user data available</p>
-      )}
+    <div>
+      <h2>Update Profile</h2>
+      <form onSubmit={submitHandler}>
+        <label>Name</label>
+        <input
+          type='text'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          autoComplete='name' // Added autocomplete attribute
+        />
+        <label>Email</label>
+        <input
+          type='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete='email' // Added autocomplete attribute
+        />
+        <label>Password</label>
+        <input
+          type='password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          autoComplete='new-password' // Added autocomplete attribute for new passwords
+        />
+        <label>Confirm Password</label>
+        <input
+          type='password'
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          autoComplete='new-password' // Added autocomplete attribute for new passwords
+        />
+        <label>Profile Image</label>
+        <input
+          type='file'
+          onChange={uploadFileHandler}
+          autoComplete='off' // Disable autocomplete for file inputs
+        />
+        {image && <img src={image} alt='Profile Preview' />}
+        <button type='submit'>Update</button>
+      </form>
     </div>
   )
-}
-
-const styles = {
-  container: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '20px',
-    textAlign: 'center',
-    backgroundColor: '#f9f9f9',
-    borderRadius: '8px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  },
-  profileInfo: {
-    textAlign: 'left',
-    marginTop: '20px',
-    fontSize: '16px',
-    lineHeight: '1.5',
-  },
-  form: {
-    marginTop: '20px',
-    textAlign: 'left',
-  },
-  input: {
-    padding: '8px',
-    margin: '10px 0',
-    width: '100%',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-  },
-  button: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    backgroundColor: '#333',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginTop: '20px',
-  },
-  logoutButton: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    backgroundColor: '#e74c3c',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginTop: '20px',
-  },
 }
 
 export default Profile

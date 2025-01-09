@@ -1,4 +1,4 @@
-import { USERS_URL } from '../contstants'
+import { UPLOAD_URL, USERS_URL } from '../contstants'
 import { apiSlice } from './apiSlice'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
@@ -44,7 +44,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
-    profile: builder.query({
+    profile: builder.mutation({
       query: () => ({
         url: `${USERS_URL}/profile`,
         method: 'GET',
@@ -109,7 +109,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Users'],
     }),
-    
+    uploadPostImage: builder.mutation({
+      query: (data) => ({
+        url: `${UPLOAD_URL}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 })
 
@@ -118,13 +124,13 @@ export const {
   useGoogleLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
+  useUploadPostImageMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useProfileQuery,
+  useProfileMutation,
   useUpdateProfileMutation,
   useGetUsersQuery,
   useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation,
- 
 } = usersApiSlice

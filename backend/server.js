@@ -3,8 +3,10 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
 import authRouter from './routers/authRoute.js'
+import uploadRoutes from './routers/uploadRoutes.js'
 import propertieRouter from './routers/propertieRoute.js'
 import agentsRouter from './routers/agentRouter.js'
+import partner from './routers/partnerRouter.js'
 import blogRouter from './routers/blogRouter.js'
 import messageRouter from './routers/messageRouter.js'
 import contactRoute from './routers/contactRouter.js'
@@ -39,11 +41,13 @@ app.use('/api/users', authRouter)
 app.use('/api/form/contact', contactRoute)
 app.use('/api/properties', propertieRouter)
 app.use('/api/agents', agentsRouter)
+app.use('/api/partner', partner)
 app.use('/api/blogs', blogRouter)
 app.use('/api/messages', messageRouter)
 app.use('/api/wishlist', wishlistRoutes)
-
+app.use(`/api/upload`, uploadRoutes)
 const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'frontend/build')))
   app.get('*', (req, res) =>

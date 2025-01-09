@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: { type: String, default: '' },
     role: {
       type: String,
       enum: ['seller', 'admin', 'user'],
@@ -16,11 +17,6 @@ const UserSchema = new mongoose.Schema(
     },
     contactNumber: { type: String },
 
-    displayName: { type: String },
-    profileImage: {
-      type: String,
-      default: '/images/default-avatar.png',
-    },
     dateJoined: { type: Date, default: Date.now },
     isVerified: {
       type: Boolean,

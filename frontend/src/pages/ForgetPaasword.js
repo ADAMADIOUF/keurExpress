@@ -17,7 +17,9 @@ const ForgetPassword = () => {
     setLoading(true)
     try {
       await forgotPassword({ email }).unwrap()
-      toast.success('Password reset link sent to your email.')
+      toast.success(
+        'Un lien de réinitialisation du mot de passe a été envoyé à votre email.'
+      )
       navigate('/login')
     } catch (error) {
       toast.error(error?.data?.message || error.error)
@@ -28,14 +30,14 @@ const ForgetPassword = () => {
 
   return (
     <div className='form-container'>
-      <h1>Forgot Password</h1>
+      <h1>Mot de passe oublié</h1>
       <form onSubmit={submitHandler} className='forgot-password-form'>
         <div className='form-group'>
-          <label htmlFor='email'>Email Address</label>
+          <label htmlFor='email'>Adresse e-mail</label>
           <input
             type='email'
             id='email'
-            placeholder='Enter your email'
+            placeholder='Entrez votre email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -43,7 +45,7 @@ const ForgetPassword = () => {
         </div>
 
         <button type='submit' className='btn' disabled={loading || isLoading}>
-          Send Reset Link
+          Envoyer le lien de réinitialisation
         </button>
 
         {loading || isLoading ? <Loader /> : null}
@@ -51,7 +53,8 @@ const ForgetPassword = () => {
 
       <div className='redirect'>
         <p>
-          Remember your password? <Link to='/login'>Sign In</Link>
+          Vous vous souvenez de votre mot de passe ?{' '}
+          <Link to='/login'>Se connecter</Link>
         </p>
       </div>
     </div>

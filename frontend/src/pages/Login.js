@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLoginMutation } from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
 import { toast } from 'react-toastify'
-import { FcGoogle } from 'react-icons/fc'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -18,7 +17,7 @@ const Login = () => {
   const sp = new URLSearchParams(search)
   const redirect = sp.get('redirect') || '/'
 
-  // Redirect user if already logged in
+  // Redirige l'utilisateur s'il est déjà connecté
   useEffect(() => {
     if (userInfo) {
       navigate(redirect)
@@ -32,19 +31,19 @@ const Login = () => {
     try {
       const res = await login({ email, password }).unwrap()
 
-      
-      dispatch(setCredentials(res)) 
+      dispatch(setCredentials(res))
       navigate(redirect)
     } catch (error) {
       setError(error?.data?.message || error.error)
-      toast.error(error?.data?.message || 'Login failed. Please try again.')
+      toast.error(
+        error?.data?.message || 'Échec de la connexion. Veuillez réessayer.'
+      )
     }
   }
 
-  
   return (
     <div style={styles.container}>
-      <h2>Login</h2>
+      <h2>Se connecter</h2>
       <form onSubmit={submitHandler} style={styles.form}>
         {error && <p style={styles.error}>{error}</p>}
 
@@ -60,7 +59,7 @@ const Login = () => {
         </label>
 
         <label style={styles.label}>
-          Password
+          Mot de passe
           <input
             type='password'
             value={password}
@@ -71,20 +70,18 @@ const Login = () => {
         </label>
 
         <button type='submit' style={styles.button}>
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? 'Connexion...' : 'Se connecter'}
         </button>
       </form>
 
-      <p style={styles.orText}>or</p>
-
-     
+      <p style={styles.orText}>ou</p>
 
       <p style={styles.signupText}>
-        <Link to='/forgot-password'>Forgot your password?</Link>
-        Don't have an account? <Link to='/register'>Sign up</Link>
+        <Link to='/forgot-password'>Mot de passe oublié ?</Link>
+        Vous n'avez pas de compte ? <Link to='/register'>S'inscrire</Link>
       </p>
       <div className='return-to-store'>
-        <Link to='/'>Return Home</Link>
+        <Link to='/'>Retour à l'accueil</Link>
       </div>
     </div>
   )

@@ -1,12 +1,13 @@
-import User from "../models/User.js";
-
-import asyncHandler from "../middleware/asyncHandler.js"
+import User from '../models/User.js'
+import asyncHandler from '../middleware/asyncHandler.js'
 import generateToken from '../utils/generateToken.js'
 import crypto from 'crypto'
 import {
   sendPasswordResetEmail,
   sendResetSuccessEmail,
 } from '../mailtrap/mailtrap.js'
+
+// Helper function to generate a numeric code
 const generateNumericCode = (length) => {
   let code = ''
   for (let i = 0; i < length; i++) {
@@ -15,62 +16,64 @@ const generateNumericCode = (length) => {
   return code
 }
 
-const isAdmin = (req) => req.user && req.user.role === 'admin'
-
+// Register User
 export const registerUser = asyncHandler(async (req, res) => {
-  const { email, name, password, role } = req.body;
+  const { email, name, password, role } = req.body
 
-  console.log("Role received:", role); // Debugging log
+  console.log('Role received:', role) // Debugging log
 
-  const userExist = await User.findOne({ email });
+  // Handle missing role and default to 'user'
+  const userRole = role === 'admin' ? 'admin' : 'user'
+  console.log('Assigned role:', userRole) // Debugging log
+
+  // Check if user already exists
+  const userExist = await User.findOne({ email })
   if (userExist) {
-    res.status(400);
-    throw new Error("User already exists");
+    res.status(400)
+    throw new Error('User already exists')
   }
 
-  const userRole = role === "admin" ? "admin" : "user";
-  console.log("Assigned role:", userRole); // Debugging log
+  const verificationCode = generateNumericCode(6)
 
-  const verificationCode = generateNumericCode(6);
-
+  // Create the new user
   const user = await User.create({
     name,
     email,
     password,
-    role: userRole, // Ensure this is correctly set
+    role: userRole, // Ensure the role is being saved correctly
     verificationToken: verificationCode,
-    verificationExpiresAt: Date.now() + 3600000,
-  });
+    verificationExpiresAt: Date.now() + 3600000, // 1 hour expiry
+  })
 
   if (user) {
-    generateToken(res, user._id, );
+    // Generate token and send response
+    generateToken(res, user._id)
 
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
-      profileImage: user.profileImage || "/images/default-avatar.png",
-    });
+    })
   } else {
-    res.status(400);
-    throw new Error("User not created");
+    res.status(400)
+    throw new Error('User not created')
   }
-});
+})
 
+// Login User
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
 
   if (user && (await user.matchPassword(password))) {
-    
-    generateToken(res, user._id) 
+    generateToken(res, user._id)
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role, 
-      profileImage: user.profileImage || '/images/default-avatar.png', 
+      role: user.role,
+      image: user.image
     })
   } else {
     res.status(400)
@@ -78,10 +81,9 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-
-
+// Get User Profile
 export const getProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id) 
+  const user = await User.findById(req.user._id)
 
   if (user) {
     res.json({
@@ -90,27 +92,26 @@ export const getProfile = asyncHandler(async (req, res) => {
       email: user.email,
       image: user.image,
       role: user.role,
-
-      profileImage: user.profileImage || '/images/default-avatar.png',
     })
   } else {
     res.status(404)
     throw new Error('User not found')
   }
 })
-// Update user profile
-export const updateProfile = asyncHandler(async (req, res) => {
-  const { name, email, profileImage } = req.body
 
+// Update User Profile
+export const updateProfile = asyncHandler(async (req, res) => {
+  const { name, email, image } = req.body
   const user = await User.findById(req.user._id)
 
   if (!user) {
     res.status(404)
     throw new Error('User not found')
   }
+
   if (name) user.name = name
   if (email) user.email = email
-  if (profileImage) user.profileImage = profileImage
+  if (image) user.image = image
 
   await user.save()
 
@@ -120,18 +121,18 @@ export const updateProfile = asyncHandler(async (req, res) => {
     email: user.email,
     image: user.image,
     role: user.role,
-
-    profileImage: user.profileImage || '/images/default-avatar.png',
   })
 })
-// Get all users (Admin only)
+
+// Get All Users (Admin only)
 export const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({}) // Fetch all users
   res.json(users) // Send the users as a response
 })
 
-// Get a user by ID (Admin only)
+// Get a User by ID (Admin only)
 export const getUserById = asyncHandler(async (req, res) => {
+  // Check if user has admin role
   if (!isAdmin(req)) {
     res.status(403)
     throw new Error('Access denied. Admins only.')
@@ -145,9 +146,7 @@ export const getUserById = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.role === 'admin',
-      buyer: user.role === 'buyer',
-      seller: user.role === 'seller',
-      profileImage: user.profileImage,
+      image: user.image,
     })
   } else {
     res.status(404)
@@ -155,54 +154,67 @@ export const getUserById = asyncHandler(async (req, res) => {
   }
 })
 
-// Update a user (Admin only)
+// Update User (Admin only)
 export const updateUser = asyncHandler(async (req, res) => {
-  if (!isAdmin(req)) {
-    res.status(403)
-    throw new Error('Access denied. Admins only.')
-  }
+  const { name, email, role ,image} = req.body
 
-  const { name, email, role } = req.body
-
+  // Get user from DB
   const user = await User.findById(req.params.id)
 
   if (user) {
+    // Check if trying to update an admin user
+    if (user.role === 'admin' && req.user.role !== 'admin') {
+      res.status(400)
+      throw new Error('Cannot update admin user')
+    }
+
+    // If the role is provided, ensure that an admin cannot be assigned a non-admin role
+    if (role && user.role === 'admin' && role !== 'admin') {
+      res.status(400)
+      throw new Error('Cannot change admin role')
+    }
+
+    // Update user fields
     user.name = name || user.name
     user.email = email || user.email
     user.role = role || user.role
-
+    user.image = image || user.image
     const updatedUser = await user.save()
 
+    // Send the updated user back in the response
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
       role: updatedUser.role,
-      profileImage: updatedUser.profileImage,
+      image: updatedUser.image,
     })
   } else {
     res.status(404)
     throw new Error('User not found')
   }
 })
-
-// Delete a user (Admin only)
+// Delete User (Admin only)
 export const deleteUser = asyncHandler(async (req, res) => {
-  if (!isAdmin(req)) {
-    res.status(403)
-    throw new Error('Access denied. Admins only.')
-  }
-
   const user = await User.findById(req.params.id)
 
   if (user) {
-    await user.remove()
-    res.json({ message: 'User removed successfully' })
+    // Check if the user is an admin, if so, prevent deletion
+    if (user.role === 'admin') {
+      res.status(400)
+      throw new Error('Cannot delete an admin user')
+    }
+
+    // Delete the user
+    await User.deleteOne({ _id: user._id })
+    res.status(200).json({ message: 'User deleted successfully' })
   } else {
     res.status(404)
     throw new Error('User not found')
   }
 })
+
+// Forgot Password
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body
 
@@ -244,6 +256,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   }
 })
 
+// Reset Password
 export const resetPassword = asyncHandler(async (req, res) => {
   const { token } = req.params
   const { password } = req.body
@@ -278,11 +291,17 @@ export const resetPassword = asyncHandler(async (req, res) => {
     .status(200)
     .json({ message: 'Password reset successful, you can now log in' })
 })
+
+// Logout User
 export const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('jwt', '', {
     httpOnly: true,
     expires: new Date(0),
   })
-  res.status(200).json({ message: 'logout successfully' })
+  res.status(200).json({ message: 'Logged out successfully' })
 })
 
+// Helper function to check if user is admin
+const isAdmin = (req) => {
+  return req.user && req.user.role === 'admin'
+}

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useResetPasswordMutation } from '../slices/userApiSlice' // Adjust the import based on your API slice
+import { useResetPasswordMutation } from '../slices/userApiSlice' // Ajustez l'importation en fonction de votre API slice
 import Loader from '../components/Loading'
 
 const ResetPassword = () => {
-  const { token } = useParams() // Extract the token from the URL
-  const navigate = useNavigate() // Hook to navigate to login
+  const { token } = useParams() // Extraire le token de l'URL
+  const navigate = useNavigate() // Hook pour naviguer vers la page de connexion
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [resetPassword, { isLoading }] = useResetPasswordMutation()
@@ -14,47 +14,49 @@ const ResetPassword = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
+      toast.error('Les mots de passe ne correspondent pas')
       return
     }
 
     try {
       await resetPassword({ token, password }).unwrap()
-      toast.success('Password reset successfully!')
-      navigate('/login') // Navigate to login page after success
+      toast.success('Mot de passe réinitialisé avec succès !')
+      navigate('/login') // Naviguer vers la page de connexion après le succès
     } catch (error) {
-      toast.error(error?.data?.message || 'Failed to reset password')
+      toast.error(
+        error?.data?.message || 'Échec de la réinitialisation du mot de passe'
+      )
     }
   }
 
   return (
     <div className='reset-password-container'>
-      <h2>Reset Password</h2>
+      <h2>Réinitialiser le mot de passe</h2>
       <form onSubmit={submitHandler}>
         <div className='form-group'>
-          <label htmlFor='password'>New Password</label>
+          <label htmlFor='password'>Nouveau mot de passe</label>
           <input
             type='password'
             id='password'
-            placeholder='Enter new password'
+            placeholder='Entrez le nouveau mot de passe'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
         <div className='form-group'>
-          <label htmlFor='confirmPassword'>Confirm Password</label>
+          <label htmlFor='confirmPassword'>Confirmer le mot de passe</label>
           <input
             type='password'
             id='confirmPassword'
-            placeholder='Confirm new password'
+            placeholder='Confirmer le nouveau mot de passe'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>
         <button type='submit' className='update-button'>
-          Reset Password
+          Réinitialiser le mot de passe
         </button>
         {isLoading && <Loader />}
       </form>

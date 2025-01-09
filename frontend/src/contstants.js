@@ -1,6 +1,7 @@
 export const BASE_URL = ''
 export const PROPERTIES_URL = `/api/properties`
 export const AGENTS_URL = `/api/agents` 
+export const PARTNER_URL = `/api/partner`  
 export const BLOGS_URL = `/api/blogs`
 export const TRANSLATION_URL = `/api/translation`
 export const USERS_URL = `/api/users`

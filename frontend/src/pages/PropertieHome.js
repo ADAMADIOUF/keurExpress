@@ -9,12 +9,11 @@ const PropertieHome = () => {
     keyword = '',
     location = '',
     address = '',
-    propertyType="",
-    minPrice="",
-    maxPrice="",
+    propertyType = '',
+    minPrice = '',
+    maxPrice = '',
   } = useParams()
 
- 
   const {
     data: properties,
     error,
@@ -33,7 +32,9 @@ const PropertieHome = () => {
   }
 
   if (error) {
-    return <Error message='Failed to load properties.' />
+    return (
+      <Error message="Une erreur s'est produite. Veuillez réessayer plus tard." />
+    )
   }
 
   const propertyList = properties?.data || []
@@ -43,9 +44,11 @@ const PropertieHome = () => {
     return (
       <>
         <Link to='/' className='back-btn'>
-          Go Back
+          Retourner à l'accueil
         </Link>
-        <Error variant='info'>No properties found</Error>
+        <Error variant='info'>
+          Aucune propriété trouvée. Retourner à l'accueil
+        </Error>
       </>
     )
   }
@@ -54,7 +57,7 @@ const PropertieHome = () => {
     <>
       {keyword && (
         <Link to='/' className='back-btn'>
-          Go Back
+          Retourner à l'accueil
         </Link>
       )}
 

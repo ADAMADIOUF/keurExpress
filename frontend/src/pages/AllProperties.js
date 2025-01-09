@@ -7,55 +7,54 @@ import HeroReusable from '../components/HeroResuable'
 import SearchTermTwo from '../components/SearchTermTwo'
 
 const AllProperties = () => {
-   const {
-       keyword = '',
-       location = '',
-       address = '',
-       propertyType="",
-       minPrice="",
-       maxPrice="",
-     } = useParams()
-   
-     // Query properties with keyword, location, and address as parameters
-     const {
-       data: properties,
-       error,
-       isLoading,
-     } = useGetProperiesQuery({
-       keyword,
-       location,
-       address,
-       propertyType,
-       minPrice,
-       maxPrice,
-     })
-   
+  const {
+    keyword = '',
+    location = '',
+    address = '',
+    propertyType = '',
+    minPrice = '',
+    maxPrice = '',
+  } = useParams()
+
+  // Query properties with keyword, location, and address as parameters
+  const {
+    data: properties,
+    error,
+    isLoading,
+  } = useGetProperiesQuery({
+    keyword,
+    location,
+    address,
+    propertyType,
+    minPrice,
+    maxPrice,
+  })
 
   if (isLoading) {
     return <Loading />
   }
 
   if (error) {
-    return <Error message='Failed to load properties.' />
+    return <Error message='Échec du chargement des propriétés.' />
   }
 
   const propertyList = properties?.data || []
-if (propertyList.length === 0) {
-  return (
-    <>
-      <Link to='/' className='back-btn'>
-        Go Back
-      </Link>
-      <Error variant='info'>No properties found</Error>
-    </>
-  )
-}
+  if (propertyList.length === 0) {
+    return (
+      <>
+        <Link to='/' className='back-btn'>
+          Retourner à l'accueil
+        </Link>
+        <Error variant='info'>Aucune propriété trouvée</Error>
+      </>
+    )
+  }
 
   return (
     <>
       {keyword && (
         <Link to='/' className='back-btn'>
-          Go Back
+          Retourner à l'accueil
         </Link>
       )}
       <HeroReusable
@@ -130,7 +129,7 @@ if (propertyList.length === 0) {
 
                     {property.livingrooms && (
                       <p>
-                        <strong>{property.livingrooms}</strong> salons
+                        <strong>{property.livingrooms}</strong> Salons
                       </p>
                     )}
 

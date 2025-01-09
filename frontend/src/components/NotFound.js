@@ -1,15 +1,14 @@
-// src/components/NotFound.js
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const NotFound = () => {
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>404 - Page Not Found</h1>
+      <h1 style={styles.heading}>404 - Page Introuvable</h1>
       <p style={styles.message}>
-        Sorry, the page you are looking for does not exist.
+        Désolé, la page que vous recherchez n'existe pas.
       </p>
-      <Link to={"/"}>Go Back to home page</Link>
+      <Link to={'/'}>Retourner à la page d'accueil</Link>
     </div>
   )
 }
