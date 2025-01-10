@@ -179,7 +179,7 @@ height:auto;
 
 @media (min-width: 1200px) {
   .logo {
-    width: 300px; 
+    width: 200px; 
     height: 150px;
   }
 }
@@ -253,9 +253,9 @@ height:auto;
     
   }
   .nav-flex{
-    flex: 1;
+
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
    
   }
@@ -293,6 +293,7 @@ height:auto;
   .social-icons a:hover {
     color: var(--clr-primary-7);
   }
+  
 }
 /* Navigation Styles */
 .nav-item {
@@ -328,6 +329,12 @@ height:auto;
 .profile-flex li:hover{
   background-color: var(--clr-black);
 }
+.container-profile{
+  display: flex;
+  flex-wrap: wrap;
+ 
+}
+
 .username {
   
   font-weight: bold;
@@ -360,7 +367,7 @@ height:auto;
 
 /* Dropdown styles for admin links */
 .dropdown-item {
-  display: block;
+  display: flex;
   color: #333;
   padding: 5px 5px;
   text-decoration: none;
@@ -488,12 +495,12 @@ height:auto;
  }
  
 
-@media (min-width:992px) {
+@media (min-width:1440px) {
   .second-hero-img-content {
     display: block;
   position: absolute;
   top: 40%;
-  right:-10rem;
+  right:-16rem;
   width: 300px;
   border-radius: 10px; 
   overflow: hidden; 
@@ -664,13 +671,7 @@ height:auto;
   background-color: #ccc; 
 }
 }
-@media (min-width:1170px) {
-  .container-companies{
-   
-    grid-template-columns: repeat(5,1fr);
-    
-  }
-}
+
 /* HomeAbout */
 /* Add this class to control the image movement */
 .home-about-img.move {

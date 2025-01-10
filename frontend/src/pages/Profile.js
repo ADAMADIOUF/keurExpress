@@ -1,108 +1,156 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useProfileMutation } from '../slices/userApiSlice'
+import {
+  useProfileMutation,
+  useUploadPostImageMutation,
+} from '../slices/userApiSlice'
 import { setCredentials } from '../slices/authSlice'
-import { useUploadPostImageMutation } from '../slices/userApiSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [image, setImage] = useState(null) // Base64 or URL
-
+  const [image, setImage] = useState('')
   const { userInfo } = useSelector((state) => state.auth)
+
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation()
   const [uploadProductImage, { isLoading: loadingUpload }] =
     useUploadPostImageMutation()
 
   useEffect(() => {
-    if (userInfo) {
-      setName(userInfo.name)
-      setEmail(userInfo.email)
-      setImage(userInfo.image)
+    if (!userInfo) {
+      navigate('/login')
+    } else {
+      setName(userInfo.name || '')
+      setEmail(userInfo.email || '')
+      setImage(userInfo.image || '')
     }
-  }, [userInfo])
+  }, [userInfo, navigate])
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData()
     formData.append('image', e.target.files[0])
+
     try {
       const res = await uploadProductImage(formData).unwrap()
-      setImage(res.image)
       toast.success(res.message)
+      setImage(res.image)
     } catch (error) {
       toast.error(error?.data?.message || error.error)
     }
   }
 
-  const submitHandler = async (e) => {
-    e.preventDefault()
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
-    } else {
-      try {
-        const updatedProfile = {
-          _id: userInfo._id,
-          name,
-          email,
-          password,
-          image,
-        }
-        const res = await updateProfile(updatedProfile).unwrap()
-        dispatch(setCredentials(res))
-        toast.success('Profile updated successfully')
-      } catch (error) {
-        toast.error(error?.data?.message || error.error)
-      }
-    }
+  const handleDeleteAvatar = () => {
+    setImage('')
+    toast.info('Avatar removed')
   }
 
-  if (loadingUpdateProfile || loadingUpload) return <p>Loading...</p>
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      toast.error("Passwords don't match")
+      return
+    }
+
+    try {
+      const updatedUser = await updateProfile({
+        name,
+        email,
+        password,
+        image,
+      }).unwrap()
+
+      dispatch(setCredentials(updatedUser))
+      toast.success('Profile updated successfully!')
+    } catch (error) {
+      toast.error(error?.data?.message || 'Failed to update profile')
+    }
+  }
 
   return (
     <div>
       <h2>Update Profile</h2>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit}>
         <label>Name</label>
         <input
           type='text'
           value={name}
           onChange={(e) => setName(e.target.value)}
-          autoComplete='name' // Added autocomplete attribute
+          autoComplete='name'
         />
         <label>Email</label>
         <input
           type='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          autoComplete='email' // Added autocomplete attribute
+          autoComplete='email'
         />
         <label>Password</label>
         <input
           type='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          autoComplete='new-password' // Added autocomplete attribute for new passwords
+          autoComplete='new-password'
         />
         <label>Confirm Password</label>
         <input
           type='password'
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          autoComplete='new-password' // Added autocomplete attribute for new passwords
+          autoComplete='new-password'
         />
-        <label>Profile Image</label>
-        <input
-          type='file'
-          onChange={uploadFileHandler}
-          autoComplete='off' // Disable autocomplete for file inputs
-        />
-        {image && <img src={image} alt='Profile Preview' />}
-        <button type='submit'>Update</button>
+        <div className='my-2'>
+          <label>Image</label>
+          <input
+            type='text'
+            placeholder='Enter image URL'
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+          <input type='file' label='Choose File' onChange={uploadFileHandler} />
+          {image && (
+            <div className='avatar-preview'>
+              <img
+                src={image}
+                alt='Avatar Preview'
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  marginTop: '10px',
+                }}
+              />
+              <button
+                type='button'
+                onClick={handleDeleteAvatar}
+                style={{
+                  marginTop: '10px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                  border: 'none',
+                  padding: '5px 10px',
+                  cursor: 'pointer',
+                  borderRadius: '5px',
+                }}
+              >
+                Delete Avatar
+              </button>
+            </div>
+          )}
+        </div>
+        <button type='submit' disabled={loadingUpdateProfile || loadingUpload}>
+          {loadingUpdateProfile || loadingUpload
+            ? 'Updating...'
+            : 'Update Profile'}
+        </button>
       </form>
     </div>
   )

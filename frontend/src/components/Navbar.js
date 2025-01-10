@@ -132,72 +132,87 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <li style={styles.navItem}>
-              <Link to='/profile' style={styles.link} className='no-wrap'>
-                <FaUser /> {'Profil'}
-              </Link>
-            </li>
-            <li style={styles.navItem} className='no-wrap'>
-              <Link to='/wishlist' style={styles.link}>
-                <FaHeart /> {'Liste de souhaits'}
-              </Link>
-            </li>
-            <span className='username'>{userInfo.name}</span>
-            {userInfo && userInfo.image ? (
-              <img
-                src={userInfo.image}
-                alt="Avatar de l'utilisateur"
-                className='avatar-img'
-              />
-            ) : (
-             <img src={userInfo.image} alt="" srcset="" />
-            )}
-            {userInfo.role === 'admin' && (
-              <div className='admin-nav'>
-                <Link to='/admin/dashboard' className='dropdown-item no-wrap'>
-                  {'Tableau de bord'}
+            <div className='container-profile'>
+              <li style={styles.navItem}>
+                <Link to='/profile' style={styles.link} className='no-wrap'>
+                  <FaUser /> {'Profil'}
                 </Link>
-                <Link
-                  to='/admin/propertiesList'
-                  className='dropdown-item no-wrap'
-                >
-                  {'Toutes les propriétés'}
+              </li>
+              <li style={styles.navItem} className='no-wrap'>
+                <Link to='/wishlist' style={styles.link}>
+                  <FaHeart /> {'Liste de souhaits'}
                 </Link>
-                <Link to='/admin/agentList' className='dropdown-item no-wrap'>
-                  {'Toutes les agents'}
-                </Link>
-                <Link to='/admin/partnerList' className='dropdown-item no-wrap'>
-                  {'Toutes les partenairs'}
-                </Link>
-                <Link to='/admin/blogList' className='dropdown-item no-wrap'>
-                  {'Toutes les blogs'}
-                </Link>
-                <Link to='/admin/userlist' className='dropdown-item no-wrap'>
-                  {'Tous les utilisateurs'}
-                </Link>
+              </li>
+
+              <div className='avatar'>
+                {userInfo.image ? (
+                  <img
+                    src={userInfo.image}
+                    alt='User Avatar'
+                    className='avatar-img'
+                  />
+                ) : (
+                  <span className='username'>{userInfo.name}</span>
+                )}
               </div>
-            )}
-            <li style={styles.navItem}>
-              <button onClick={logoutHandler} className='logout-button no-wrap'>
-                {'Se déconnecter'} {isGoogleLogin ? `(Google)` : ''}
-              </button>
-            </li>
+            </div>
+            <div>
+              <div>
+                {userInfo.role === 'admin' && (
+                  <div className='admin-nav'>
+                    <Link
+                      to='/admin/dashboard'
+                      className='dropdown-item no-wrap'
+                    >
+                      {'Tableau de bord'}
+                    </Link>
+                    <Link
+                      to='/admin/propertiesList'
+                      className='dropdown-item no-wrap'
+                    >
+                      {'Toutes les propriétés'}
+                    </Link>
+                    <Link
+                      to='/admin/agentList'
+                      className='dropdown-item no-wrap'
+                    >
+                      {'Toutes les agents'}
+                    </Link>
+                    <Link
+                      to='/admin/partnerList'
+                      className='dropdown-item no-wrap'
+                    >
+                      {'Toutes les partenairs'}
+                    </Link>
+                    <Link
+                      to='/admin/blogList'
+                      className='dropdown-item no-wrap'
+                    >
+                      {'Toutes les blogs'}
+                    </Link>
+                    <Link
+                      to='/admin/userlist'
+                      className='dropdown-item no-wrap'
+                    >
+                      {'Tous les utilisateurs'}
+                    </Link>
+                  </div>
+                )}
+              </div>
+              <div>
+                <li style={styles.navItem}>
+                  <button
+                    onClick={logoutHandler}
+                    className='logout-button no-wrap'
+                  >
+                    Se déconnecter
+                  </button>
+                </li>
+              </div>
+            </div>
           </>
         )}
       </div>
-
-      {/* {userInfo?.provider === 'google' && (
-        <div style={styles.userInfo}>
-          <img
-            src={userInfo?.photo || 'https://via.placeholder.com/150'}
-            alt='User Profile'
-            style={styles.userImage}
-          />
-          <p style={styles.userName}>
-            {userInfo?.displayName || userInfo?.name}
-          </p>
-        </div>
-      )} */}
     </nav>
   )
 }

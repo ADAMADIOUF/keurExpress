@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import asyncHandler from '../middleware/asyncHandler.js'
+import bcrypt from 'bcryptjs'
 import generateToken from '../utils/generateToken.js'
 import crypto from 'crypto'
 import {
@@ -101,28 +102,39 @@ export const getProfile = asyncHandler(async (req, res) => {
 
 // Update User Profile
 export const updateProfile = asyncHandler(async (req, res) => {
-  const { name, email, image } = req.body
-  const user = await User.findById(req.user._id)
+  const { name, email, image, password } = req.body
 
-  if (!user) {
+  const user = await User.findById(req.user._id)
+  if (user) {
+    
+    
+
+    // Update the fields if provided
+    user.name = name || user.name
+    user.email = email || user.email
+    user.image = image || user.image
+
+    // If a new password is provided, hash and update it
+    if (password) {
+      const salt = await bcrypt.genSalt(10)
+      user.password = await bcrypt.hash(password, salt)
+    }
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      image: updatedUser.image,
+      role: updatedUser.role,
+    })
+  } else {
     res.status(404)
     throw new Error('User not found')
   }
-
-  if (name) user.name = name
-  if (email) user.email = email
-  if (image) user.image = image
-
-  await user.save()
-
-  res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    image: user.image,
-    role: user.role,
-  })
 })
+
 
 // Get All Users (Admin only)
 export const getUsers = asyncHandler(async (req, res) => {

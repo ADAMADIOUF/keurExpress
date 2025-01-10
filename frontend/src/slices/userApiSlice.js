@@ -8,49 +8,27 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/login`,
         method: 'POST',
         body: data,
-        credentials: 'include', // Include credentials for login
       }),
-      invalidatesTags: ['User'], // Invalidate user data after login
     }),
-
     register: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}`,
         method: 'POST',
         body: data,
-        credentials: 'include', // Include credentials for registration
       }),
-      invalidatesTags: ['User'], // Invalidate user data after registration
     }),
-    googleLogin: builder.mutation({
-      query: (token) => ({
-        url: `${USERS_URL}/auth/google/callback`,
-        method: 'POST', // Adjust method to POST
-        body: { token }, // Pass token in the body
-      }),
-      invalidatesTags: ['User'],
-    }),
-    // Invalidates any relevant cache or updates user data after login
-
     logout: builder.mutation({
-      // Accept token as an argument
-      query: (token) => ({
+      query: () => ({
         url: `${USERS_URL}/logout`,
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: 'include',
       }),
-      invalidatesTags: ['User'],
     }),
     profile: builder.mutation({
-      query: () => ({
+      query: (data) => ({
         url: `${USERS_URL}/profile`,
-        method: 'GET',
-        credentials: 'include', // Include credentials when fetching profile
+        method: 'PUT',
+        body: data,
       }),
-      providesTags: ['User'], // Provide user tag for caching
     }),
     updateProfile: builder.mutation({
       query: (data) => ({
@@ -121,7 +99,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useLoginMutation,
-  useGoogleLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
   useUploadPostImageMutation,
