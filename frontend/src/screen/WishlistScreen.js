@@ -3,7 +3,7 @@ import {
   useGetWishlistQuery,
   useRemoveFromWishlistMutation,
 } from '../slices/wishlistApiSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Loader from '../components/Loading'
 import Message from '../components/Error'
@@ -14,7 +14,7 @@ const WishlistScreen = () => {
   const [removeFromWishlist, { isLoading: loadingRemove }] =
     useRemoveFromWishlistMutation()
 
-  // Accessing userInfo from Redux store
+  // Accès à userInfo depuis le store Redux
   const { userInfo } = useSelector((state) => state.auth)
 
   const handleRemoveFromWishlist = async (propertyId) => {
@@ -23,7 +23,7 @@ const WishlistScreen = () => {
 
   useEffect(() => {
     if (error) {
-      console.error('Error fetching wishlist:', error)
+      console.error('Erreur lors de la récupération de la wishlist:', error)
     }
   }, [error])
 
@@ -31,25 +31,28 @@ const WishlistScreen = () => {
     return <Loader />
   }
 
-  // If no userInfo is available, prompt to add items to the wishlist
+  // Si aucun userInfo n'est disponible, inviter à ajouter des éléments à la wishlist
   if (!userInfo) {
     return (
-      <Message variant='warning'>Please add items to your wishlist.</Message>
+      <Message variant='warning'>
+        Veuillez ajouter des éléments à votre wishlist.
+      </Message>
     )
   }
 
-  // Handle different error situations more specifically
+  // Gérer des erreurs spécifiques de manière plus détaillée
   if (error) {
-    let errorMessage = 'An unexpected error occurred. Please try again later.'
+    let errorMessage =
+      'Une erreur inattendue est survenue. Veuillez réessayer plus tard.'
     if (error?.data?.message) {
-      errorMessage = error.data.message // More specific error message from the API
+      errorMessage = error.data.message // Message d'erreur plus spécifique provenant de l'API
     }
     return <Message variant='danger'>{errorMessage}</Message>
   }
 
   return (
     <div className='wishlist-screen'>
-      <h2>Your Wishlist</h2>
+      <h2>Votre Wishlist</h2>
       {wishlist && wishlist.properties.length > 0 ? (
         <div className='wishlist-items'>
           {wishlist.properties.map((property) => (
@@ -62,23 +65,29 @@ const WishlistScreen = () => {
               <div className='property-info'>
                 <h3>{property.title}</h3>
                 <p>{property.description}</p>
-                <p>Price: ${property.price}</p>
+                <p>Prix : ${property.price}</p>
                 <p>
-                  {property.bedrooms} Bedrooms, {property.bathrooms} Bathrooms
+                  {property.bedrooms} Chambres, {property.bathrooms} Salles de
+                  bain
                 </p>
                 <button
                   onClick={() => handleRemoveFromWishlist(property._id)}
                   disabled={loadingRemove}
                 >
-                  {loadingRemove ? 'Removing...' : 'Remove from Wishlist'}
+                  {loadingRemove
+                    ? 'Suppression en cours...'
+                    : 'Retirer de la Wishlist'}
                 </button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>Your wishlist is empty.</p>
+        <p>Votre wishlist est vide.</p>
       )}
+      <Link to={'/property'}>
+        <button className='btn'>Retour à la propriété</button>
+      </Link>
     </div>
   )
 }

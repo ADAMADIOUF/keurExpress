@@ -2885,6 +2885,105 @@ a:hover {
   margin-top: 10px;
   text-align: center;
 }
+/* Profile Page Styling */
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile-label {
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.profile-input:focus {
+  border-color: #007bff;
+}
+
+.profile-file-input {
+  margin-top: 10px;
+}
+
+.profile-image-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.avatar-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.delete-avatar-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-avatar-btn:hover {
+  background-color: darkred;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.submit-btn:hover:enabled {
+  background-color: #0056b3;
+}
+
 .wishlist-screen {
   padding: 20px;
   max-width: 1200px;

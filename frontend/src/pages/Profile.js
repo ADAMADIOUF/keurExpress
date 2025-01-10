@@ -76,77 +76,73 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <h2>Update Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Name</label>
+    <div className='profile-container'>
+      <h2 className='profile-title'>Update Profile</h2>
+      <form className='profile-form' onSubmit={handleSubmit}>
+        <label className='profile-label'>Name</label>
         <input
           type='text'
           value={name}
           onChange={(e) => setName(e.target.value)}
           autoComplete='name'
+          className='profile-input'
         />
-        <label>Email</label>
+        <label className='profile-label'>Email</label>
         <input
           type='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete='email'
+          className='profile-input'
         />
-        <label>Password</label>
+        <label className='profile-label'>Password</label>
         <input
           type='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete='new-password'
+          className='profile-input'
         />
-        <label>Confirm Password</label>
+        <label className='profile-label'>Confirm Password</label>
         <input
           type='password'
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           autoComplete='new-password'
+          className='profile-input'
         />
-        <div className='my-2'>
-          <label>Image</label>
+        <div className='profile-image-section'>
+          <label className='profile-label'>Image</label>
           <input
             type='text'
             placeholder='Enter image URL'
             value={image}
             onChange={(e) => setImage(e.target.value)}
+            className='profile-input'
           />
-          <input type='file' label='Choose File' onChange={uploadFileHandler} />
+          <input
+            type='file'
+            onChange={uploadFileHandler}
+            className='profile-file-input'
+          />
           {image && (
             <div className='avatar-preview'>
-              <img
-                src={image}
-                alt='Avatar Preview'
-                style={{
-                  width: '100px',
-                  height: '100px',
-                  borderRadius: '50%',
-                  marginTop: '10px',
-                }}
-              />
+              <img src={image} alt='Avatar Preview' className='avatar-img' />
               <button
                 type='button'
                 onClick={handleDeleteAvatar}
-                style={{
-                  marginTop: '10px',
-                  backgroundColor: 'red',
-                  color: 'white',
-                  border: 'none',
-                  padding: '5px 10px',
-                  cursor: 'pointer',
-                  borderRadius: '5px',
-                }}
+                className='delete-avatar-btn'
               >
                 Delete Avatar
               </button>
             </div>
           )}
         </div>
-        <button type='submit' disabled={loadingUpdateProfile || loadingUpload}>
+        <button
+          type='submit'
+          disabled={loadingUpdateProfile || loadingUpload}
+          className='submit-btn'
+        >
           {loadingUpdateProfile || loadingUpload
             ? 'Updating...'
             : 'Update Profile'}

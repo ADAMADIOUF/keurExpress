@@ -6,13 +6,13 @@ const ProgressBar = () => {
   const [count, setCount] = useState(false)
 
   useEffect(() => {
-    // Simulates a loading state when the component mounts
+    // Simulate loading state when component mounts
     const loadingTimer = setTimeout(() => {
       setCount(true)
     }, 2000)
 
     return () => {
-      clearTimeout(loadingTimer) // Cleanup timeout when the component unmounts
+      clearTimeout(loadingTimer) // Clean up on unmount
     }
   }, [])
 
