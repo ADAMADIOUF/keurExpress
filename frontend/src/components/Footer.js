@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import a from '../assets/f1.png'
 import b from '../assets/f2.png'
 import c from '../assets/f3.png'
-
+import logo from '../assets/hero.png'
 const Footer = () => {
   const currentYear = new Date().getFullYear()
 
@@ -12,11 +12,7 @@ const Footer = () => {
     <footer className='footer'>
       <div className='footer-container section-center'>
         <div className='footer-about'>
-          <img
-            src='https://example.com/logo.png'
-            alt='Logo NestBes'
-            className='footer-logo'
-          />
+          <img src={logo} alt='Logo NestBes' className='footer-logo' />
           <p>
             {
               'Embarquez dans un voyage pour trouver votre espace de vie idéal avec NestBes. Explorez une sélection de propriétés soigneusement choisies.'
@@ -91,12 +87,14 @@ const Footer = () => {
           <h4>{'Contact'}</h4>
           <p>
             {'Email'}:{' '}
-            <a href='mailto:contact@nestbes.com'>contact@nestbes.com</a>
+            <a href='mailto:keurexpress@keurexpress.com'>
+              keurexpress@keurexpress.com
+            </a>
           </p>
           <p>
-            {'Téléphone'}: <a href='tel:(316) 555-0116'>(316) 555-0116</a>
+            {'Téléphone'}: <a href='tel:(316) 555-0116'>+(221) 77-519-01-04</a>
           </p>
-          <p>{'Adresse'}: 1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+          <p>{'Adresse'}: Senegal,Dkar,Keur Massar,Cite Ainoumady</p>
         </div>
       </div>
       <div className='footer-image-absolute'>

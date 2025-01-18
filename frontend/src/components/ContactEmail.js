@@ -11,7 +11,7 @@ const ContactEmail = () => {
               alt=''
             />
             <h3>Numéro de Téléphone</h3>
-            <p>Téléphone : +1(701) 500-32-59</p>
+            <p>Téléphone : +221(77) 519-01-04</p>
             <p>Téléphone : +221(77) 545-91-02</p>
             <p>Téléphone : +212(626) 79-48-08</p>
           </article>
@@ -21,8 +21,9 @@ const ContactEmail = () => {
               alt=''
             />
             <h3>Adresse Email</h3>
+            <p>Email : keurexpress@keurexpress.com</p>
             <p>Email : absatechgalsen@gamil.com</p>
-            <p>Email : adamadiouf2017@gmail.com</p>
+
             <p>Email : moulaye1904@gmail.com</p>
           </article>
           <article>
